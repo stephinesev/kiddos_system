@@ -21021,6 +21021,11 @@
     background-size: cover;
   }
   
+  .auth .login-half-bg2 {
+    background: url("../images/bg-orange_1.jpg");
+    background-size: cover;
+  }
+  
   .auth .register-half-bg {
     background: url("../images/auth/register-bg.jpg");
     background-size: cover;
