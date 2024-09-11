@@ -31,6 +31,7 @@ class DonorsController extends Controller
         foreach($donor AS $b){
             $donorall[]=[
                 'id'=>$b->id,
+                date('F d,Y',strtotime($b->created_at)),
                 $b->fullname,
                 $b->birth_date,
                 $b->gender,

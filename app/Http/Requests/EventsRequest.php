@@ -24,6 +24,7 @@ class EventsRequest extends FormRequest
         return [
             'event_name'=>'required|string|nullable',
             'event_description'=>'string|nullable',
+            'event_color'=>'required|string|nullable',
             'event_address'=>'required|string|nullable',
             'event_time'=>'required|string|nullable',
             'start_date'=>'required|string|nullable',

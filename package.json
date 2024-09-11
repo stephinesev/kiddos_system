@@ -31,6 +31,7 @@
         "jszip": "^3.10.1",
         "moment": "^2.30.1",
         "vue": "^3.4.32",
+        "vue-color-kit": "^1.0.6",
         "vue-loader": "^17.3.1",
         "vue-router": "^4.4.0"
     }

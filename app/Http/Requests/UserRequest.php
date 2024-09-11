@@ -24,7 +24,7 @@ class UserRequest extends FormRequest
         return [
             'username'=>'string|nullable|unique:users,username,'.$this->id,
             'name'=>'required|string|nullable',
-            'password'=>'required|string|nullable',
+            'password'=>'sometimes|required|string|nullable',
             'birth_date'=>'required|string|nullable',
             'gender'=>'required|string|nullable',
             'address'=>'required|string|nullable',

@@ -16,5 +16,6 @@ class Events extends Model
         'event_time',
         'start_date',
         'end_date',
+        'event_color',
     ];
 }

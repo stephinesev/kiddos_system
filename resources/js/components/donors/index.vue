@@ -20,7 +20,8 @@
 	let form=ref([]);
 	let donors=ref([]);
 	let donorsall=ref([]);
-	let error = ref([])
+	// let error = ref([])
+	let error = ref("")
 	let success = ref('')	
 	const warningAlert = ref(false)
 	const successAlert = ref(false)
@@ -56,7 +57,8 @@
 		axios.post("/api/add_donor",formData).then(function () {
 			success.value='You have successfully added new donor!'
 			form.value=[]
-			error.value=[]
+			// error.value=[]
+			error.value=''
 			form.value.email='';
 			successAlert.value = !successAlert.value
 			setTimeout(() => {
@@ -66,29 +68,30 @@
 				closeModal()
 			}, 2000);
 		}).catch(function(err){
-			error.value=[]
+			// error.value=[]
+			error.value='Fields cannot be empty!'
 			warningAlert.value = !warningAlert.value
-			if (err.response.data.errors.name) {
-				error.value.push(err.response.data.errors.fullname[0])
-			}
-			if (err.response.data.errors.password) {
-				error.value.push(err.response.data.errors.password[0])
-			}
-			if (err.response.data.errors.email) {
-				error.value.push(err.response.data.errors.email[0])
-			}
-			if (err.response.data.errors.birth_date) {
-				error.value.push(err.response.data.errors.birth_date[0])
-			}
-			if (err.response.data.errors.gender) {
-				error.value.push(err.response.data.errors.gender[0])
-			}
-			if (err.response.data.errors.address) {
-				error.value.push(err.response.data.errors.address[0])
-			} 
-			if (err.response.data.errors.contact_no) {
-				error.value.push(err.response.data.errors.contact_no[0])
-			}
+			// if (err.response.data.errors.name) {
+			// 	error.value.push(err.response.data.errors.fullname[0])
+			// }
+			// if (err.response.data.errors.password) {
+			// 	error.value.push(err.response.data.errors.password[0])
+			// }
+			// if (err.response.data.errors.email) {
+			// 	error.value.push(err.response.data.errors.email[0])
+			// }
+			// if (err.response.data.errors.birth_date) {
+			// 	error.value.push(err.response.data.errors.birth_date[0])
+			// }
+			// if (err.response.data.errors.gender) {
+			// 	error.value.push(err.response.data.errors.gender[0])
+			// }
+			// if (err.response.data.errors.address) {
+			// 	error.value.push(err.response.data.errors.address[0])
+			// } 
+			// if (err.response.data.errors.contact_no) {
+			// 	error.value.push(err.response.data.errors.contact_no[0])
+			// }
 		});
 	}
 
@@ -106,7 +109,7 @@
 		axios.post(`/api/update_donor/`+id, formData).then(function () {
 			success.value='You have successfully updated donor!'
 			donors.value=[]
-			error.value=[]
+			error.value=''
 			donors.value.email='';
 			successAlert.value = !successAlert.value
 			setTimeout(() => {
@@ -116,29 +119,29 @@
 				closeModal()
 			}, 2000);
 		}).catch(function(err){
-			error.value=[]
 			warningAlert.value = !warningAlert.value
-			if (err.response.data.errors.name) {
-				error.value.push(err.response.data.errors.fullname[0])
-			}
-			if (err.response.data.errors.password) {
-				error.value.push(err.response.data.errors.password[0])
-			}
-			if (err.response.data.errors.email) {
-				error.value.push(err.response.data.errors.email[0])
-			}
-			if (err.response.data.errors.birth_date) {
-				error.value.push(err.response.data.errors.birth_date[0])
-			}
-			if (err.response.data.errors.gender) {
-				error.value.push(err.response.data.errors.gender[0])
-			}
-			if (err.response.data.errors.address) {
-				error.value.push(err.response.data.errors.address[0])
-			} 
-			if (err.response.data.errors.contact_no) {
-				error.value.push(err.response.data.errors.contact_no[0])
-			}
+			error.value='Fields cannot be empty!'
+			// if (err.response.data.errors.name) {
+			// 	error.value.push(err.response.data.errors.fullname[0])
+			// }
+			// if (err.response.data.errors.password) {
+			// 	error.value.push(err.response.data.errors.password[0])
+			// }
+			// if (err.response.data.errors.email) {
+			// 	error.value.push(err.response.data.errors.email[0])
+			// }
+			// if (err.response.data.errors.birth_date) {
+			// 	error.value.push(err.response.data.errors.birth_date[0])
+			// }
+			// if (err.response.data.errors.gender) {
+			// 	error.value.push(err.response.data.errors.gender[0])
+			// }
+			// if (err.response.data.errors.address) {
+			// 	error.value.push(err.response.data.errors.address[0])
+			// } 
+			// if (err.response.data.errors.contact_no) {
+			// 	error.value.push(err.response.data.errors.contact_no[0])
+			// }
 		});
 	}
 	//Datatable Initialization
@@ -158,7 +161,7 @@
 				title:'Donors',
 				extend: 'copy',
 				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5 ],
+					columns: [ 0, 1, 2, 3, 4, 5, 6 ],
 					orthogonal: null
 				}
 			},
@@ -166,7 +169,7 @@
 				title:'Donors',
 				extend: 'excel',
 				exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5 ],
+                    columns: [ 0, 1, 2, 3, 4, 5, 6 ],
 					orthogonal: null,
 				},
 				createEmptyCells: true,
@@ -181,7 +184,7 @@
 				title:'Donors',
 				extend: 'print',
 				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5 ],
+					columns: [ 0, 1, 2, 3, 4, 5, 6],
 					orthogonal: null
 				}
 			},
@@ -272,6 +275,7 @@
                             <DataTable :data="donorsall" :options="options" class="display table table-bordered table-hover !border nowrap">
                                 <thead>
                                     <tr>
+                                        <th class="!text-xs bg-gray-100 uppercase"> Registered Date</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Fullname</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Date of Birth</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Gender</th>
@@ -285,7 +289,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <template #column-6="props" align="center">
+                                <template #column-7="props" align="center">
                                     <button @click="openEdit(props.rowData.id)" class="btn btn-xs btn-info text-white p-1">
                                         <PencilIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></PencilIcon>
                                     </button >
@@ -549,7 +553,8 @@
 							<div class="col-lg-12 col-md-3">
 								<div class="text-center">
 									<h2 class="mb-2  font-bold text-red-400">Error!</h2>
-									<h5 class="leading-tight" v-for="er in error">{{ er }}</h5>
+									<h5 class="leading-tight">{{ error }}</h5>
+									<!-- <h5 class="leading-tight" v-for="er in error">{{ er }}</h5> -->
 								</div>
 							</div>
 						</div>

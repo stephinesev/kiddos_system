@@ -16,7 +16,8 @@ class EventsController extends Controller
             'event_address'=>'',
             'event_time'=>'',
             'start_date'=>'',
-            'end_date'=>''
+            'end_date'=>'',
+            'event_color'=>''
         ];
         return response()->json($formData);
     }
@@ -28,7 +29,7 @@ class EventsController extends Controller
 
     public function get_events(){
         $event=Events::orderBy('event_name','ASC')->get();
-        $eventall=array();
+        $eventall=[];
         foreach($event AS $b){
             $eventall[]=[
                 'id'=>$b->id,
@@ -55,7 +56,7 @@ class EventsController extends Controller
                 'title'=>$b->event_name,
                 'start'=>$b->start_date,
                 'end'=>date('Y-m-d',strtotime($b->end_date. ' +1 day')),
-                'color'=>'#164852',
+                'color'=>$b->event_color,
                 'time'=>date("H:i A",strtotime($b->event_time)),
                 'description'=>$b->event_description,
                 'address'=>$b->event_address,

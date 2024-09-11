@@ -120,9 +120,9 @@
 											</template>
 											<div style="text-align:left;">
 												<b>Event Name:</b> {{arg.event.title}}<br />
-												<b>Event Time:</b> {{arg.event.extendedProps.time}}<br />
+												<!-- <b>Event Time:</b> {{arg.event.extendedProps.time}}<br />
 												<b>Event Description:</b> {{arg.event.extendedProps.description}}<br />
-												<b>Where:</b> {{arg.event.extendedProps.address}}<br />
+												<b>Where:</b> {{arg.event.extendedProps.address}}<br /> -->
 											</div>
 										</v-tooltip>
 									</template>

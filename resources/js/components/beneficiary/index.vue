@@ -20,7 +20,8 @@
 	let form=ref([]);
 	let beneficiary=ref([]);
 	let beneficiaryall=ref([]);
-	let error = ref([])
+	let error = ref('')
+	// let error = ref([])
 	let success = ref('')	
 	const warningAlert = ref(false)
 	const successAlert = ref(false)
@@ -67,7 +68,8 @@
 		axios.post("/api/add_beneficiary",formData).then(function () {
 			success.value='You have successfully added new beneficiary!'
 			form.value=[]
-			error.value=[]
+			error.value=''
+			// error.value=[]
 			form.value.email='';
 			successAlert.value = !successAlert.value
 			setTimeout(() => {
@@ -77,38 +79,38 @@
 				closeModal()
 			}, 2000);
 		}).catch(function(err){
-			error.value=[]
 			warningAlert.value = !warningAlert.value
-			if (err.response.data.errors.username) {
-				error.value.push(err.response.data.errors.username[0])
-			}
-			if (err.response.data.errors.name) {
-				error.value.push(err.response.data.errors.name[0])
-			}
-			if (err.response.data.errors.password) {
-				error.value.push(err.response.data.errors.password[0])
-			}
-			if (err.response.data.errors.email) {
-				error.value.push(err.response.data.errors.email[0])
-			}
-			if (err.response.data.errors.birth_date) {
-				error.value.push(err.response.data.errors.birth_date[0])
-			}
-			if (err.response.data.errors.gender) {
-				error.value.push(err.response.data.errors.gender[0])
-			}
-			if (err.response.data.errors.address) {
-				error.value.push(err.response.data.errors.address[0])
-			} 
-			if (err.response.data.errors.role) {
-				error.value.push(err.response.data.errors.role[0])
-			}
-			if (err.response.data.errors.status) {
-				error.value.push(err.response.data.errors.status[0])
-			}
-			if (err.response.data.errors.barangay) {
-				error.value.push(err.response.data.errors.barangay[0])
-			}
+			error.value='Fields cannot be empty!'
+			// if (err.response.data.errors.username) {
+			// 	error.value.push(err.response.data.errors.username[0])
+			// }
+			// if (err.response.data.errors.name) {
+			// 	error.value.push(err.response.data.errors.name[0])
+			// }
+			// if (err.response.data.errors.password) {
+			// 	error.value.push(err.response.data.errors.password[0])
+			// }
+			// if (err.response.data.errors.email) {
+			// 	error.value.push(err.response.data.errors.email[0])
+			// }
+			// if (err.response.data.errors.birth_date) {
+			// 	error.value.push(err.response.data.errors.birth_date[0])
+			// }
+			// if (err.response.data.errors.gender) {
+			// 	error.value.push(err.response.data.errors.gender[0])
+			// }
+			// if (err.response.data.errors.address) {
+			// 	error.value.push(err.response.data.errors.address[0])
+			// } 
+			// if (err.response.data.errors.role) {
+			// 	error.value.push(err.response.data.errors.role[0])
+			// }
+			// if (err.response.data.errors.status) {
+			// 	error.value.push(err.response.data.errors.status[0])
+			// }
+			// if (err.response.data.errors.barangay) {
+			// 	error.value.push(err.response.data.errors.barangay[0])
+			// }
 		});
 	}
 	//Update function
@@ -117,7 +119,7 @@
 		formData.append('username',beneficiary.value.username)
 		formData.append('name',beneficiary.value.name)
 		formData.append('email',beneficiary.value.email)
-		formData.append('password',beneficiary.value.password)
+		// formData.append('password',beneficiary.value.password)
 		formData.append('birth_date',beneficiary.value.birth_date)
 		formData.append('gender',beneficiary.value.gender)
 		formData.append('address',beneficiary.value.address)
@@ -137,7 +139,7 @@
 		axios.post(`/api/update_beneficiary/`+id, formData).then(function () {
 			success.value='You have successfully updated beneficiary!'
 			beneficiary.value=[]
-			error.value=[]
+			error.value=''
 			beneficiary.value.email='';
 			successAlert.value = !successAlert.value
 			setTimeout(() => {
@@ -147,38 +149,39 @@
 				closeModal()
 			}, 2000);
 		}).catch(function(err){
-			error.value=[]
+			// error.value=[]
 			warningAlert.value = !warningAlert.value
-			if (err.response.data.errors.username) {
-				error.value.push(err.response.data.errors.username[0])
-			}
-			if (err.response.data.errors.name) {
-				error.value.push(err.response.data.errors.name[0])
-			}
-			if (err.response.data.errors.password) {
-				error.value.push(err.response.data.errors.password[0])
-			}
-			if (err.response.data.errors.email) {
-				error.value.push(err.response.data.errors.email[0])
-			}
-			if (err.response.data.errors.birth_date) {
-				error.value.push(err.response.data.errors.birth_date[0])
-			}
-			if (err.response.data.errors.gender) {
-				error.value.push(err.response.data.errors.gender[0])
-			}
-			if (err.response.data.errors.address) {
-				error.value.push(err.response.data.errors.address[0])
-			} 
-			if (err.response.data.errors.role) {
-				error.value.push(err.response.data.errors.role[0])
-			}
-			if (err.response.data.errors.status) {
-				error.value.push(err.response.data.errors.status[0])
-			}
-			if (err.response.data.errors.barangay) {
-				error.value.push(err.response.data.errors.barangay[0])
-			}
+			error.value='Fields cannot be empty!'
+			// if (err.response.data.errors.username) {
+			// 	error.value.push(err.response.data.errors.username[0])
+			// }
+			// if (err.response.data.errors.name) {
+			// 	error.value.push(err.response.data.errors.name[0])
+			// }
+			// if (err.response.data.errors.password) {
+			// 	error.value.push(err.response.data.errors.password[0])
+			// }
+			// if (err.response.data.errors.email) {
+			// 	error.value.push(err.response.data.errors.email[0])
+			// }
+			// if (err.response.data.errors.birth_date) {
+			// 	error.value.push(err.response.data.errors.birth_date[0])
+			// }
+			// if (err.response.data.errors.gender) {
+			// 	error.value.push(err.response.data.errors.gender[0])
+			// }
+			// if (err.response.data.errors.address) {
+			// 	error.value.push(err.response.data.errors.address[0])
+			// } 
+			// if (err.response.data.errors.role) {
+			// 	error.value.push(err.response.data.errors.role[0])
+			// }
+			// if (err.response.data.errors.status) {
+			// 	error.value.push(err.response.data.errors.status[0])
+			// }
+			// if (err.response.data.errors.barangay) {
+			// 	error.value.push(err.response.data.errors.barangay[0])
+			// }
 		});
 	}
 	//Datatable Initialization
@@ -323,7 +326,7 @@
                                         <th class="!text-xs bg-gray-100 uppercase"> Height</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> BMI</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Status</th>
-                                        <th class="!text-xs bg-gray-100 uppercase" width="1%" align="center"> 
+                                        <th class="!text-xs bg-gray-100 uppercase" width="7%" align="center"> 
                                             <span class="text-center  px-auto">
                                                 <Bars3Icon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></Bars3Icon>
                                             </span>
@@ -804,7 +807,8 @@
 							<div class="col-lg-12 col-md-3">
 								<div class="text-center">
 									<h2 class="mb-2  font-bold text-red-400">Error!</h2>
-									<h5 class="leading-tight" v-for="er in error">{{ er }}</h5>
+									<h5 class="leading-tight">{{ error }}</h5>
+									<!-- <h5 class="leading-tight" v-for="er in error">{{ er }}</h5> -->
 								</div>
 							</div>
 						</div>

@@ -4,6 +4,9 @@
 	import{ArrowUpOnSquareIcon} from '@heroicons/vue/24/outline'
     import { reactive, ref, onMounted } from "vue"
     import { useRouter } from "vue-router"
+
+	import { ColorPicker } from 'vue-color-kit'
+	import 'vue-color-kit/dist/vue-color-kit.css'	
 	const router = useRouter();
 	//Datatable Package
     import DataTable from 'datatables.net-vue3';
@@ -21,6 +24,7 @@
 	let events=ref([]);
 	let eventall=ref([]);
 	let error = ref([])
+	let color_display = ref([])
 	let success = ref('')	
 	const warningAlert = ref(false)
 	const successAlert = ref(false)
@@ -29,12 +33,48 @@
 	onMounted(async () => {
 		eventsForm()
 		allEvents()
+		getRandomHexColor()
 	})
+
+	const getRandomHexColor = () => {
+		for(var i=0;i<20;i++){
+			// Define an array of hexadecimal digits
+			const hexChars = [
+				'0',
+				'1',
+				'2',
+				'3',
+				'4',
+				'5',
+				'6',
+				'7',
+				'8',
+				'9',
+				'A',
+				'B',
+				'C',
+				'D',
+				'E',
+				'F',
+			];
+			// Generate an array of six random indices from 0 to 15
+			const hexIndices = Array.from({ length: 6 }, () =>
+				Math.floor(Math.random() * 16)
+			);
+			// Map each index to its corresponding hex digit and join them into a string
+			const hexCode = hexIndices.map((i) => hexChars[i]).join('');
+			// Return the string with a "#" prefix
+			// return `#${hexCode}`;
+			color_display.value[i] = `#${hexCode}`
+		}
+	};
+	
 
 	//Declaration of input values
 	const eventsForm = async () => {
 		let response = await axios.get("/api/create_event");
 		form.value = response.data;
+		
 	}
 	//Fetching Data From Events Table for display
 	const allEvents = async () => {
@@ -46,6 +86,7 @@
 	const onSave = () => {
 		const formData=new FormData()
 		formData.append('event_name',form.value.event_name)
+		formData.append('event_color',form.value.event_color)
 		formData.append('event_description',form.value.event_description)
 		formData.append('event_address',form.value.event_address)
 		formData.append('event_time',form.value.event_time)
@@ -63,23 +104,24 @@
 				closeModal()
 			}, 2000);
 		}).catch(function(err){
-			error.value=[]
+			// error.value=[]
 			warningAlert.value = !warningAlert.value
-			if (err.response.data.errors.event_name) {
-				error.value.push(err.response.data.errors.event_name[0])
-			}
-			if (err.response.data.errors.event_address) {
-				error.value.push(err.response.data.errors.event_address[0])
-			}
-			if (err.response.data.errors.event_time) {
-				error.value.push(err.response.data.errors.event_time[0])
-			}
-			if (err.response.data.errors.start_date) {
-				error.value.push(err.response.data.errors.start_date[0])
-			}
-			if (err.response.data.errors.end_date) {
-				error.value.push(err.response.data.errors.end_date[0])
-			}
+			error.value='Fields cannot be empty!'
+			// if (err.response.data.errors.event_name) {
+			// 	error.value.push(err.response.data.errors.event_name[0])
+			// }
+			// if (err.response.data.errors.event_address) {
+			// 	error.value.push(err.response.data.errors.event_address[0])
+			// }
+			// if (err.response.data.errors.event_time) {
+			// 	error.value.push(err.response.data.errors.event_time[0])
+			// }
+			// if (err.response.data.errors.start_date) {
+			// 	error.value.push(err.response.data.errors.start_date[0])
+			// }
+			// if (err.response.data.errors.end_date) {
+			// 	error.value.push(err.response.data.errors.end_date[0])
+			// }
 		});
 	}
 
@@ -87,6 +129,7 @@
 	const onEdit = (id) => {
 		const formData=new FormData()
 		formData.append('event_name',events.value.event_name)
+		formData.append('event_color',events.value.event_color)
 		formData.append('event_description',events.value.event_description)
 		formData.append('event_address',events.value.event_address)
 		formData.append('event_time',events.value.event_time)
@@ -95,7 +138,7 @@
 		axios.post(`/api/update_event/`+id, formData).then(function () {
 			success.value='You have successfully updated event!'
 			events.value=[]
-			error.value=[]
+			error.value=''
 			successAlert.value = !successAlert.value
 			setTimeout(() => {
 				// window.location.reload()
@@ -104,24 +147,25 @@
 				closeModal()
 			}, 2000);
 		}).catch(function(err){
-			alert(err)
-			error.value=[]
+			// alert(err)
+			// error.value=[]
 			warningAlert.value = !warningAlert.value
-			if (err.response.data.errors.event_name) {
-				error.value.push(err.response.data.errors.event_name[0])
-			}
-			if (err.response.data.errors.event_address) {
-				error.value.push(err.response.data.errors.event_address[0])
-			}
-			if (err.response.data.errors.event_time) {
-				error.value.push(err.response.data.errors.event_time[0])
-			}
-			if (err.response.data.errors.start_date) {
-				error.value.push(err.response.data.errors.start_date[0])
-			}
-			if (err.response.data.errors.end_date) {
-				error.value.push(err.response.data.errors.end_date[0])
-			}
+			error.value='Fields cannot be empty!'
+			// if (err.response.data.errors.event_name) {
+			// 	error.value.push(err.response.data.errors.event_name[0])
+			// }
+			// if (err.response.data.errors.event_address) {
+			// 	error.value.push(err.response.data.errors.event_address[0])
+			// }
+			// if (err.response.data.errors.event_time) {
+			// 	error.value.push(err.response.data.errors.event_time[0])
+			// }
+			// if (err.response.data.errors.start_date) {
+			// 	error.value.push(err.response.data.errors.start_date[0])
+			// }
+			// if (err.response.data.errors.end_date) {
+			// 	error.value.push(err.response.data.errors.end_date[0])
+			// }
 		});
 	}
 	//Datatable Initialization
@@ -305,6 +349,15 @@
 					</div>
 					<hr class="mt-0">
 					<div class="modal_s_items ">
+						<div class="row">
+							<div class="col-lg-12 col-md-12">
+								<label class="text-gray-500 m-0" for="">Event Color</label>
+								<select name="color_display" id="color_display" class="form-control" v-model="form.event_color">
+									<option value="">--Select Event Color--</option>
+									<option :value="color_display[index]" v-for="(col,index) in color_display" :key="color_display[index]" :style="{background: color_display[index]}">{{ color_display[index] }}</option>
+								</select>
+							</div>
+						</div>
                         <div class="row">
 							<div class="col-lg-6 col-md-6">
 								<div class="form-group">
@@ -381,6 +434,15 @@
 					</div>
 					<hr class="mt-0">
 					<div class="modal_s_items ">
+						<div class="row">
+							<div class="col-lg-12 col-md-12">
+								<label class="text-gray-500 m-0" for="">Event Color</label>
+								<select name="color_display" id="color_display" class="form-control" v-model="events.event_color">
+									<option value="">--Select Event Color--</option>
+									<option :value="color_display[index]" v-for="(col,index) in color_display" :key="color_display[index]" :style="{background: color_display[index]}">{{ color_display[index] }}</option>
+								</select>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-lg-6 col-md-6">
 								<div class="form-group">
@@ -494,7 +556,8 @@
 							<div class="col-lg-12 col-md-3">
 								<div class="text-center">
 									<h2 class="mb-2  font-bold text-red-400">Error!</h2>
-									<h5 class="leading-tight" v-for="er in error">{{ er }}</h5>
+									<h5 class="leading-tight">{{ error }}</h5>
+									<!-- <h5 class="leading-tight" v-for="er in error">{{ er }}</h5> -->
 								</div>
 							</div>
 						</div>
