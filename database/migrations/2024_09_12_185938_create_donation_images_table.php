@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('donation_images', function (Blueprint $table) {
             $table->id();
             $table->integer('donation_id')->default(0);
-            $table->integer('image_name')->default(0);
+            $table->string('image_name')->nullable();
             $table->timestamps();
         });
     }
