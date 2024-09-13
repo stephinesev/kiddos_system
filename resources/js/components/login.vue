@@ -72,9 +72,9 @@
 									<input type="submit" value="Login" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
 								</div>
 								
-								<div class="text-center mt-4 font-weight-light text-sm">
+								<!-- <div class="text-center mt-4 font-weight-light text-sm">
 									Don't have an account or Forgot password? <a href="#" class="text-primary">Please Contact Administrator</a>
-								</div>
+								</div> -->
 							</form>
 						</div>
 					</div>

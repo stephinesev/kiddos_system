@@ -31,8 +31,6 @@ const routes = [
             requiresAuth:true
         }
     },
-    
-
     {
         path:'/beneficiary',
         component: beneficaryIndex,
@@ -40,7 +38,6 @@ const routes = [
             requiresAuth:true
         }
     },
-
     {
         path:'/beneficiary/view/:id',
         props:true, 
@@ -64,27 +61,40 @@ const routes = [
             requiresAuth:true
         }
     },
-
-
     {
         path:'/donor_login/',
-        component: DonorUI_Index
+        component: DonorUI_Index,
+        meta:{
+            requiresAuth:false
+        }
     },
     {
         path:'/donor_register/',
-        component: DonorUI_Register
+        component: DonorUI_Register,
+        meta:{
+            requiresAuth:false
+        }
     },
     {
         path:'/donor_dashboard/',
-        component: DonorUI_Dashboard
+        component: DonorUI_Dashboard,
+        meta:{
+            requiresAuth:true
+        }
     },
     {
         path:'/donate/',
-        component: DonorUI_Donate
+        component: DonorUI_Donate,
+        meta:{
+            requiresAuth:true
+        }
     },
     {
         path:'/donation_history/',
-        component: DonorUI_History
+        component: DonorUI_History,
+        meta:{
+            requiresAuth:true
+        }
     },
     // {
     //     path:'/:pathMatch(.*)*',

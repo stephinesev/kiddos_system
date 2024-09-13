@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DonorsRequest extends FormRequest
+class DonationsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,13 @@ class DonorsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'fullname'=>'required|string|nullable',
-            'password'=>'required|string|nullable',
-            'birth_date'=>'required|string|nullable',
-            'gender'=>'required|string|nullable',
-            'address'=>'required|string|nullable',
-            'email' => 'required|email|nullable|unique:donors,email,'.$this->id,
-            'contact_no'=>'required|string|nullable',
+            'donor_id'=>'string|nullable',
+            'event_id'=>'required|string|nullable',
+            'when_date'=>'required|string|nullable',
+            'when_time'=>'required|string|nullable',
+            'barangay'=>'required|string|nullable',
+            'donation_type'=>'required|string|nullable',
+            'mode_of_collection'=>'required|string|nullable',
         ];
     }
 }

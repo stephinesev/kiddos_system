@@ -8,7 +8,6 @@
     const router = useRouter() //use if link is used inside the page
     const userDrop = ref(false);
     const notif = ref(false);
-    
     const menu = ref(false);
     const masterfileDrop = ref(false);
     const prDrop = ref(false);
@@ -26,46 +25,6 @@
         drDrop.value = !hideDrop.value
         rfdDrop.value = !hideDrop.value
 	}
-    const openPR = () => {
-		prDrop.value = !prDrop.value
-        masterfileDrop.value = !hideDrop.value
-        rfqDrop.value = !hideDrop.value
-        poDrop.value = !hideDrop.value
-        drDrop.value = !hideDrop.value
-        rfdDrop.value = !hideDrop.value
-	}
-    const openRFQ = () => {
-		rfqDrop.value = !rfqDrop.value
-        prDrop.value = !hideDrop.value
-        masterfileDrop.value = !hideDrop.value
-        poDrop.value = !hideDrop.value
-        drDrop.value = !hideDrop.value
-        rfdDrop.value = !hideDrop.value
-	}
-    const openPO = () => {
-        poDrop.value = !poDrop.value
-		rfqDrop.value = !hideDrop.value
-        prDrop.value = !hideDrop.value
-        masterfileDrop.value = !hideDrop.value
-        drDrop.value = !hideDrop.value
-        rfdDrop.value = !hideDrop.value
-	}
-    const openDR = () => {
-        drDrop.value = !drDrop.value
-        poDrop.value = !hideDrop.value
-		rfqDrop.value = !hideDrop.value
-        prDrop.value = !hideDrop.value
-        masterfileDrop.value = !hideDrop.value
-        rfdDrop.value = !hideDrop.value
-	}
-    const openRFD = () => {
-        rfdDrop.value = !rfdDrop.value
-        drDrop.value = !hideDrop.value
-        poDrop.value = !hideDrop.value
-		rfqDrop.value = !hideDrop.value
-        prDrop.value = !hideDrop.value
-        masterfileDrop.value = !hideDrop.value
-	}
 	const closeModal = () => {
 		drawer_dr.value = !hideDrop.value
 		drawer_rfd.value = !hideDrop.value
@@ -75,11 +34,9 @@
 		localStorage.removeItem('token')
 		router.push('/')
 	}
-
     const getDashboard = async () => {
 		const response = await fetch(`/api/dashboard`);
 		credentials.value = await response.json();
-        // console.log(credentials.value)
 	}
 </script>
 <template>
@@ -131,7 +88,7 @@
                         <span>
                             <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon>
                         </span>
-                        <span class="nav-profile-name"></span>
+                        <span class="nav-profile-name">{{ credentials.name }}</span>
                     </a>
                     <Transition
 						enter-active-class="transition ease-out duration-200"
@@ -175,7 +132,7 @@
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600 cursor-pointer" @click="openMaster()" >
                             <i class="mdi mdi-circle-outline menu-icon !text-gray-600">
-                                <KeyIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></KeyIcon>
+                                <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></UserIcon>
                             </i>
                             <span class="menu-title">Users</span>
                         </a>

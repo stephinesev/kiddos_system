@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\DonorsController;
+use App\Http\Controllers\DonationsController;
 use App\Http\Controllers\EventsController;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 /*
@@ -26,6 +27,13 @@ Route::get('/qrcode', [UsersController::class,'qrcode']);
 Route::get('/login_form', [UsersController::class,'login_form']);
 Route::post('/login_process', [UsersController::class,'login_process']);
 Route::get('/dashboard', [UsersController::class,'dashboard']);
+// DONOR LOGIN
+Route::get('/donor_login_form', [DonorsController::class,'donor_login_form']);
+Route::post('/donor_login_process', [DonorsController::class,'donor_login_process']);
+Route::get('/donor_credentials', [DonorsController::class,'donor_credentials']);
+//DONOR REGISTRATION
+Route::get('/create_registration',[DonationsController::class,'create_registration']);
+Route::post('/registration',[DonationsController::class,'registration']);
 //Beneficiary CRUD
 Route::get('/create_beneficiary',[UsersController::class,'create_beneficiary']);
 Route::post('/add_beneficiary',[UsersController::class,'add_beneficiary']);
@@ -43,6 +51,12 @@ Route::get('/get_donor',[DonorsController::class,'get_donor']);
 Route::get('/edit_donor/{id}',[DonorsController::class,'edit_donor']);
 Route::post('/update_donor/{id}',[DonorsController::class,'update_donor']);
 Route::get('/delete_donor/{id}',[DonorsController::class,'delete_donor']);
+//Donation CRUD
+Route::get('/create_donation',[DonationsController::class,'create_donation']);
+Route::post('/add_donation',[DonationsController::class,'add_donation']);
+Route::get('/get_events_donation',[DonationsController::class,'get_events_donation']);
+Route::get('/get_event_address/{id}',[DonationsController::class,'get_event_address']);
+Route::post('/upload_image', [DonationsController::class, 'upload_image']);
 //Calendar Data
 Route::get('/create_event',[EventsController::class,'create_event']);
 Route::post('/add_event',[EventsController::class,'add_event']);

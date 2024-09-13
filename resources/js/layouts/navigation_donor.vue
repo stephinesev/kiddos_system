@@ -3,7 +3,7 @@
     import { reactive, ref, onMounted } from "vue"
     import { useRouter } from "vue-router"
     onMounted(async () => {
-		getDashboard()
+		getCredentials()
 	})
     const router = useRouter() //use if link is used inside the page
     const userDrop = ref(false);
@@ -71,15 +71,14 @@
 		drawer_rfd.value = !hideDrop.value
 		drawer_revise.value = !hideDrop.value
 	}
-    const logout = () => {
+    const logout_donor = () => {
 		localStorage.removeItem('token')
-		router.push('/')
+		router.push('/donor_login')
 	}
 
-    const getDashboard = async () => {
-		const response = await fetch(`/api/dashboard`);
+    const getCredentials = async () => {
+		const response = await fetch(`/api/donor_credentials`);
 		credentials.value = await response.json();
-        // console.log(credentials.value)
 	}
 </script>
 <template>
@@ -131,7 +130,7 @@
                         <span>
                             <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon>
                         </span>
-                        <span class="nav-profile-name"></span>
+                        <span class="nav-profile-name">{{ credentials.fullname }}</span>
                     </a>
                     <Transition
 						enter-active-class="transition ease-out duration-200"
@@ -146,7 +145,7 @@
                             <i class="mdi mdi-settings text-primary"></i>
                             Settings
                         </a>
-                        <a href="#" class="dropdown-item" @click="logout" >
+                        <a href="#" class="dropdown-item" @click="logout_donor" >
                             <i class="mdi mdi-logout text-primary"></i>
                             Logout
                         </a>
@@ -164,14 +163,14 @@
         <!-- partial:partials/_sidebar.html -->
             <nav class="sidebar sidebar-offcanvas " id="sidebar">
                 <ul class="nav ">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/donor_dashboard">
                         <i class="mdi mdi-home menu-icon !text-gray-600">
                             <HomeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></HomeIcon>
                         </i>
                         <span class="menu-title">Dashboard</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/donate">
                         <i class="mdi mdi-home menu-icon !text-gray-600">
@@ -181,7 +180,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link !text-gray-600" href="/donate_history">
+                        <a class="nav-link !text-gray-600" href="/donation_history">
                         <i class="mdi mdi-home menu-icon !text-gray-600">
                             <CalendarIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></CalendarIcon>
                         </i>

@@ -46,11 +46,13 @@ class UsersController extends Controller
     public function dashboard(){
         if(Auth::check()){
             $credentials=[
-                'username' => Auth::user()?->username,
+                'user_id' => Auth::id(),
+                'name' => Auth::user()?->name,
             ];
         }else{
             $credentials=[
-                'username' => '',
+                'user_id' => '0',
+                'name' => '',
             ];
         }
         return response()->json($credentials);
@@ -90,7 +92,7 @@ class UsersController extends Controller
 
     public function get_beneficiary(){
         $beneficiary=User::orderBy('name','ASC')->get();
-        $beneficiaryall=array();
+        $beneficiaryall=[];
         foreach($beneficiary AS $b){
             $beneficiaryall[]=[
                 'id'=>$b->id,

@@ -1,10 +1,9 @@
 <script setup>
 	import navigation from '@/layouts/navigation.vue';
-	import{ Bars3Icon, PencilIcon, XMarkIcon, TrashIcon} from '@heroicons/vue/24/solid'
+	import{ Bars3Icon, PencilIcon, XMarkIcon, TrashIcon, CheckIcon} from '@heroicons/vue/24/solid'
 	import{ArrowUpOnSquareIcon} from '@heroicons/vue/24/outline'
     import { reactive, ref, onMounted } from "vue"
     import { useRouter } from "vue-router"
-
 	import { ColorPicker } from 'vue-color-kit'
 	import 'vue-color-kit/dist/vue-color-kit.css'	
 	const router = useRouter();
@@ -20,6 +19,7 @@
 	import $ from 'jquery'
     import moment from 'moment'
 	//Variables
+	let intervalId;
 	let form=ref([]);
 	let events=ref([]);
 	let eventall=ref([]);
@@ -32,10 +32,12 @@
 	//Fetcher of Data
 	onMounted(async () => {
 		eventsForm()
-		allEvents()
+		// intervalId = setInterval(() => {
+		// 	allEvents();
+  		// }, 10000);
+		allEvents();
 		getRandomHexColor()
 	})
-
 	const getRandomHexColor = () => {
 		for(var i=0;i<20;i++){
 			// Define an array of hexadecimal digits
