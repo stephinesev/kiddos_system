@@ -65,10 +65,11 @@
 		formData.append('barangay',form.value.barangay)
 		formData.append('donation_type',form.value.donation_type)
 		formData.append('mode_of_collection',form.value.mode_of_collection)
+		formData.append('pickup_description',form.value.pickup_description)
 		formData.append('images',JSON.stringify(media.value))
 		axios.post("/api/add_donation",formData).then(function (response) {
             // console.log(response.data)
-			success.value='You have successfully added new donation!'
+			success.value='Thank you for your Generous DONATION!'
 			form.value=[]
 			error.value=[]
 			successAlert.value = !successAlert.value
@@ -239,7 +240,7 @@
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for="">Pick-up Address and Contact Number</label>
-                                    <textarea class="form-control !text-sm" rows='4'></textarea>
+                                    <textarea class="form-control !text-sm" rows='4' v-model="form.pickup_description"></textarea>
                                 </div>
                             </div>
                         </div>

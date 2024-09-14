@@ -29,6 +29,7 @@ class DonationsRequest extends FormRequest
             'barangay'=>'required|string|nullable',
             'donation_type'=>'required|string|nullable',
             'mode_of_collection'=>'required|string|nullable',
+            'pickup_description'=>'string|nullable',
         ];
     }
 }

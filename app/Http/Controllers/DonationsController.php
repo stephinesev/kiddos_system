@@ -38,6 +38,7 @@ class DonationsController extends Controller
             'barangay'=>'',
             'donation_type'=>'',
             'mode_of_collection'=>'',
+            'pickup_description'=>'',
         ];
         return response()->json($formData);
     }
