@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\DonationsRequest;
 use App\Http\Requests\DonorsRequest;
 use Illuminate\Http\Request;
@@ -79,5 +80,32 @@ class DonationsController extends Controller
         $name = uniqid() . '_' . trim($file->getClientOriginalName());
         $file->move($path, $name);
         return ['name' => $name];
+    }
+
+    public function get_donations(){
+        $donations=Donations::where('donor_id',Auth::guard('donor')->id())->orderBy('when_date','ASC')->get();
+        $donationsall=[];
+        foreach($donations AS $b){
+            $event_name=Events::where('id',$b->event_id)->value('event_name');
+            $donationsall[]=[
+                'id'=>$b->id,
+                $event_name,
+                "<center>".date('F d,Y',strtotime($b->when_date))."</center>",
+                "<center>".date('H:i A',strtotime($b->when_time))."</center>",
+                $b->barangay,
+                "<center>".$b->donation_type."</center>",
+                "<center>".$b->mode_of_collection."</center>",
+                ''
+            ];
+        }
+        return response()->json([
+            'donationsall'=>$donationsall,
+        ],200);
+    }
+    public function get_images($id){
+        $images=DonationImages::where('donation_id',$id)->get();
+        return response()->json([
+            'images'=>$images,
+        ],200);
     }
 }

@@ -57,6 +57,8 @@ Route::post('/add_donation',[DonationsController::class,'add_donation']);
 Route::get('/get_events_donation',[DonationsController::class,'get_events_donation']);
 Route::get('/get_event_address/{id}',[DonationsController::class,'get_event_address']);
 Route::post('/upload_image', [DonationsController::class, 'upload_image']);
+Route::get('/get_donations',[DonationsController::class,'get_donations']);
+Route::get('/get_images/{id}',[DonationsController::class,'get_images']);
 //Calendar Data
 Route::get('/create_event',[EventsController::class,'create_event']);
 Route::post('/add_event',[EventsController::class,'add_event']);

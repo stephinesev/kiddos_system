@@ -41,29 +41,19 @@
     const changeMedia = (event) =>{
         media.value = event
     }
-    // const upload_image = (e) => {
-    //     // const images = {
-    //     //     image:event.target.files[0]
-    //     // }
-    //     // imageFile.value.push(images)
-    //     // console.log(imageFile.value)
-    //     const tmpFiles = e.target.files
-    //     if (tmpFiles.length === 0) {
-    //         return false;
-    //     }
-    //     for(var i =0;i<tmpFiles.length;i++){
-    //         const file = tmpFiles[i]
-    //         imageFile.value.push(file)
-    //     }
-        
-    //     console.log(imageFile.value)
-    //     // const self = this
-    //     //     const reader = new FileReader()
-    //     // reader.onload = function(e) {
-    //     //     self.rawData.push(e.target.result)
-    //     // }
-    //     // reader.readAsDataURL(file)
-    // }
+    //Toggle Textbox if pickup is clicked
+    const toggleTextbox = () => {
+        var targetDiv = document.getElementById("showpickup");
+        if (targetDiv.style.display !== "none") {
+            targetDiv.style.display = "none";
+        } else {
+            targetDiv.style.display = "block";
+        }
+    }
+    const untoggleTextbox = () => {
+        var targetDiv = document.getElementById("showpickup");
+        targetDiv.style.display = "none";
+    }
     //Insert Function
 	const onSave = () => {
        
@@ -233,17 +223,25 @@
                                     <label for="">Mode of Collection</label>
                                     <div class="flex justify-start space-x-3 mt-2">
                                         <div class="flex justify-center space-x-1">
-                                            <input type="radio" class="" name="mode_of_collection" v-model="form.mode_of_collection"  value="Self Delivery">
+                                            <input type="radio" @click="untoggleTextbox()" class="" name="mode_of_collection" v-model="form.mode_of_collection"  value="Self Delivery">
                                             <span class="text-sm">Self Delivery</span>
                                         </div>
                                         <div class="flex justify-center space-x-1">
-                                            <input type="radio" class="" name="mode_of_collection" v-model="form.mode_of_collection"  value="Pick Up">
+                                            <input type="radio" @click="toggleTextbox()" class="" name="mode_of_collection" v-model="form.mode_of_collection"  value="Pick Up">
                                             <span class="text-sm">Pick Up</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
+                        </div>
+                        <div id="showpickup" class="row" style="display:none">
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="">Pick-up Address and Contact Number</label>
+                                    <textarea class="form-control !text-sm" rows='4'></textarea>
+                                </div>
+                            </div>
                         </div>
                         <hr class="border-dashed">
                         <div class="row">
