@@ -152,7 +152,7 @@
         >
 			<div class="modal pt-4 px-3" :class="{ show:modalImage }">
 				<div @click="closeModal" class="w-full h-full fixed"></div>
-				<div class="modal__content w-6/12">
+				<div class="modal__content w-8/12">
 					<div class="row mb-3">
 						<div class="col-lg-12 flex justify-between">
 							<span class="font-bold ">Donation Images Viewer</span>
@@ -164,9 +164,32 @@
 					<hr class="mt-0">
 					<div class="modal_s_items ">
 						<div class="row">
-							<div class="col-lg-4 col-md-4"  v-for="i in donation_images">
+							<div class="col-lg-12 col-md-12"  v-for="i in donation_images">
 								<div class="form-group">
                                     <img :src="'storage/images/'+i.image_name"/>
+								</div>
+							</div>
+
+							<div class="col-lg-12 col-md-12">
+								<div class="p-1 sm:p-8">
+									<div class="columns-1 gap-2 sm:columns-2 sm:gap-2 md:columns-3 lg:columns-4 [&>img:not(:first-child)]:mt-2">
+										<img src="../../../images/bg-orange_1.jpg"/>
+										<img src="../../../images/bg-orange_2.jpg"/>
+										<img src="../../../images/bg-orange_3.jpg"/>
+										<img src="../../../images/bg-orange_1.jpg"/>
+										<img src="../../../images/bg-orange_4.jpg"/>
+										<img src="../../../images/bg-orange_5.jpg"/>
+										<img src="../../../images/bg-orange_4.jpg"/>
+										<img src="../../../images/bg-orange_6.jpg"/>
+										<img src="../../../images/bg-orange_1.jpg"/>
+										<img src="../../../images/bg-orange_5.jpg"/>
+										<img src="../../../images/bg-orange_1.jpg"/>
+										<img src="../../../images/bg-orange_2.jpg"/>
+										<img src="../../../images/bg-orange_1.jpg"/>
+										<img src="../../../images/bg-orange_1.jpg"/>
+										<img src="../../../images/bg-orange_1.jpg"/>
+										<img src="../../../images/bg-orange_1.jpg"/>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -12,6 +12,7 @@ import eventsIndex from '../components/events/index.vue'
 import DonorUI_Index from '../components/donors_ui/index.vue'
 import DonorUI_Dashboard from '../components/donors_ui/dashboard.vue'
 import DonorUI_Donate from '../components/donors_ui/donate.vue'
+import DonorUI_DonorProfile from '../components/donors_ui/donor_profile.vue'
 import DonorUI_Register from '../components/donors_ui/register.vue'
 import DonorUI_History from '../components/donors_ui/donate_history.vue'
 
@@ -85,6 +86,13 @@ const routes = [
     {
         path:'/donate/',
         component: DonorUI_Donate,
+        meta:{
+            requiresAuth:true
+        }
+    },
+    {
+        path:'/donor_profile/',
+        component: DonorUI_DonorProfile,
         meta:{
             requiresAuth:true
         }

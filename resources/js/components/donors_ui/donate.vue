@@ -154,8 +154,6 @@
                                         <option :value="ev.id" v-for="(ev,index) in events" :key="ev.id">{{ ev.event_name }}</option>
                                      </select>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="">When</label>
                                     <div class="flex justify-between space-x-3">
@@ -163,13 +161,51 @@
                                         <input type="time" class="form-control !text-sm" v-model="form.when_time">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="">Barangay</label>
                                     <input type="text" class="form-control !text-sm" v-model="form.barangay">
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-lg-12">
+                                        <div class="form-group border-r">
+                                            <div class="flex justify-start space-x-5">
+                                                <span class="m-0 text-sm" for="">Type of Donation:</span>
+                                                <div class="flex justify-center space-x-1">
+                                                    <input type="radio" class="" name="donation_type" v-model="form.donation_type" value="Dry Goods">
+                                                    <span class="text-sm">Dry Goods</span>
+                                                </div>
+                                                <div class="flex justify-center space-x-1 mr-3">
+                                                    <input type="radio" class="" name="donation_type" v-model="form.donation_type" value="Wet Goods">
+                                                    <span class="text-sm">Wet Goods</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <div class="flex justify-start space-x-5">
+                                                <span class="m-0 text-sm" for="">Mode of Collection:</span>
+                                                <div class="flex justify-center space-x-1">
+                                                    <input type="radio" @click="untoggleTextbox()" class="" name="mode_of_collection" v-model="form.mode_of_collection"  value="Self Delivery">
+                                                    <span class="text-sm">Self Delivery</span>
+                                                </div>
+                                                <div class="flex justify-center space-x-1">
+                                                    <input type="radio" @click="toggleTextbox()" class="" name="mode_of_collection" v-model="form.mode_of_collection"  value="Pick Up">
+                                                    <span class="text-sm">Pick Up</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="showpickup" class="row mt-2" style="display:none">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="">Pick-up Address and Contact Number</label>
+                                            <textarea class="form-control !text-sm" rows='4' v-model="form.pickup_description"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -183,67 +219,18 @@
                                                 @change="changeMedia"
                                             />
                                         </div>
-                                        <!-- <input type="file" class="form-control  !text-sm p-1 image_display"  @change="upload_image" multiple> -->
-                                        <!-- <div class="flex justify-center space-x-1">
-                                            <button type="button" class="btn btn-primary p-2" @click="addRowImage">
-                                                <PlusIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></PlusIcon>
-                                            </button>
-                                        </div> -->
                                     </div>
                                 </div>
-                                <!-- <div class="form-group" v-for="(i,index) in image_list">
-                                    <div class="flex justify-start space-x-3 mt-0">
-                                        <input type="file" class="form-control  !text-sm p-1 image_display"  @change="upload_image">
-                                        <div class="flex justify-center space-x-1">
-                                            <button type="button" class="btn btn-danger p-2"  @click="removeImage(index)">
-                                                <XMarkIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></XMarkIcon>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="">Type of Donation</label>
-                                    <div class="flex justify-start space-x-3 mt-2">
-                                        <div class="flex justify-center space-x-1">
-                                            <input type="radio" class="" name="donation_type" v-model="form.donation_type" value="Dry Goods">
-                                            <span class="text-sm">Dry Goods</span>
-                                        </div>
-                                        <div class="flex justify-center space-x-1">
-                                            <input type="radio" class="" name="donation_type" v-model="form.donation_type" value="Wet Goods">
-                                            <span class="text-sm">Wet Goods</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-lg-6">
+                                
                             </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="">Mode of Collection</label>
-                                    <div class="flex justify-start space-x-3 mt-2">
-                                        <div class="flex justify-center space-x-1">
-                                            <input type="radio" @click="untoggleTextbox()" class="" name="mode_of_collection" v-model="form.mode_of_collection"  value="Self Delivery">
-                                            <span class="text-sm">Self Delivery</span>
-                                        </div>
-                                        <div class="flex justify-center space-x-1">
-                                            <input type="radio" @click="toggleTextbox()" class="" name="mode_of_collection" v-model="form.mode_of_collection"  value="Pick Up">
-                                            <span class="text-sm">Pick Up</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-lg-6">
                             </div>
                         </div>
-                        <div id="showpickup" class="row" style="display:none">
-                            <div class="col-lg-3"></div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="">Pick-up Address and Contact Number</label>
-                                    <textarea class="form-control !text-sm" rows='4' v-model="form.pickup_description"></textarea>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <hr class="border-dashed">
                         <div class="row">
                             <div class="col-lg-12">

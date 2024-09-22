@@ -1,5 +1,5 @@
 <script setup>
-    import{CalendarIcon, HomeIcon, KeyIcon, UserIcon, DocumentTextIcon, RectangleGroupIcon, Square3Stack3DIcon, DocumentDuplicateIcon, TruckIcon, BanknotesIcon} from '@heroicons/vue/24/solid'
+    import{CalendarIcon, QueueListIcon, KeyIcon, InboxArrowDownIcon, RectangleGroupIcon, Square3Stack3DIcon, DocumentDuplicateIcon, TruckIcon, UserIcon} from '@heroicons/vue/24/solid'
     import { reactive, ref, onMounted } from "vue"
     import { useRouter } from "vue-router"
     onMounted(async () => {
@@ -174,15 +174,23 @@
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/donate">
                         <i class="mdi mdi-home menu-icon !text-gray-600">
-                            <CalendarIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></CalendarIcon>
+                            <InboxArrowDownIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></InboxArrowDownIcon>
                         </i>
                         <span class="menu-title">Donate</span>
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link !text-gray-600" href="/donor_profile">
+                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                            <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></UserIcon>
+                        </i>
+                        <span class="menu-title">Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/donation_history">
                         <i class="mdi mdi-home menu-icon !text-gray-600">
-                            <CalendarIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></CalendarIcon>
+                            <QueueListIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></QueueListIcon>
                         </i>
                         <span class="menu-title">Donate History</span>
                         </a>
