@@ -22,9 +22,10 @@ class Donor extends Authenticatable
         'address',
         'email',
         'contact_no',
+        'profile_image',
     ];
     protected $hidden = [
-        'password',
+        // 'password',
         'remember_token',
     ];
     protected $casts = [

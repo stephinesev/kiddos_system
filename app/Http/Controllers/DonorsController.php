@@ -63,11 +63,13 @@ class DonorsController extends Controller
         if(Auth::guard('donor')->check()){
             $credentials=[
                 'donor_id' => Auth::guard('donor')->id(),
+                'picture' => auth('donor')->user()->profile_image,
                 'fullname' =>auth('donor')->user()->fullname,
             ];
         }else{
             $credentials=[
                 'donor_id' => '0',
+                'picture' =>'',
                 'fullname' => '',
             ];
         }
@@ -120,6 +122,16 @@ class DonorsController extends Controller
     public function update_donor(DonorsRequest $request, $id){
         $update=Donor::where('id',$id)->first();
         $validated=$request->validated();
+        if($request->file('profile_image')){
+            $path = storage_path('app/public/profile');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            $file = $request->file('profile_image');
+            $name = uniqid() . '_' . trim($file->getClientOriginalName());
+            $file->move($path, $name);
+            $validated['profile_image']=$name;
+        }
         $update->update($validated);
     }
     public function delete_donor($id){

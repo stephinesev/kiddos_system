@@ -81,6 +81,11 @@
 		credentials.value = await response.json();
 	}
 </script>
+<style>
+    .navbar .navbar-menu-wrapper .navbar-nav .nav-item.nav-profile .nav-link img {
+        width: 67px!important;
+    }
+</style>
 <template>
     
     <div class="container-scroller">
@@ -128,7 +133,8 @@
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle !flex" href="#" data-toggle="dropdown" id="profileDropdown" @click="userDrop = !userDrop">
                         <span>
-                            <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon>
+                            <img :src="'storage/profile/'+credentials.picture" id="img1" v-if="credentials.picture!=null"/>
+                            <!-- <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon> -->
                         </span>
                         <span class="nav-profile-name">{{ credentials.fullname }}</span>
                     </a>

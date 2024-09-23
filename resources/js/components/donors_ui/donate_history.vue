@@ -164,16 +164,17 @@
 					<hr class="mt-0">
 					<div class="modal_s_items ">
 						<div class="row">
-							<div class="col-lg-12 col-md-12"  v-for="i in donation_images">
+							<!-- <div class="col-lg-12 col-md-12"  v-for="i in donation_images">
 								<div class="form-group">
                                     <img :src="'storage/images/'+i.image_name"/>
 								</div>
-							</div>
+							</div> -->
 
-							<div class="col-lg-12 col-md-12">
+							<div class="col-lg-12 col-md-12" >
 								<div class="p-1 sm:p-8">
-									<div class="columns-1 gap-2 sm:columns-2 sm:gap-2 md:columns-3 lg:columns-4 [&>img:not(:first-child)]:mt-2">
-										<img src="../../../images/bg-orange_1.jpg"/>
+									<div class="columns-1 gap-2 sm:columns-2 sm:gap-2 md:columns-3 lg:columns-4 [&>img:not(:first-child)]:mt-2" v-for="i in donation_images">
+										<img :src="'storage/images/'+i.image_name"/>
+										<!-- <img src="../../../images/bg-orange_1.jpg"/>
 										<img src="../../../images/bg-orange_2.jpg"/>
 										<img src="../../../images/bg-orange_3.jpg"/>
 										<img src="../../../images/bg-orange_1.jpg"/>
@@ -188,7 +189,7 @@
 										<img src="../../../images/bg-orange_1.jpg"/>
 										<img src="../../../images/bg-orange_1.jpg"/>
 										<img src="../../../images/bg-orange_1.jpg"/>
-										<img src="../../../images/bg-orange_1.jpg"/>
+										<img src="../../../images/bg-orange_1.jpg"/> -->
 									</div>
 								</div>
 							</div>
