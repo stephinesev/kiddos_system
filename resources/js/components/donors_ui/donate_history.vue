@@ -169,7 +169,8 @@
                                     <img :src="'storage/images/'+i.image_name"/>
 								</div>
 							</div> -->
-
+							 
+							
 							<div class="col-lg-12 col-md-12" >
 								<div class="p-1 sm:p-8">
 									<div class="columns-1 gap-2 sm:columns-2 sm:gap-2 md:columns-3 lg:columns-4 [&>img:not(:first-child)]:mt-2" v-for="i in donation_images">

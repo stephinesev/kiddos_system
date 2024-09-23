@@ -83,7 +83,7 @@
 </script>
 <style>
     .navbar .navbar-menu-wrapper .navbar-nav .nav-item.nav-profile .nav-link img {
-        width: 67px!important;
+        width: 60px!important;
     }
 </style>
 <template>

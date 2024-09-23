@@ -71,7 +71,8 @@ class DonationsController extends Controller
         $address=Events::where('id',$id)->value('event_address');
         return $address;
     }
-
+ 
+    
     public function upload_image(Request $request){
         $path = storage_path('app/public/tmp/uploads');
         if (!file_exists($path)) {
