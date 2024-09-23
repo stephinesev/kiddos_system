@@ -1,5 +1,5 @@
 <script setup>
-    import{CalendarIcon, QueueListIcon, KeyIcon, InboxArrowDownIcon, RectangleGroupIcon, Square3Stack3DIcon, DocumentDuplicateIcon, TruckIcon, UserIcon} from '@heroicons/vue/24/solid'
+    import{CalendarIcon, BellIcon, QueueListIcon, HomeIcon, InboxArrowDownIcon, CogIcon, Square3Stack3DIcon, DocumentDuplicateIcon, TruckIcon, UserIcon} from '@heroicons/vue/24/solid'
     import { reactive, ref, onMounted } from "vue"
     import { useRouter } from "vue-router"
     onMounted(async () => {
@@ -120,44 +120,100 @@
                 </li>
                 </ul>
                 <ul class="navbar-nav navbar-nav-right">
-                <li class="nav-item dropdown mr-1">
-                    <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
-                    <i class="mdi mdi-message-text mx-0"></i>
-                    </a>
-                </li>
-                <li class="nav-item dropdown mr-4">
-                    <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center notification-dropdown" id="notificationDropdown" href="#" data-toggle="dropdown">
-                    <i class="mdi mdi-bell mx-0"></i>
-                    </a>
-                </li>
-                <li class="nav-item nav-profile dropdown">
-                    <a class="nav-link dropdown-toggle !flex" href="#" data-toggle="dropdown" id="profileDropdown" @click="userDrop = !userDrop">
-                        <span>
-                            <img :src="'storage/profile/'+credentials.picture" id="img1" v-if="credentials.picture!=null"/>
-                            <!-- <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon> -->
-                        </span>
-                        <span class="nav-profile-name">{{ credentials.fullname }}</span>
-                    </a>
-                    <Transition
-						enter-active-class="transition ease-out duration-200"
-						enter-from-class="opacity-0"
-						enter-to-class="opacity-100 "
-						leave-active-class="transition ease-in duration-200"
-						leave-from-class="opacity-100 "
-						leave-to-class="opacity-0"
-					>
-                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown"  v-show="userDrop">
-                        <a class="dropdown-item">
-                            <i class="mdi mdi-settings text-primary"></i>
-                            Settings
+                    <li class="nav-item dropdown m-0">
+                        <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center notification-dropdown" href="#" data-toggle="dropdown" id="profileDropdown" @click="notif = !notif">
+                            <span>
+                                <BellIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></BellIcon>
+                            </span>
+                            <!-- <span class="nav-profile-name">{{ credentials.fullname }}</span> -->
                         </a>
-                        <a href="#" class="dropdown-item" @click="logout_donor" >
-                            <i class="mdi mdi-logout text-primary"></i>
-                            Logout
+                        <Transition
+                            enter-active-class="transition ease-out duration-200"
+                            enter-from-class="opacity-0"
+                            enter-to-class="opacity-100 "
+                            leave-active-class="transition ease-in duration-200"
+                            leave-from-class="opacity-100 "
+                            leave-to-class="opacity-0"
+                        >
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown" v-show="notif">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                            <a class="dropdown-item">
+                                <div class="item-thumbnail">
+                                    <div class="item-icon bg-success">
+                                        <span>
+                                            <BellIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></BellIcon>
+                                        </span>
+                                    </div>
+                                    </div>
+                                    <div class="item-content">
+                                    <h6 class="font-weight-normal">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        Just now
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="item-thumbnail">
+                                <div class="item-icon bg-warning">
+                                    <span>
+                                        <CogIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></CogIcon>
+                                    </span>
+                                </div>
+                                </div>
+                                <div class="item-content">
+                                <h6 class="font-weight-normal">Settings</h6>
+                                <p class="font-weight-light small-text mb-0 text-muted">
+                                    Private message
+                                </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="item-thumbnail">
+                                <div class="item-icon bg-info">
+                                    <span>
+                                        <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon>
+                                    </span>
+                                </div>
+                                </div>
+                                <div class="item-content">
+                                <h6 class="font-weight-normal">New user registration</h6>
+                                <p class="font-weight-light small-text mb-0 text-muted">
+                                    2 days ago
+                                </p>
+                                </div>
+                            </a>
+                        </div>
+                        </Transition>
+                    </li>
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle !flex" href="#" data-toggle="dropdown" id="profileDropdown" @click="userDrop = !userDrop">
+                            <span>
+                                <img :src="'storage/profile/'+credentials.picture" id="img1" v-if="credentials.picture!=null"/>
+                                <!-- <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon> -->
+                            </span>
+                            <span class="nav-profile-name">{{ credentials.fullname }}</span>
                         </a>
-                    </div>
-                    </Transition>
-                </li>
+                        <Transition
+                            enter-active-class="transition ease-out duration-200"
+                            enter-from-class="opacity-0"
+                            enter-to-class="opacity-100 "
+                            leave-active-class="transition ease-in duration-200"
+                            leave-from-class="opacity-100 "
+                            leave-to-class="opacity-0"
+                        >
+                        
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown"  v-show="userDrop">
+                            <a class="dropdown-item">
+                                <i class="mdi mdi-settings text-primary"></i>
+                                Settings
+                            </a>
+                            <a href="#" class="dropdown-item" @click="logout_donor" >
+                                <i class="mdi mdi-logout text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                        </Transition>
+                    </li>
                 </ul>
                 <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
                 <span class="mdi mdi-menu"></span>
@@ -169,14 +225,14 @@
         <!-- partial:partials/_sidebar.html -->
             <nav class="sidebar sidebar-offcanvas " id="sidebar">
                 <ul class="nav ">
-                    <!-- <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/donor_dashboard">
                         <i class="mdi mdi-home menu-icon !text-gray-600">
                             <HomeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></HomeIcon>
                         </i>
                         <span class="menu-title">Dashboard</span>
                         </a>
-                    </li> -->
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/donate">
                         <i class="mdi mdi-home menu-icon !text-gray-600">
