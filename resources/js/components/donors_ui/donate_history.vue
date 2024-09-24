@@ -177,7 +177,6 @@
 										<div v-for="i in donation_images">
 											<img class="mb-2 border border-gray-100" :src="'storage/images/'+i.image_name"/>
 										</div>
-										
 									</div>
 								</div>
 							</div>
