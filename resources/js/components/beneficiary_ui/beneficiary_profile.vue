@@ -1,5 +1,5 @@
 <script setup>
-	import navigation from '@/layouts/navigation_donor.vue';
+	import navigation from '@/layouts/navigation_bene.vue';
 	import{ Bars3Icon, PencilIcon, MagnifyingGlassIcon, TrashIcon, EyeIcon, CheckIcon, PlusIcon, XMarkIcon} from '@heroicons/vue/24/solid'
 	import{ArrowUpOnSquareIcon} from '@heroicons/vue/24/outline'
     import { reactive, ref, onMounted} from "vue"
@@ -12,7 +12,7 @@
             <div class="col-lg-12">
                 <div class="flex justify-between mb-3 px-2">
                     <span class="">
-                        <h3 class="card-title !text-lg m-0 uppercase font-bold text-gray-600">Donor's Profile<small></small></h3>
+                        <h3 class="card-title !text-lg m-0 uppercase font-bold text-gray-600">Beneficiary's Profile<small></small></h3>
                     </span>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb !mb-0 !text-xs px-2 py-1 !bg-transparent">

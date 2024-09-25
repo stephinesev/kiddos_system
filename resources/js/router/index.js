@@ -16,6 +16,14 @@ import DonorUI_DonorProfile from '../components/donors_ui/donor_profile.vue'
 import DonorUI_Register from '../components/donors_ui/register.vue'
 import DonorUI_History from '../components/donors_ui/donate_history.vue'
 
+
+import BeneUI_Index from '../components/beneficiary_ui/index.vue'
+import BeneUI_Dashboard from '../components/beneficiary_ui/dashboard.vue'
+import BeneUI_Donate from '../components/beneficiary_ui/donate.vue'
+import BeneUI_DonorProfile from '../components/beneficiary_ui/beneficiary_profile.vue'
+import BeneUI_Register from '../components/beneficiary_ui/register.vue'
+import BeneUI_History from '../components/beneficiary_ui/bmi_history.vue'
+
 const routes = [
     {
         path:'/',
@@ -100,6 +108,52 @@ const routes = [
     {
         path:'/donation_history/',
         component: DonorUI_History,
+        meta:{
+            requiresAuth:true
+        }
+    },
+
+
+
+
+    {
+        path:'/bene_login/',
+        component: BeneUI_Index,
+        meta:{
+            requiresAuth:false
+        }
+    },
+    {
+        path:'/bene_register/',
+        component: BeneUI_Register,
+        meta:{
+            requiresAuth:false
+        }
+    },
+    {
+        path:'/bene_dashboard/',
+        component: BeneUI_Dashboard,
+        meta:{
+            requiresAuth:true
+        }
+    },
+    {
+        path:'/donate/',
+        component: BeneUI_Donate,
+        meta:{
+            requiresAuth:true
+        }
+    },
+    {
+        path:'/bene_profile/',
+        component: BeneUI_DonorProfile,
+        meta:{
+            requiresAuth:true
+        }
+    },
+    {
+        path:'/bmi_history/',
+        component: BeneUI_History,
         meta:{
             requiresAuth:true
         }
