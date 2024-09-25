@@ -15,6 +15,7 @@ import DonorUI_Donate from '../components/donors_ui/donate.vue'
 import DonorUI_DonorProfile from '../components/donors_ui/donor_profile.vue'
 import DonorUI_Register from '../components/donors_ui/register.vue'
 import DonorUI_History from '../components/donors_ui/donate_history.vue'
+import DonoationAdminView from '../components/donations/index.vue'
 
 const routes = [
     {
@@ -100,6 +101,13 @@ const routes = [
     {
         path:'/donation_history/',
         component: DonorUI_History,
+        meta:{
+            requiresAuth:true
+        }
+    },
+    {
+        path:'/donation_admin_view/',
+        component: DonoationAdminView,
         meta:{
             requiresAuth:true
         }

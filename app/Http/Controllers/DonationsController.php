@@ -56,8 +56,7 @@ class DonationsController extends Controller
                     DonationImages::create($validated_image);
                 }
             }
-        }
-        
+        } 
     }
 
     public function get_events_donation(){
@@ -109,5 +108,39 @@ class DonationsController extends Controller
         return response()->json([
             'images'=>$images,
         ],200);
+    }
+
+    public function get_admin_donations(){
+        $donations=Donations::orderBy('when_date','ASC')->get();
+        $donationsall=[];
+        foreach($donations AS $b){
+            $event_name=Events::where('id',$b->event_id)->value('event_name');
+            $donationsall[]=[
+                'id'=>$b->id,
+                $event_name,
+                "<center>".date('F d,Y',strtotime($b->when_date))."</center>",
+                "<center>".date('H:i A',strtotime($b->when_time))."</center>",
+                $b->barangay,
+                "<center>".$b->donation_type."</center>",
+                "<center>".$b->mode_of_collection."</center>",
+                $b->pickup_description,
+                "<center>".(($b->status==0) ? '<span style="color:orange">Pending</span>' : (($b->status==1) ? '<span style="color:green">Accepted</span>' : '<span style="color:red">Declined</span>'))."</center>",
+                ''
+            ];
+        }
+        return response()->json([
+            'donationsall'=>$donationsall,
+        ],200);
+    }
+
+    public function accept_donation($id){
+        $update=Donations::where('id',$id)->first();
+        $accepted['status']='1';
+        $update->update($accepted);
+    }
+    public function decline_donation($id){
+        $update=Donations::where('id',$id)->first();
+        $declined['status']='2';
+        $update->update($declined);
     }
 }

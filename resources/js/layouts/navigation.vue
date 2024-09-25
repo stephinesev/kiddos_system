@@ -1,5 +1,5 @@
 <script setup>
-    import{CalendarIcon, HomeIcon, KeyIcon, UserIcon, DocumentTextIcon, RectangleGroupIcon, Square3Stack3DIcon, DocumentDuplicateIcon, TruckIcon, BanknotesIcon} from '@heroicons/vue/24/solid'
+    import{CalendarIcon, HomeIcon, KeyIcon, UserIcon, DocumentTextIcon, RectangleGroupIcon, Square3Stack3DIcon, DocumentDuplicateIcon, TruckIcon, BanknotesIcon, BellIcon,CogIcon} from '@heroicons/vue/24/solid'
     import { reactive, ref, onMounted } from "vue"
     import { useRouter } from "vue-router"
     onMounted(async () => {
@@ -38,6 +38,11 @@
 		const response = await fetch(`/api/dashboard`);
 		credentials.value = await response.json();
 	}
+    
+    const getNotification = async () => {
+		const response = await fetch(`/api/get_notification`);
+		credentials.value = await response.json();
+	}
 </script>
 <template>
     
@@ -73,46 +78,112 @@
                 </li>
                 </ul>
                 <ul class="navbar-nav navbar-nav-right">
-                <li class="nav-item dropdown mr-1">
-                    <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
-                    <i class="mdi mdi-message-text mx-0"></i>
-                    </a>
-                </li>
-                <li class="nav-item dropdown mr-4">
-                    <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center notification-dropdown" id="notificationDropdown" href="#" data-toggle="dropdown">
-                    <i class="mdi mdi-bell mx-0"></i>
-                    </a>
-                </li>
-                <li class="nav-item nav-profile dropdown">
-                    <a class="nav-link dropdown-toggle !flex" href="#" data-toggle="dropdown" id="profileDropdown" @click="userDrop = !userDrop">
-                        <span>
-                            <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon>
-                        </span>
-                        <span class="nav-profile-name">{{ credentials.name }}</span>
-                    </a>
-                    <Transition
-						enter-active-class="transition ease-out duration-200"
-						enter-from-class="opacity-0"
-						enter-to-class="opacity-100 "
-						leave-active-class="transition ease-in duration-200"
-						leave-from-class="opacity-100 "
-						leave-to-class="opacity-0"
-					>
-                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown"  v-show="userDrop">
-                        <a class="dropdown-item">
-                            <i class="mdi mdi-settings text-primary"></i>
-                            Settings
+                    <li class="nav-item dropdown mr-1">
+                        <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
+                        <i class="mdi mdi-message-text mx-0"></i>
                         </a>
-                        <a href="#" class="dropdown-item" @click="logout" >
-                            <i class="mdi mdi-logout text-primary"></i>
-                            Logout
+                    </li>
+                    <li class="nav-item dropdown mr-4">
+                        <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center notification-dropdown" id="notificationDropdown" href="#" data-toggle="dropdown">
+                        <i class="mdi mdi-bell mx-0"></i>
                         </a>
-                    </div>
-                    </Transition>
-                </li>
+                    </li>
+                    <li class="nav-item dropdown m-0">
+                        <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center notification-dropdown" href="#" data-toggle="dropdown" id="profileDropdown" @click="notif = !notif">
+                            <span>
+                                <BellIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></BellIcon>
+                            </span>
+                            <span class="bg-red-500 absolute z-index-50 rounded-xl p-.5 px-1.5 -top-2 -right-2 text-[10px] text-white">1</span>
+                            <!-- <span class="nav-profile-name">{{ credentials.fullname }}</span> -->
+                        </a>
+                        <Transition
+                            enter-active-class="transition ease-out duration-200"
+                            enter-from-class="opacity-0"
+                            enter-to-class="opacity-100 "
+                            leave-active-class="transition ease-in duration-200"
+                            leave-from-class="opacity-100 "
+                            leave-to-class="opacity-0"
+                        >
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown" v-show="notif">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                            <a class="dropdown-item">
+                                <div class="item-thumbnail">
+                                    <div class="item-icon bg-success">
+                                        <span>
+                                            <BellIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></BellIcon>
+                                        </span>
+                                    </div>
+                                    </div>
+                                    <div class="item-content">
+                                    <h6 class="font-weight-normal">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        Just now
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="item-thumbnail">
+                                <div class="item-icon bg-warning">
+                                    <span>
+                                        <CogIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></CogIcon>
+                                    </span>
+                                </div>
+                                </div>
+                                <div class="item-content">
+                                <h6 class="font-weight-normal">Settings</h6>
+                                <p class="font-weight-light small-text mb-0 text-muted">
+                                    Private message
+                                </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="item-thumbnail">
+                                <div class="item-icon bg-info">
+                                    <span>
+                                        <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon>
+                                    </span>
+                                </div>
+                                </div>
+                                <div class="item-content">
+                                <h6 class="font-weight-normal">New user registration</h6>
+                                <p class="font-weight-light small-text mb-0 text-muted">
+                                    2 days ago
+                                </p>
+                                </div>
+                            </a>
+                        </div>
+                        </Transition>
+                    </li>
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle !flex" href="#" data-toggle="dropdown" id="profileDropdown" @click="userDrop = !userDrop">
+                            <span>
+                                <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon>
+                            </span>
+                            <span class="nav-profile-name">{{ credentials.name }}</span>
+                        </a>
+                        <Transition
+                            enter-active-class="transition ease-out duration-200"
+                            enter-from-class="opacity-0"
+                            enter-to-class="opacity-100 "
+                            leave-active-class="transition ease-in duration-200"
+                            leave-from-class="opacity-100 "
+                            leave-to-class="opacity-0"
+                        >
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown"  v-show="userDrop">
+                            <a class="dropdown-item">
+                                <i class="mdi mdi-settings text-primary"></i>
+                                Settings
+                            </a>
+                            <a href="#" class="dropdown-item" @click="logout" >
+                                <i class="mdi mdi-logout text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                        </Transition>
+                    </li>
                 </ul>
                 <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-                <span class="mdi mdi-menu"></span>
+                    <span class="mdi mdi-menu"></span>
                 </button>
             </div>
         </nav>
@@ -151,6 +222,14 @@
                                 </ul>
                             </div>
                         </Transition>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link !text-gray-600" href="/donation_admin_view">
+                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                            <BanknotesIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></BanknotesIcon>
+                        </i>
+                        <span class="menu-title">Donations</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/events">
