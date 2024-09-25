@@ -1,5 +1,5 @@
 <script setup>
-	import navigation from '@/layouts/navigation_donor.vue';
+	import navigation from '@/layouts/navigation_bene.vue';
 	import{ Bars3Icon, PencilIcon, MagnifyingGlassIcon, TrashIcon, EyeIcon, CheckIcon, PlusIcon, XMarkIcon} from '@heroicons/vue/24/solid'
 	import{ArrowUpOnSquareIcon} from '@heroicons/vue/24/outline'
     import { reactive, ref, onMounted} from "vue"

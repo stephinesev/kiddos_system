@@ -1,5 +1,5 @@
 <script setup>
-	import navigation from '@/layouts/navigation_donor.vue';
+	import navigation from '@/layouts/navigation_bene.vue';
 	import{ Bars3Icon, PencilIcon, MagnifyingGlassIcon, TrashIcon, EyeIcon, XMarkIcon} from '@heroicons/vue/24/solid'
 	import{ArrowUpOnSquareIcon} from '@heroicons/vue/24/outline'
     import { reactive, ref, onMounted} from "vue"
@@ -95,12 +95,12 @@
             <div class="col-lg-12">
                 <div class="flex justify-between mb-3 px-2">
                     <span class="">
-                        <h3 class="card-title !text-lg m-0 uppercase font-bold text-gray-600">Donation History <small>List</small></h3>
+                        <h3 class="card-title !text-lg m-0 uppercase font-bold text-gray-600">BMI History <small>List</small></h3>
                     </span>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb !mb-0 !text-xs px-2 py-1 !bg-transparent">
                             <li class="breadcrumb-item"><a href="/donor_dashboard">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Donation History</li>
+                            <li class="breadcrumb-item active" aria-current="page">BMI History</li>
                         </ol>
                     </nav>
                 </div>
@@ -115,12 +115,12 @@
                             <DataTable :data="donationsall" :options="options" class="display table table-bordered table-hover !border nowrap">
                                 <thead>
                                     <tr>
-                                        <th class="!text-xs bg-gray-100 uppercase text-center"> Event Name</th>
+                                        <th class="!text-xs bg-gray-100 uppercase text-center"> #</th>
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Date</th>
-                                        <th class="!text-xs bg-gray-100 uppercase text-center"> Time</th>
-                                        <th class="!text-xs bg-gray-100 uppercase text-center"> Barangay</th>
-                                        <th class="!text-xs bg-gray-100 uppercase text-center"> Type of Donation</th>
-                                        <th class="!text-xs bg-gray-100 uppercase text-center"> Mode of Collection</th>
+                                        <th class="!text-xs bg-gray-100 uppercase text-center"> Height</th>
+                                        <th class="!text-xs bg-gray-100 uppercase text-center"> Weight</th>
+                                        <th class="!text-xs bg-gray-100 uppercase text-center"> BMI</th>
+                                        <th class="!text-xs bg-gray-100 uppercase text-center"> Nutritional Status</th>
                                         <th class="!text-xs bg-gray-100 uppercase" width="7%" align="center"> 
                                             <span class="text-center  px-auto">
                                                 <Bars3Icon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></Bars3Icon>
