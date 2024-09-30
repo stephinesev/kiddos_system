@@ -8284,3 +8284,7 @@ Stack trace:
 #60 D:\\Systems\\kiddos_system\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('...')
 #61 {main}
 "} 
+[2024-09-30 15:17:09] local.ERROR: Maximum execution time of 60 seconds exceeded {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Maximum execution time of 60 seconds exceeded at D:\\Systems\\kiddos_system\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\ConnectionInterface.php:171)
+[stacktrace]
+#0 {main}
+"} 
