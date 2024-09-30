@@ -13,7 +13,7 @@
         .then(response =>{
             if(response.data.success){
                 localStorage.setItem('token', response.data.data.token)
-                router.push('/donate')
+                router.push('/donor_dashboard')
             } else {
                 error.value = response.data.message;
             }

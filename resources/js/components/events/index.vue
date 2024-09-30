@@ -39,35 +39,38 @@
 		getRandomHexColor()
 	})
 	const getRandomHexColor = () => {
-		for(var i=0;i<20;i++){
+		for(var i=0;i<10;i++){
 			// Define an array of hexadecimal digits
-			const hexChars = [
-				'0',
-				'1',
-				'2',
-				'3',
-				'4',
-				'5',
-				'6',
-				'7',
-				'8',
-				'9',
-				'A',
-				'B',
-				'C',
-				'D',
-				'E',
-				'F',
-			];
+			// const hexChars = [
+			// 	'0',
+			// 	'1',
+			// 	'2',
+			// 	'3',
+			// 	'4',
+			// 	'5',
+			// 	'6',
+			// 	'7',
+			// 	'8',
+			// 	'9',
+			// 	'A',
+			// 	'B',
+			// 	'C',
+			// 	'D',
+			// 	'E',
+			// 	'F',
+			// ];
+			var hexChars = ['#5E50F9', '#0f1531', '#6a008a', '#686868','#f96868','#f2a654','#f6e84e','#46c35f','#58d8a3','#57c7d4'];
 			// Generate an array of six random indices from 0 to 15
-			const hexIndices = Array.from({ length: 6 }, () =>
-				Math.floor(Math.random() * 16)
-			);
+			// const hexIndices = Array.from({ length: 6 }, () =>
+			// 	Math.floor(Math.random() * 16)
+			// );
 			// Map each index to its corresponding hex digit and join them into a string
-			const hexCode = hexIndices.map((i) => hexChars[i]).join('');
+			// const hexCode = hexIndices.map((i) => hexChars[i]).join('');
+			const hexCode= hexChars[i]
 			// Return the string with a "#" prefix
 			// return `#${hexCode}`;
-			color_display.value[i] = `#${hexCode}`
+			color_display.value[i] = `${hexCode}`
+			// color_display.value[i] = `#${hexCode}`
 		}
 	};
 	
@@ -354,7 +357,7 @@
 						<div class="row">
 							<div class="col-lg-12 col-md-12">
 								<label class="text-gray-500 m-0" for="">Event Color</label>
-								<select name="color_display" id="color_display" class="form-control" v-model="form.event_color">
+								<select name="color_display" id="color_display" class="form-control" v-model="form.event_color" :style="'background-color:'+form.event_color">
 									<option value="">--Select Event Color--</option>
 									<option :value="color_display[index]" v-for="(col,index) in color_display" :key="color_display[index]" :style="{background: color_display[index]}">{{ color_display[index] }}</option>
 								</select>
@@ -384,7 +387,7 @@
                             <div class="col-lg-6 col-md-6">
 								<div class="form-group">
 									<label class="text-gray-500 m-0" >Event Time</label>
-									<input type="time" class="form-control" rows="3" v-model="form.event_time" placeholder="Event Time">
+									<input type="time" class="form-control" v-model="form.event_time" placeholder="Event Time">
 								</div>
 							</div>
 						</div>
@@ -439,7 +442,7 @@
 						<div class="row">
 							<div class="col-lg-12 col-md-12">
 								<label class="text-gray-500 m-0" for="">Event Color</label>
-								<select name="color_display" id="color_display" class="form-control" v-model="events.event_color">
+								<select name="color_display" id="color_display" class="form-control" v-model="events.event_color" :style="'background-color:'+events.event_color">
 									<option value="">--Select Event Color--</option>
 									<option :value="color_display[index]" v-for="(col,index) in color_display" :key="color_display[index]" :style="{background: color_display[index]}">{{ color_display[index] }}</option>
 								</select>

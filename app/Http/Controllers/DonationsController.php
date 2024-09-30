@@ -9,6 +9,7 @@ use App\Models\Donations;
 use App\Models\DonationImages;
 use App\Models\Donor;
 use App\Models\Events;
+use App\Models\Notifications;
 use Illuminate\Support\Facades\File;
 
 class DonationsController extends Controller
@@ -46,6 +47,11 @@ class DonationsController extends Controller
         $validated=$request->validated();
         $insert=Donations::create($validated);
         if($insert){
+            $donor_name=Donor::where('id',$insert->donor_id)->value('fullname');
+            $validated_notif['donor_id']=$insert->donor_id;
+            $validated_notif['event_id']=$insert->event_id;
+            $validated_notif['notification']=$donor_name." has generously made a ".$insert->mode_of_collection." donation of ".$insert->donation_type." to the barangay.";
+            Notifications::create($validated_notif);
             if(count(json_decode($request->input("images")))>0){
                 foreach(json_decode($request->images) as $i){
                     $from = storage_path('app/public/tmp/uploads/' . $i->name);
@@ -68,7 +74,14 @@ class DonationsController extends Controller
 
     public function get_event_address($id){
         $address=Events::where('id',$id)->value('event_address');
-        return $address;
+        $date=Events::where('id',$id)->value('start_date');
+        $time=Events::where('id',$id)->value('event_time');
+        return response()->json([
+            'address'=>$address,
+            'date'=>$date,
+            'time'=>$time,
+        ],200);
+        // return $address;
     }
  
     
@@ -84,7 +97,7 @@ class DonationsController extends Controller
     }
 
     public function get_donations(){
-        $donations=Donations::where('donor_id',Auth::guard('donor')->id())->orderBy('when_date','ASC')->get();
+        $donations=Donations::where('donor_id',Auth::guard('donor')->id())->orderByDesc('when_date')->get();
         $donationsall=[];
         foreach($donations AS $b){
             $event_name=Events::where('id',$b->event_id)->value('event_name');
@@ -111,12 +124,14 @@ class DonationsController extends Controller
     }
 
     public function get_admin_donations(){
-        $donations=Donations::orderBy('when_date','ASC')->get();
+        $donations=Donations::orderByDesc('created_at')->get();
         $donationsall=[];
         foreach($donations AS $b){
             $event_name=Events::where('id',$b->event_id)->value('event_name');
+            $donor_name=Donor::where('id',$b->donor_id)->value('fullname');
             $donationsall[]=[
                 'id'=>$b->id,
+                $donor_name,
                 $event_name,
                 "<center>".date('F d,Y',strtotime($b->when_date))."</center>",
                 "<center>".date('H:i A',strtotime($b->when_time))."</center>",
@@ -137,10 +152,47 @@ class DonationsController extends Controller
         $update=Donations::where('id',$id)->first();
         $accepted['status']='1';
         $update->update($accepted);
+        if($update){
+            $validated_notif['donor_id']=$update->donor_id;
+            $validated_notif['event_id']=$update->event_id;
+            $validated_notif['notification']=($update->mode_of_collection=='Self Delivery') ? "Thankyou for your donation! We will be expecting your donation." : "Thankyou for your donation! We will be arriving on your location.";
+            $validated_notif['identifier']="1";
+            Notifications::create($validated_notif);
+        }
     }
     public function decline_donation($id){
         $update=Donations::where('id',$id)->first();
         $declined['status']='2';
         $update->update($declined);
+        if($update){
+            $validated_notif['donor_id']=$update->donor_id;
+            $validated_notif['event_id']=$update->event_id;
+            $validated_notif['notification']="Sorry your donation has been declined.";
+            $validated_notif['identifier']="1";
+            Notifications::create($validated_notif);
+        }
+    }
+
+    public function get_notification(){
+        $notification=Notifications::with('donors')->where('read','0')->where('identifier','0')->orderByDesc('created_at')->get();
+        $notification_count=Notifications::where('read','0')->where('identifier','0')->count();
+        return response()->json([
+            'notification'=>$notification,
+            'notification_count'=>$notification_count,
+        ],200);
+    }
+
+    public function get_notification_donor(){
+        $notification=Notifications::with('donors')->where('donor_id',Auth::guard('donor')->id())->where('read','0')->where('identifier','1')->orderByDesc('created_at')->get();
+        $notification_count=Notifications::where('donor_id',Auth::guard('donor')->id())->where('read','0')->where('identifier','1')->count();
+        return response()->json([
+            'notification'=>$notification,
+            'notification_count'=>$notification_count,
+        ],200);
+    }
+    public function read_notification($id){
+        $update=Notifications::where('id',$id)->first();
+        $notif['read']='1';
+        $update->update($notif);
     }
 }

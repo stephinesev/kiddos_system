@@ -62,6 +62,9 @@ Route::get('/get_images/{id}',[DonationsController::class,'get_images']);
 Route::get('/get_admin_donations',[DonationsController::class,'get_admin_donations']);
 Route::get('/accept_donation/{id}',[DonationsController::class,'accept_donation']);
 Route::get('/decline_donation/{id}',[DonationsController::class,'decline_donation']);
+Route::get('/get_notification',[DonationsController::class,'get_notification']);
+Route::get('/read_notification/{id}',[DonationsController::class,'read_notification']);
+Route::get('/get_notification_donor',[DonationsController::class,'get_notification_donor']);
 //Calendar Data
 Route::get('/create_event',[EventsController::class,'create_event']);
 Route::post('/add_event',[EventsController::class,'add_event']);
@@ -70,3 +73,4 @@ Route::get('/get_dashboard_events',[EventsController::class,'get_dashboard_event
 Route::get('/edit_event/{id}',[EventsController::class,'edit_event']);
 Route::post('/update_event/{id}',[EventsController::class,'update_event']);
 Route::get('/delete_event/{id}',[EventsController::class,'delete_event']);
+Route::get('/today_event',[EventsController::class,'today_event']);

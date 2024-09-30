@@ -29,7 +29,7 @@
 					</div>
 					<div class="col-lg-6 d-flex align-items-center justify-content-center !bg-white">
 						<div class="auth-form-transparent text-left p-3">
-							<h4 class="font-bold">DONORS</h4>
+							<h4 class="font-bold">BENEFICIARIES</h4>
 							<div class="alert alert-danger" v-if="error">
 								<div class="flex justify-start space-x-2">
 									<div>

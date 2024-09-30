@@ -85,7 +85,9 @@
     //Fetch event address
     const getAddress = async () => {
 		let response = await axios.get(`/api/get_event_address/`+form.value.event_id);
-		form.value.barangay = response.data;
+		form.value.barangay = response.data.address;
+		form.value.when_date = response.data.date;
+		form.value.when_time = response.data.time;
 	}
     //Modal Popup Variables and Function
     const modalNew = ref(false)

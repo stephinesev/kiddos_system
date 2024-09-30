@@ -2,8 +2,13 @@
     import{CalendarIcon, HomeIcon, KeyIcon, UserIcon, DocumentTextIcon, RectangleGroupIcon, Square3Stack3DIcon, DocumentDuplicateIcon, TruckIcon, BanknotesIcon, BellIcon,CogIcon} from '@heroicons/vue/24/solid'
     import { reactive, ref, onMounted } from "vue"
     import { useRouter } from "vue-router"
+    import moment from 'moment'
+    let intervalId;
     onMounted(async () => {
 		getDashboard()
+        intervalId = setInterval(() => {
+			getNotification();
+  		}, 800);
 	})
     const router = useRouter() //use if link is used inside the page
     const userDrop = ref(false);
@@ -17,6 +22,8 @@
     const rfdDrop = ref(false);
 	const hideDrop = ref(true)
 	const credentials = ref([])
+	const notification = ref([])
+	const notification_count = ref(0)
 	const openMaster = () => {
 		masterfileDrop.value = !masterfileDrop.value
 		prDrop.value = !hideDrop.value
@@ -34,14 +41,27 @@
 		localStorage.removeItem('token')
 		router.push('/')
 	}
+    //Get Credential Details
     const getDashboard = async () => {
 		const response = await fetch(`/api/dashboard`);
 		credentials.value = await response.json();
 	}
     
+    //Function for notification
     const getNotification = async () => {
-		const response = await fetch(`/api/get_notification`);
-		credentials.value = await response.json();
+		const response = await axios.get("/api/get_notification");
+		notification.value = response.data.notification;
+		notification_count.value = response.data.notification_count;
+	}
+
+    //Read Notification function
+	const readNotif = (id) => {
+        axios.get(`/api/read_notification/`+id).then(function () {
+            getNotification()
+        }).catch(function(err){
+            success.value=''
+            error.value.push('Error! Try again.')
+        });
 	}
 </script>
 <template>
@@ -93,7 +113,7 @@
                             <span>
                                 <BellIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></BellIcon>
                             </span>
-                            <span class="bg-red-500 absolute z-index-50 rounded-xl p-.5 px-1.5 -top-2 -right-2 text-[10px] text-white">1</span>
+                            <span class="bg-red-500 absolute z-index-50 rounded-xl p-.5 px-1.5 -top-2 -right-2 text-[10px] text-white">{{ notification_count }}</span>
                             <!-- <span class="nav-profile-name">{{ credentials.fullname }}</span> -->
                         </a>
                         <Transition
@@ -106,22 +126,46 @@
                         >
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown" v-show="notif">
                             <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                            <a class="dropdown-item">
-                                <div class="item-thumbnail">
-                                    <div class="item-icon bg-success">
-                                        <span>
-                                            <BellIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></BellIcon>
-                                        </span>
-                                    </div>
-                                    </div>
+                            <div v-if="notification!=''">
+                                <span v-for="(notif,index) in notification">
+                                    <a class="dropdown-item" @click="readNotif(notif.id)">
+                                        <div class="item-thumbnail">
+                                            <div class="item-icon bg-success">
+                                                <span>
+                                                    <img :src="'storage/profile/'+notif.donors[0].profile_image" id="img1" v-if="notif.donors[0].profile_image!=null"/>
+                                                    <img src="../../images/default.jpg" id="img1" v-else/>
+                                                </span>
+                                            </div>
+                                            </div>
+                                            <div class="item-content">
+                                            <h6 class="font-weight-normal">{{ notif.notification }}</h6>
+                                            <p class="font-weight-light small-text mb-0 text-muted">
+                                                <!-- Just now -->
+                                                {{ moment(notif.created_at).format("MMMM DD, YYYY [at] h:mm A z") }}
+                                            </p>
+                                        </div>
+                                    </a>
+                                </span>
+                            </div>
+                            <span v-else>
+                                <a class="dropdown-item" @click="readNotif(notif.id)">
                                     <div class="item-content">
-                                    <h6 class="font-weight-normal">Application Error</h6>
-                                    <p class="font-weight-light small-text mb-0 text-muted">
-                                        Just now
-                                    </p>
-                                </div>
-                            </a>
-                            <a class="dropdown-item">
+                                        <center>
+                                            <h4 class="font-weight-bold"> 
+                                                No Notifications Yet
+                                            </h4>
+                                            <h6 style="color:grey">
+                                                You have no notification right now.
+                                            </h6>
+                                            <h6  style="color:grey">
+                                                Come back later
+                                            </h6>
+                                        </center>
+                                    </div>
+                                </a>
+                            </span>
+
+                            <!-- <a class="dropdown-item">
                                 <div class="item-thumbnail">
                                 <div class="item-icon bg-warning">
                                     <span>
@@ -150,7 +194,7 @@
                                     2 days ago
                                 </p>
                                 </div>
-                            </a>
+                            </a> -->
                         </div>
                         </Transition>
                     </li>
@@ -170,10 +214,6 @@
                             leave-to-class="opacity-0"
                         >
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown"  v-show="userDrop">
-                            <a class="dropdown-item">
-                                <i class="mdi mdi-settings text-primary"></i>
-                                Settings
-                            </a>
                             <a href="#" class="dropdown-item" @click="logout" >
                                 <i class="mdi mdi-logout text-primary"></i>
                                 Logout
