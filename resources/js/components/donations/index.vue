@@ -48,7 +48,7 @@
 		warningAlert.value = !hideAlert.value
 		successAlert.value= !hideAlert.value
 	}
-	//Insert function
+	//Accept function
 	const acceptDonation = (id) => {
 		var confirmation = confirm("Do you want to accept this donation?");
 		if (confirmation == true) {
@@ -67,7 +67,7 @@
 			});
 		}
 	}
-	//Insert function
+	//Decline function
 	const declineDonation = (id) => {
 		var confirmation = confirm("Do you want to decline this donation?");
 		if (confirmation == true) {
@@ -103,7 +103,7 @@
 				title:'Donations',
 				extend: 'copy',
 				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5 ],
+					columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
 					orthogonal: null
 				}
 			},
@@ -111,7 +111,7 @@
 				title:'Donations',
 				extend: 'excel',
 				exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5 ],
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
 					orthogonal: null,
 				},
 				createEmptyCells: true,
@@ -126,7 +126,7 @@
 				title:'Donations',
 				extend: 'print',
 				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5 ],
+					columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
 					orthogonal: null
 				}
 			},
@@ -162,6 +162,7 @@
                             <DataTable :data="donationsall" :options="options" class="display table table-bordered table-hover !border nowrap">
                                 <thead>
                                     <tr>
+                                        <th class="!text-xs bg-gray-100 uppercase text-center"> Donor Name</th>
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Event Name</th>
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Date</th>
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Time</th>
@@ -177,7 +178,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <template #column-8="props">
+                                <template #column-9="props">
                                     <center>
 										<button @click="openImage(props.rowData.id)" class="btn btn-xs btn-info text-white p-1" title='View Images'>
                                             <EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></EyeIcon>

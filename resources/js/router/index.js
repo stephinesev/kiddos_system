@@ -137,30 +137,30 @@ const routes = [
     {
         path:'/bene_dashboard/',
         component: BeneUI_Dashboard,
-        meta:{
-            requiresAuth:true
-        }
+        // meta:{
+        //     requiresAuth:true
+        // }
     },
     {
         path:'/donate/',
         component: BeneUI_Donate,
-        meta:{
-            requiresAuth:true
-        }
+        // meta:{
+        //     requiresAuth:true
+        // }
     },
     {
         path:'/bene_profile/',
         component: BeneUI_DonorProfile,
-        meta:{
-            requiresAuth:true
-        }
+        // meta:{
+        //     requiresAuth:true
+        // }
     },
     {
         path:'/bmi_history/',
         component: BeneUI_History,
-        meta:{
-            requiresAuth:true
-        }
+        // meta:{
+        //     requiresAuth:true
+        // }
     },
     // {
     //     path:'/:pathMatch(.*)*',
