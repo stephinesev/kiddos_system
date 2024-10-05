@@ -172,7 +172,7 @@
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Pick-up Location</th>
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Pick-up Contact No</th>
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Status</th>
-                                        <th class="!text-xs bg-gray-100 uppercase" width="7%" align="center"> 
+                                        <th class="!text-xs bg-gray-100 uppercase" width="10%" align="center"> 
                                             <span class="text-center  px-auto">
                                                 <Bars3Icon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></Bars3Icon>
                                             </span>

@@ -16,7 +16,8 @@ import DonorUI_Donate from '../components/donors_ui/donate.vue'
 import DonorUI_DonorProfile from '../components/donors_ui/donor_profile.vue'
 import DonorUI_Register from '../components/donors_ui/register.vue'
 import DonorUI_History from '../components/donors_ui/donate_history.vue'
-import DonoationAdminView from '../components/donations/index.vue'
+import DonationAdminIndex from '../components/donations/index.vue'
+import DonationAdminView from '../components/donations/view.vue'
 
 
 import BeneUI_Index from '../components/beneficiary_ui/index.vue'
@@ -123,10 +124,17 @@ const routes = [
     },
     {
         path:'/donation_admin_view/',
-        component: DonoationAdminView,
+        component: DonationAdminIndex,
 
 
     },
+    {
+        path:'/donation_admin_view/view',
+        component: DonationAdminView,
+
+
+    },
+
 
     {
         path:'/bene_login/',
