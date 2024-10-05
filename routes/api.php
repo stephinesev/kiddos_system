@@ -23,14 +23,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/qrcode', [UsersController::class,'qrcode']);
-//LOGIN
+//ADMIN LOGIN
 Route::get('/login_form', [UsersController::class,'login_form']);
 Route::post('/login_process', [UsersController::class,'login_process']);
 Route::get('/dashboard', [UsersController::class,'dashboard']);
-// DONOR LOGIN
+//DONOR LOGIN
 Route::get('/donor_login_form', [DonorsController::class,'donor_login_form']);
 Route::post('/donor_login_process', [DonorsController::class,'donor_login_process']);
 Route::get('/donor_credentials', [DonorsController::class,'donor_credentials']);
+//BENEFICIARY LOGIN
+Route::post('/beneficiary_login_process', [UsersController::class,'beneficiary_login_process']);
 //DONOR REGISTRATION
 Route::get('/create_registration',[DonationsController::class,'create_registration']);
 Route::post('/registration',[DonationsController::class,'registration']);
@@ -44,6 +46,8 @@ Route::get('/delete_beneficiary/{id}',[UsersController::class,'delete_beneficiar
 Route::get('/update_beneficiary_delete/{id}',[UsersController::class,'update_beneficiary_delete']);
 Route::post('/add_bmi_history',[UsersController::class,'add_bmi_history']);
 Route::get('/history_beneficiary_delete/{id}',[UsersController::class,'history_beneficiary_delete']);
+Route::get('/get_bmi',[UsersController::class,'get_bmi']);
+Route::post('/insert_attendance',[UsersController::class,'insert_attendance']);
 //Donors CRUD
 Route::get('/create_donor',[DonorsController::class,'create_donor']);
 Route::post('/add_donor',[DonorsController::class,'add_donor']);

@@ -103,7 +103,7 @@
 				title:'Donations',
 				extend: 'copy',
 				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
+					columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8,9 ],
 					orthogonal: null
 				}
 			},
@@ -111,7 +111,7 @@
 				title:'Donations',
 				extend: 'excel',
 				exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8,9 ],
 					orthogonal: null,
 				},
 				createEmptyCells: true,
@@ -126,7 +126,7 @@
 				title:'Donations',
 				extend: 'print',
 				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
+					columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8,9 ],
 					orthogonal: null
 				}
 			},
@@ -170,6 +170,7 @@
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Type of Donation</th>
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Mode of Collection</th>
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Pick-up Location</th>
+                                        <th class="!text-xs bg-gray-100 uppercase text-center"> Pick-up Contact No</th>
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Status</th>
                                         <th class="!text-xs bg-gray-100 uppercase" width="7%" align="center"> 
                                             <span class="text-center  px-auto">
@@ -178,7 +179,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <template #column-9="props">
+                                <template #column-10="props">
                                     <center>
 										<button @click="openImage(props.rowData.id)" class="btn btn-xs btn-info text-white p-1" title='View Images'>
                                             <EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></EyeIcon>

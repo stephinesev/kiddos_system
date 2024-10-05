@@ -52,7 +52,7 @@
 		formData.append('birth_date',form.value.birth_date)
 		formData.append('gender',form.value.gender)
 		formData.append('address',form.value.address)
-		formData.append('role',form.value.role)
+		// formData.append('role',form.value.role)
 		formData.append('weight',form.value.weight)
 		formData.append('height',form.value.height)
 		formData.append('bmi',form.value.bmi)
@@ -123,7 +123,7 @@
 		formData.append('birth_date',beneficiary.value.birth_date)
 		formData.append('gender',beneficiary.value.gender)
 		formData.append('address',beneficiary.value.address)
-		formData.append('role',beneficiary.value.role)
+		// formData.append('role',beneficiary.value.role)
 		// formData.append('weight',beneficiary.value.weight)
 		// formData.append('height',beneficiary.value.height)
 		// formData.append('bmi',beneficiary.value.bmi)
@@ -321,7 +321,7 @@
                                         <th class="!text-xs bg-gray-100 uppercase"> Name</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Gender</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Email</th>
-                                        <th class="!text-xs bg-gray-100 uppercase"> Role</th>
+                                        <!-- <th class="!text-xs bg-gray-100 uppercase"> Role</th> -->
                                         <th class="!text-xs bg-gray-100 uppercase"> Weight</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Height</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> BMI</th>
@@ -333,7 +333,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <template #column-8="props">
+                                <template #column-7="props">
 									<button @click="showTransaction(props.rowData.id)" class="btn btn-xs btn-success text-white p-1">
                                         <EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></EyeIcon>
                                     </button >
@@ -453,7 +453,7 @@
 									<input type="text" class="form-control" placeholder="Student ID" v-model="form.student_id">
 								</div>
 							</div>
-                            <div class="col-lg-6 col-md-6">
+                            <!-- <div class="col-lg-6 col-md-6">
 								<div class="form-group">
 									<label class="text-gray-500 m-0" >Role</label>
 									<select class="form-control" v-model="form.role">
@@ -462,7 +462,7 @@
                                         <option value="Beneficiary">Beneficiary</option>
                                     </select>
 								</div>
-							</div>
+							</div> -->
 						</div>
 						<div class="row">
 							<div class="col-lg-12 col-md-12">
@@ -652,7 +652,7 @@
 									<input type="text" class="form-control" placeholder="Student ID" v-model="beneficiary.student_id">
 								</div>
 							</div>
-                            <div class="col-lg-6 col-md-6">
+                            <!-- <div class="col-lg-6 col-md-6">
 								<div class="form-group">
 									<label class="text-gray-500 m-0" >Role</label>
 									<select class="form-control" v-model="beneficiary.role">
@@ -661,7 +661,7 @@
                                         <option value="Beneficiary">Beneficiary</option>
                                     </select>
 								</div>
-							</div>
+							</div> -->
 						</div>
 						<div class="row">
 							<div class="col-lg-12 col-md-12">

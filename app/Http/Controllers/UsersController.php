@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use App\Http\Requests\BmiHistoryRequest;
 use App\Models\User;
 use App\Models\BmiHistory;
+use App\Models\Attendance;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class UsersController extends Controller
 {
@@ -23,6 +24,8 @@ class UsersController extends Controller
         $credentials = [
             'username' => $request->username,
             'password' => $request->password,
+            'status' => 'Active',
+            'role' => 'Admin',
         ];
         if(Auth::attempt($credentials)) {
             $user = $request->user();
@@ -31,7 +34,7 @@ class UsersController extends Controller
             $response = [
                 'success' => true,
                 'data' => $success,
-                'message' => 'User login successfully'
+                'message' => 'Admin login successfully'
             ];
             return response()->json($response, 200);
         } else {
@@ -86,8 +89,15 @@ class UsersController extends Controller
 
     public function add_beneficiary(UserRequest $request){
         $validated=$request->validated();
-        User::create($validated);
-        QrCode::size(200)->generate($request->username, storage_path('app/public/qr/'.$request->username.".png"));
+        $validated['role']='Beneficiary';
+        $user=User::create($validated);
+        if($user){
+            $update_qr=User::where('id',$user->id)->first();
+            $qr_name='http://127.0.0.1:8000/beneficiary/view/'.$user->id;
+            $qrupdate['qr_code']=$request->name.'.png';
+            $update_qr->update($qrupdate);
+        }
+        QrCode::size(200)->generate($qr_name, storage_path('app/public/qr/'.$request->name.".png"));
     }
 
     public function get_beneficiary(){
@@ -99,7 +109,7 @@ class UsersController extends Controller
                 $b->name,
                 $b->gender,
                 $b->email,
-                $b->role,
+                // $b->role,
                 $b->weight,
                 $b->height,
                 $b->bmi,
@@ -170,5 +180,69 @@ class UsersController extends Controller
     public function history_beneficiary_delete($id){
         $deleted = BmiHistory::find($id);
         $deleted->delete();
+    }
+
+    public function beneficiary_login_process(Request $request){
+        $credentials = [
+            'username' => $request->username,
+            'password' => $request->password,
+            'status' => 'Active',
+            'role' => 'Beneficiary',
+        ];
+        if(Auth::attempt($credentials)) {
+            $user = $request->user();
+            $success['token'] = $user->createToken('MyApp')->plainTextToken;
+            $success['name'] = $user->username;
+            $response = [
+                'success' => true,
+                'data' => $success,
+                'message' => 'Beneficiary login successfully'
+            ];
+            return response()->json($response, 200);
+        } else {
+            $response = [
+                'success' => false,
+                'message' => 'Unauthorized'
+            ];
+            return response()->json($response,200);     
+        }
+    }
+
+    public function get_bmi(){
+        $beneficiary=User::where('id',Auth::id())->first();
+        $beneficiary_joinhistoryuser=User::where('id',Auth::id())->where('delete_bmi','0')->get();
+        $beneficiary_joinhistorybmi=BmiHistory::where('beneficiary_id',Auth::id())->get();
+        $beneficiaryfirst=[];
+        foreach($beneficiary_joinhistoryuser AS $b){
+            $beneficiaryfirst[]=[
+                'id'=>$b->id,
+                '<center>'.date('F d,Y',strtotime($b->created_at)).'</center>',
+                '<center>'.$b->height.'</center>',
+                '<center>'.$b->weight.'</center>',
+                '<center>'.$b->bmi.'</center>',
+                '<center>'.$b->nutritional_status.'</center>',
+            ];
+        }
+        foreach($beneficiary_joinhistorybmi AS $be){
+            $beneficiaryfirst[]=[
+                'id'=>$be->id,
+                '<center>'.date('F d,Y',strtotime($be->bmi_date)).'</center>',
+                '<center>'.$be->height.'</center>',
+                '<center>'.$be->weight.'</center>',
+                '<center>'.$be->bmi.'</center>',
+                '<center>'.$be->nutritional_status.'</center>',
+            ];
+        }
+        return response()->json([
+            'beneficiaryfirst'=>$beneficiaryfirst,
+            // 'beneficiary_joinhistoryuser'=>$beneficiary_joinhistoryuser,
+            // 'beneficiary_joinhistorybmi'=>$beneficiary_joinhistorybmi,
+        ],200);
+    }
+    
+    public function insert_attendance(Request $request){
+        $validated['beneficiary_id']=$request->beneficiary_id;
+        $validated['attendance_date']=$request->attendance_date;
+        Attendance::create($validated);
     }
 }

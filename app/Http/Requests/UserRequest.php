@@ -28,7 +28,6 @@ class UserRequest extends FormRequest
             'birth_date'=>'required|string|nullable',
             'gender'=>'required|string|nullable',
             'address'=>'required|string|nullable',
-            'role'=>'required|string|nullable',
             'status'=>'required|string|nullable',
             'email' => 'required|email|nullable|unique:users,email,'.$this->id,
             'weight' => 'string|nullable',

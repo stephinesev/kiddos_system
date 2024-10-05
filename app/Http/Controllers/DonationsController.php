@@ -33,13 +33,15 @@ class DonationsController extends Controller
     public function create_donation(Request $request){
         $formData=[
             'donor_id'=>'',
-            'event_id'=>'',
+            'event_id'=>0,
             'where_date'=>'',
             'where_time'=>'',
             'barangay'=>'',
             'donation_type'=>'',
             'mode_of_collection'=>'',
             'pickup_description'=>'',
+            'pickup_contact_no'=>'',
+            'others'=>'',
         ];
         return response()->json($formData);
     }
@@ -66,7 +68,10 @@ class DonationsController extends Controller
     }
 
     public function get_events_donation(){
-        $events=Events::orderBy('start_date','ASC')->get();
+        $date=date('Y-m-d');
+        // $start_date=Events::where('start_date',$date)->value('start_date');
+        $end_date=Events::where('end_date',$date)->value('end_date');
+        $events=Events::whereBetween('start_date',[$date, $end_date])->orWhereBetween('end_date', [$date,$end_date])->orderBy('start_date','ASC')->get();
         return response()->json([
             'events'=>$events,
         ],200);
@@ -97,13 +102,13 @@ class DonationsController extends Controller
     }
 
     public function get_donations(){
-        $donations=Donations::where('donor_id',Auth::guard('donor')->id())->orderByDesc('when_date')->get();
+        $donations=Donations::where('donor_id',Auth::guard('donor')->id())->orderBy('created_at','ASC')->get();
         $donationsall=[];
         foreach($donations AS $b){
             $event_name=Events::where('id',$b->event_id)->value('event_name');
             $donationsall[]=[
                 'id'=>$b->id,
-                $event_name,
+                ($b->event_id!=0) ? $event_name : $b->others,
                 "<center>".date('F d,Y',strtotime($b->when_date))."</center>",
                 "<center>".date('H:i A',strtotime($b->when_time))."</center>",
                 $b->barangay,
@@ -132,13 +137,14 @@ class DonationsController extends Controller
             $donationsall[]=[
                 'id'=>$b->id,
                 $donor_name,
-                $event_name,
+                ($b->event_id!=0) ? $event_name : $b->others,
                 "<center>".date('F d,Y',strtotime($b->when_date))."</center>",
                 "<center>".date('H:i A',strtotime($b->when_time))."</center>",
                 $b->barangay,
                 "<center>".$b->donation_type."</center>",
                 "<center>".$b->mode_of_collection."</center>",
                 $b->pickup_description,
+                $b->pickup_contact_no,
                 "<center>".(($b->status==0) ? '<span style="color:orange">Pending</span>' : (($b->status==1) ? '<span style="color:green">Accepted</span>' : '<span style="color:red">Declined</span>'))."</center>",
                 ''
             ];

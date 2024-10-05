@@ -41,6 +41,7 @@ class User extends Authenticatable
         'guardian_relationship',
         'nutritional_status',
         'delete_bmi',
+        'qr_code',
     ];
 
     /**

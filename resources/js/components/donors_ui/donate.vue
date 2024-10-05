@@ -66,6 +66,8 @@
 		formData.append('donation_type',form.value.donation_type)
 		formData.append('mode_of_collection',form.value.mode_of_collection)
 		formData.append('pickup_description',form.value.pickup_description)
+		formData.append('pickup_contact_no',form.value.pickup_contact_no)
+		formData.append('others',form.value.others)
 		formData.append('images',JSON.stringify(media.value))
 		axios.post("/api/add_donation",formData).then(function (response) {
             // console.log(response.data)
@@ -150,11 +152,13 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="">What</label>
-                                    <!-- <input type="text" class="form-control  !text-sm"> -->
-                                     <select class="form-control" @change='getAddress()' v-model="form.event_id">
-                                        <option value="">--Select Event--</option>
-                                        <option :value="ev.id" v-for="(ev,index) in events" :key="ev.id">{{ ev.event_name }}</option>
-                                     </select>
+                                    <div class="flex justify-between space-x-3">
+                                        <select class="form-control" @change='getAddress()' v-model="form.event_id">
+                                            <option value="">--Select Event--</option>
+                                            <option :value="ev.id" v-for="(ev,index) in events" :key="ev.id">{{ ev.event_name }}</option>
+                                        </select>
+                                        <input type="text" class="form-control  !text-sm" placeholder="Others" v-model="form.others">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="">When</label>
@@ -202,10 +206,18 @@
                                     </div>
                                 </div>
                                 <div id="showpickup" class="row mt-2" style="display:none">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label for="">Pick-up Address and Contact Number</label>
-                                            <textarea class="form-control !text-sm" rows='4' v-model="form.pickup_description"></textarea>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="">Pick-up Address</label>
+                                                <textarea class="form-control !text-sm" rows='4' v-model="form.pickup_description"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="">Contact Number</label>
+                                                <input type="text" class="form-control !text-sm"  v-model="form.pickup_contact_no">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

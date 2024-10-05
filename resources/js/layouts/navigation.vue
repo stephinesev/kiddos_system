@@ -1,5 +1,5 @@
 <script setup>
-    import{CalendarIcon, HomeIcon, KeyIcon, UserIcon, DocumentTextIcon, RectangleGroupIcon, Square3Stack3DIcon, DocumentDuplicateIcon, TruckIcon, BanknotesIcon, BellIcon,CogIcon} from '@heroicons/vue/24/solid'
+    import{CalendarIcon, HomeIcon, KeyIcon, UserIcon, DocumentTextIcon, RectangleGroupIcon, Square3Stack3DIcon, DocumentDuplicateIcon, TruckIcon, BanknotesIcon, BellIcon,CogIcon, MagnifyingGlassIcon} from '@heroicons/vue/24/solid'
     import { reactive, ref, onMounted } from "vue"
     import { useRouter } from "vue-router"
     import moment from 'moment'
@@ -277,6 +277,14 @@
                             <CalendarIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></CalendarIcon>
                         </i>
                         <span class="menu-title">Events</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link !text-gray-600" href="/qr_scanner">
+                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                            <MagnifyingGlassIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></MagnifyingGlassIcon>
+                        </i>
+                        <span class="menu-title">QR Scan</span>
                         </a>
                     </li>
                 </ul>

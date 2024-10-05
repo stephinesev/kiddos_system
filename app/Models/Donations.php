@@ -17,6 +17,8 @@ class Donations extends Model
         'donation_type', 
         'mode_of_collection', 
         'pickup_description', 
+        'pickup_contact_no', 
         'status', 
+        'others', 
     ];
 }
