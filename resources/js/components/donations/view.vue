@@ -1,9 +1,38 @@
 <script setup>
-	import navigation from '@/layouts/navigation_bene.vue';
+	import navigation from '@/layouts/navigation.vue';
 	import{ Bars3Icon, PencilIcon, MagnifyingGlassIcon, TrashIcon, EyeIcon, CheckIcon, PlusIcon, XMarkIcon} from '@heroicons/vue/24/solid'
 	import{ArrowUpOnSquareIcon} from '@heroicons/vue/24/outline'
-    import { reactive, ref, onMounted} from "vue"
+    import { reactive, ref, onMounted, shallowReactive} from "vue"
     import { useRouter } from "vue-router"
+	const router = useRouter();
+	import moment from 'moment'
+	import {
+		VueFlux,
+		FluxCaption,
+		FluxControls,
+		FluxIndex,
+		FluxPagination,
+		FluxPreloader,
+		Img,
+		Book,
+		Zip,
+	} from 'vue-flux';
+	import 'vue-flux/style.css';
+
+	const $vueFlux = ref();
+
+	const vfOptions = shallowReactive({
+		autoplay: true,
+	});
+
+	const vfRscs = shallowReactive([
+		new Img('../../../storage/images/6703ed13122a3_31-316257_sprite-sheet-bird-png.png'),
+		new Img('../../../storage/images/6703ee7f04d4a_adult-black-and-white-body-590496.jpg'),
+		// new Img('URL2', 'img 2'),
+		// new Img('URL3', 'img 3'),
+	]);
+
+	const vfTransitions = shallowReactive([Book, Zip]);
     let form=ref([]);
     let events=ref([]);
 	let donations=ref([]);
@@ -11,94 +40,83 @@
     let success = ref('')	
     let credentials = ref([])
     let media=ref([]);
+    let donation_images=ref([]);
     const warningAlert = ref(false)
 	const successAlert = ref(false)
 	const hideAlert = ref(true)
+	//Donation ID
+	const props = defineProps({
+		donation_id:{
+            type:String,
+            default:''
+        }
+    })
     //Fetcher of Data
 	onMounted(async () => {
 		getCredentials()
-        donationForm()
-        getEvents()
+        getDonations()
+        getImages()
 	})
 
     //Get fullname and donors ID
     const getCredentials = async () => {
-		const response = await fetch(`/api/donor_credentials`);
+		const response = await fetch(`/api/dashboard`);
 		credentials.value = await response.json();
 	}
 
-    //Declaration of input values
-	const donationForm = async () => {
-		let response = await axios.get("/api/create_donation");
-		form.value = response.data;
+    //Fetching Donations data
+	const getDonations = async () => {
+		let response =  await axios.get(`/api/get_donation_view/${props.donation_id}`);
+		donations.value=response.data.donations
+		events.value=response.data.donations.events
 	}
-    //Fetching events data
-	const getEvents = async () => {
-		let response = await axios.get("/api/get_events_donation");
-		events.value = response.data.events;
+    //Fetching Donation Images data
+	const getImages = async () => {
+		let response =  await axios.get(`/api/get_images/${props.donation_id}`);
+		donation_images.value=response.data.images
 	}
-    //Fetch Image value
-    const changeMedia = (event) =>{
-        media.value = event
-    }
-    //Toggle Textbox if pickup is clicked
-    const toggleTextbox = () => {
-        var targetDiv = document.getElementById("showpickup");
-        if (targetDiv.style.display !== "none") {
-            targetDiv.style.display = "none";
-        } else {
-            targetDiv.style.display = "block";
-        }
-    }
-    const untoggleTextbox = () => {
-        var targetDiv = document.getElementById("showpickup");
-        targetDiv.style.display = "none";
-    }
-    //Insert Function
-	const onSave = () => {
-       
-		const formData=new FormData()
-		formData.append('donor_id',credentials.value.donor_id)
-		formData.append('event_id',form.value.event_id)
-		formData.append('when_date',form.value.when_date)
-		formData.append('when_time',form.value.when_time)
-		formData.append('barangay',form.value.barangay)
-		formData.append('donation_type',form.value.donation_type)
-		formData.append('mode_of_collection',form.value.mode_of_collection)
-		formData.append('pickup_description',form.value.pickup_description)
-		formData.append('images',JSON.stringify(media.value))
-		axios.post("/api/add_donation",formData).then(function (response) {
-            // console.log(response.data)
-			success.value='Thank you for your Generous DONATION!'
-			form.value=[]
-			error.value=[]
-			successAlert.value = !successAlert.value
-			setTimeout(() => {
-				window.location.reload()
-			}, 2000);
-		}).catch(function(err){
-			warningAlert.value = !warningAlert.value
-			error.value='Fields cannot be empty!'
-		});
+    //Accept function
+	const acceptDonation = (id) => {
+		var confirmation = confirm("Do you want to accept this donation?");
+		if (confirmation == true) {
+			axios.get(`/api/accept_donation/`+id).then(function () {
+				success.value='Successfully accepted donation!'
+				error.value=[]
+				// getDonations()
+				successAlert.value = !successAlert.value
+				setTimeout(() => {
+					// getDonations()
+					closeAlert()
+					router.push('/donation_admin_view')
+				}, 2000);
+			}).catch(function(err){
+				success.value=''
+				error.value.push('Error! Try again.')
+			});
+		}
 	}
-
-    //Fetch event address
-    const getAddress = async () => {
-		let response = await axios.get(`/api/get_event_address/`+form.value.event_id);
-		form.value.barangay = response.data;
+	//Decline function
+	const declineDonation = (id) => {
+		var confirmation = confirm("Do you want to decline this donation?");
+		if (confirmation == true) {
+			axios.get(`/api/decline_donation/`+id).then(function () {
+				success.value='Successfully declined donation!'
+				error.value=[]
+				// getDonations()
+				successAlert.value = !successAlert.value
+				setTimeout(() => {
+					// getDonations()
+					closeAlert()
+					router.push('/donation_admin_view')
+				}, 2000);
+			}).catch(function(err){
+				success.value=''
+				error.value.push('Error! Try again.')
+			});
+		}
 	}
     //Modal Popup Variables and Function
-    const modalNew = ref(false)
-    const modalEdit = ref(false)
 	const hideModal = ref(true)
-	const openNew = () => {
-		modalNew.value = !modalNew.value
-	}
-    const openEdit = async (id) => {
-		let response =  await axios.get(`/api/edit_event/`+id);
-		events.value=response.data.events
-		modalEdit.value = !modalEdit.value
-	}
 	const closeModal = () => {
 		modalNew.value = !hideModal.value
 		modalEdit.value = !hideModal.value
@@ -108,20 +126,6 @@
 		warningAlert.value = !hideAlert.value
 		successAlert.value= !hideAlert.value
 	}  
-    
-    //Multiple image append
-    let image_list=ref([]);
-	let image=ref("");
-	const addRowImage= () => {
-        const terms = {
-            image:image.value,
-        }
-        image_list.value.push(terms)
-        image.value='';
-	}
-	const removeImage = (index) => {
-		image_list.value.splice(index,1)
-	}
 </script>
 <template>
 	<navigation>
@@ -148,8 +152,8 @@
 						<div class="row">
                             <div class="col-lg-12">
                                 <div class="">
-                                    <p class="text-lg font-bold w-full text-gray-700">Donations</p>
-                                    <p class="text-sm ">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32..</p>
+                                    <p class="text-lg font-bold w-full text-gray-700">Event Description</p>
+                                    <p class="text-sm ">{{ events.event_description}}</p>
                                 </div>
                             </div>
                         </div>
@@ -158,7 +162,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <p class="text-base font-bold w-full text-gray-600 mb-0.5">What</p>
-                                    <p class="text-sm ">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                    <p class="text-sm ">{{events.event_name}}</p>
                                 </div>
                             </div>
                         </div>
@@ -166,23 +170,33 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <p class="text-base font-bold w-full text-gray-600 mb-0.5">When</p>
-                                <p class="text-sm ">June 20, 2020 | 9:00 am</p>
+                                <p class="text-sm ">{{ moment(events.start_date).format("MMM. DD, YYYY") }} | {{moment(events.start_date+' '+events.event_time).format('h:mm A')}}</p>
                             </div>
                             <div class="col-lg-4">
                                 <p class="text-base font-bold w-full text-gray-600 mb-0.5">Type of Donation</p>
-                                <p class="text-sm ">Dry Goods</p>
+                                <p class="text-sm ">{{donations.donation_type}}</p>
                             </div>
                             <div class="col-lg-4">
                                 <p class="text-base font-bold w-full text-gray-600 mb-0.5">Mode of Collection</p>
-                                <p class="text-sm ">Pickup</p>
+                                <p class="text-sm ">{{donations.mode_of_collection}}</p>
+                                <div class="row" v-if="donations.mode_of_collection=='Pick Up'">
+									<div class="col-lg-6">
+										<p class="text-base font-bold w-full text-gray-600">Pick-up Location:</p>
+										<p class="text-sm ">{{donations.pickup_description}}</p>
+									</div>
+									<div class="col-lg-6">
+										<p class="text-base font-bold w-full text-gray-600">Contact Number:</p>
+										<p class="text-sm ">{{donations.pickup_contact_no}}</p>
+									</div>
+								</div>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <p class="text-base font-bold w-full text-gray-600 mb-0.5">Address</p>
-                                    <p class="text-sm ">Purok 2, Barangay Quatro, Bacolod City, Negros Occidental</p>
+                                    <p class="text-base font-bold w-full text-gray-600 mb-0.5">Barangay</p>
+                                    <p class="text-sm ">{{ events.event_address}}</p>
                                 </div>
                             </div>
                         </div>
@@ -193,28 +207,52 @@
                                     <p class="text-base font-bold w-full text-gray-600 mb-0.5">Attachments</p>
                                     <div class="p-1 sm:p-8">
 									<div class="columns-1 gap-2 sm:columns-2 sm:gap-2 md:columns-3 lg:columns-4 [&>img:not(:first-child)]:mt-2" >
-										<div >
-											<img class="mb-2 border border-gray-100" src="../../../images/bg-orange_1.jpg"/>
-											<img class="mb-2 border border-gray-100" src="../../../images/bg-orange_2.jpg"/>
-											<img class="mb-2 border border-gray-100" src="../../../images/bg-orange_5.jpg"/>
-											<img class="mb-2 border border-gray-100" src="../../../images/bg-orange_3.jpg"/>
-											<img class="mb-2 border border-gray-100" src="../../../images/bg-orange_4.jpg"/>
+										<div v-for="i in donation_images">
+											<img class="mb-2 border border-gray-100" :src="'../../../storage/images/'+i.image_name"/>
 										</div>
-										
+										<!-- <VueFlux
+											:options="vfOptions"
+											:rscs="vfRscs"
+											:transitions="vfTransitions"
+											ref="$vueFlux">
+
+											<template #preloader="preloaderProps">
+												<FluxPreloader v-bind="preloaderProps" />
+											</template>
+
+											<template #caption="captionProps">
+												<FluxCaption v-bind="captionProps" />
+											</template>
+
+											<template #controls="controlsProps">
+												<FluxControls v-bind="controlsProps" />
+											</template>
+
+											<template #pagination="paginationProps">
+												<FluxPagination v-bind="paginationProps" />
+											</template>
+
+											<template #index="indexProps">
+												<FluxIndex v-bind="indexProps" />
+											</template>
+										</VueFlux>
+										<button @click="$vueFlux.show('next')">NEXT</button> -->
 									</div>
 								</div>
                                 </div>
                             </div>
                         </div>
-                        <hr class="border-dashed">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="flex justify-center space-x-2">
-                                    <button class="btn btn-danger btn-md w-38">Decline Donation</button>
-                                    <button class="btn btn-success btn-md w-38">Accept Donation</button>
-                                </div>
-                            </div>
-                        </div>
+                        <div v-if="donations.status==0">
+							<hr class="border-dashed">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="flex justify-center space-x-2">
+										<button class="btn btn-danger btn-md w-38" @click="declineDonation(props.donation_id)">Decline Donation</button>
+										<button class="btn btn-success btn-md w-38" @click="acceptDonation(props.donation_id)">Accept Donation</button>
+									</div>
+								</div>
+							</div>
+						</div>
                     </div>
                 </div>
             </div>

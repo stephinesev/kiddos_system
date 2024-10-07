@@ -38,7 +38,7 @@
     const openImage = async (id) => {
 		let response =  await axios.get(`/api/get_images/`+id);
 		donation_images.value=response.data.images
-        console.log(donation_images.value)
+        // console.log(donation_images.value)
 		modalImage.value = !modalImage.value
 	}
     const closeModal = () => {
@@ -181,15 +181,18 @@
                                 </thead>
                                 <template #column-10="props">
                                     <center>
-										<button @click="openImage(props.rowData.id)" class="btn btn-xs btn-info text-white p-1" title='View Images'>
+										<!-- <button @click="openImage(props.rowData.id)" class="btn btn-xs btn-info text-white p-1" title='View Images'>
                                             <EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></EyeIcon>
-                                        </button >
-                                        <button @click="acceptDonation(props.rowData.id)" class="btn btn-xs btn-success text-white p-1" title='Accept Donation'>
+                                        </button > -->
+										<a :href="'/donation_admin_view/view/'+props.rowData.id" class="btn btn-xs btn-info text-white p-1" title='View Images'>
+                                            <EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></EyeIcon>
+                                        </a >
+                                        <!-- <button @click="acceptDonation(props.rowData.id)" class="btn btn-xs btn-success text-white p-1" title='Accept Donation'>
                                             <CheckIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></CheckIcon>
                                         </button >
 										<button @click="declineDonation(props.rowData.id)" class="btn btn-xs btn-danger text-white p-1" title='Decline Donation'>
                                             <XMarkIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></XMarkIcon>
-                                        </button >
+                                        </button > -->
                                     </center>
                                 </template>
                             </DataTable>

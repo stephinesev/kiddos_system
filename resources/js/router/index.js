@@ -125,14 +125,17 @@ const routes = [
     {
         path:'/donation_admin_view/',
         component: DonationAdminIndex,
-
-
+        meta:{
+            requiresAuth:true
+        }
     },
     {
-        path:'/donation_admin_view/view',
+        path:'/donation_admin_view/view/:donation_id',
         component: DonationAdminView,
-
-
+        props:true,
+        meta:{
+            requiresAuth:true
+        }
     },
 
 

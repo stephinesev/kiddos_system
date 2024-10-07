@@ -58,6 +58,7 @@
 	const readNotif = (id) => {
         axios.get(`/api/read_notification/`+id).then(function () {
             getNotification()
+            router.push('/donation_admin_view/view/'+donation_id)
         }).catch(function(err){
             success.value=''
             error.value.push('Error! Try again.')

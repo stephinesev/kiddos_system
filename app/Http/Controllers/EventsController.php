@@ -85,9 +85,9 @@ class EventsController extends Controller
 
     public function today_event(){
         $date=date('Y-m-d');
-        // $start_date=Events::where('start_date',$date)->value('start_date');
+        $start_date=Events::where('start_date',$date)->value('start_date');
         $end_date=Events::where('end_date',$date)->value('end_date');
-        $events_today=Events::where('start_date',$date)->whereBetween('start_date',[$date, $end_date])->orWhereBetween('end_date', [$date,$end_date])->get();
+        $events_today=Events::where('start_date',$date)->whereBetween('start_date',[$date, $start_date])->orWhereBetween('end_date', [$date,$end_date])->get();
         return response()->json([
             'events_today'=>$events_today,
         ],200);

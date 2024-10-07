@@ -11,6 +11,7 @@ class Notifications extends Model
     protected $table = "notification";
     protected $fillable = [
         'donor_id',
+        'donation_id',
         'event_id',
         'notification',
         'read',

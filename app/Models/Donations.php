@@ -21,4 +21,7 @@ class Donations extends Model
         'status', 
         'others', 
     ];
+    public function events(){
+        return $this->belongsTo(Events::class,'event_id', 'id');
+    }
 }

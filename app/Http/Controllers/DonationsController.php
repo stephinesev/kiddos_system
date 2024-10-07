@@ -51,6 +51,7 @@ class DonationsController extends Controller
         if($insert){
             $donor_name=Donor::where('id',$insert->donor_id)->value('fullname');
             $validated_notif['donor_id']=$insert->donor_id;
+            $validated_notif['donation_id']=$insert->id;
             $validated_notif['event_id']=$insert->event_id;
             $validated_notif['notification']=$donor_name." has generously made a ".$insert->mode_of_collection." donation of ".$insert->donation_type." to the barangay.";
             Notifications::create($validated_notif);
@@ -69,9 +70,9 @@ class DonationsController extends Controller
 
     public function get_events_donation(){
         $date=date('Y-m-d');
-        // $start_date=Events::where('start_date',$date)->value('start_date');
+        $start_date=Events::where('start_date',$date)->value('start_date');
         $end_date=Events::where('end_date',$date)->value('end_date');
-        $events=Events::whereBetween('start_date',[$date, $end_date])->orWhereBetween('end_date', [$date,$end_date])->orderBy('start_date','ASC')->get();
+        $events=Events::whereBetween('start_date',[$date, $start_date])->orWhereBetween('end_date', [$date,$end_date])->orderBy('start_date','ASC')->get();
         return response()->json([
             'events'=>$events,
         ],200);
@@ -159,8 +160,8 @@ class DonationsController extends Controller
         $accepted['status']='1';
         $update->update($accepted);
         if($update){
-            $validated_notif['donor_id']=$update->donor_id;
-            $validated_notif['event_id']=$update->event_id;
+            // $validated_notif['donor_id']=$update->donor_id;
+            // $validated_notif['event_id']=$update->event_id;
             $validated_notif['notification']=($update->mode_of_collection=='Self Delivery') ? "Thankyou for your donation! We will be expecting your donation." : "Thankyou for your donation! We will be arriving on your location.";
             $validated_notif['identifier']="1";
             Notifications::create($validated_notif);
@@ -171,8 +172,8 @@ class DonationsController extends Controller
         $declined['status']='2';
         $update->update($declined);
         if($update){
-            $validated_notif['donor_id']=$update->donor_id;
-            $validated_notif['event_id']=$update->event_id;
+            // $validated_notif['donor_id']=$update->donor_id;
+            // $validated_notif['event_id']=$update->event_id;
             $validated_notif['notification']="Sorry your donation has been declined.";
             $validated_notif['identifier']="1";
             Notifications::create($validated_notif);
@@ -200,5 +201,12 @@ class DonationsController extends Controller
         $update=Notifications::where('id',$id)->first();
         $notif['read']='1';
         $update->update($notif);
+    }
+
+    public function get_donation_view($id){
+        $donations=Donations::with('events')->where('id',$id)->first();
+        return response()->json([
+            'donations'=>$donations,
+        ],200);
     }
 }
