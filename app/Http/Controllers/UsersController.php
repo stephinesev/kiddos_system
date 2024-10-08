@@ -50,11 +50,13 @@ class UsersController extends Controller
         if(Auth::check()){
             $credentials=[
                 'user_id' => Auth::id(),
+                'picture' => Auth::user()->beneficiary_image,
                 'name' => Auth::user()?->name,
             ];
         }else{
             $credentials=[
                 'user_id' => '0',
+                'picture' => '',
                 'name' => '',
             ];
         }
@@ -97,7 +99,7 @@ class UsersController extends Controller
             $qrupdate['qr_code']=$request->name.'.png';
             $update_qr->update($qrupdate);
         }
-        QrCode::size(200)->generate($qr_name, storage_path('app/public/qr/'.$request->name.".png"));
+        QrCode::format('png')->size(200)->generate($qr_name, storage_path('app/public/qr/'.$request->name.".png"));
     }
 
     public function get_beneficiary(){
@@ -135,6 +137,16 @@ class UsersController extends Controller
     public function update_beneficiary(UserRequest $request, $id){
         $update=User::where('id',$id)->first();
         $validated=$request->validated();
+        if($request->file('beneficiary_image')){
+            $path = storage_path('app/public/profile');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            $file = $request->file('beneficiary_image');
+            $name = uniqid() . '_' . trim($file->getClientOriginalName());
+            $file->move($path, $name);
+            $validated['beneficiary_image']=$name;
+        }
         $update->update($validated);
     }
     public function delete_beneficiary($id){

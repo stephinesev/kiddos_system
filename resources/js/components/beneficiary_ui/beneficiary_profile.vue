@@ -2,13 +2,16 @@
 	import navigation from '@/layouts/navigation_bene.vue';
 	import{ Bars3Icon, PencilIcon, MagnifyingGlassIcon, TrashIcon, EyeIcon, CheckIcon, PlusIcon, XMarkIcon} from '@heroicons/vue/24/solid'
 	import{ArrowUpOnSquareIcon} from '@heroicons/vue/24/outline'
-    import { reactive, ref, onMounted} from "vue"
+    import { reactive, ref, onMounted, watch} from "vue"
     import { useRouter } from "vue-router"
     const menu =  ref()
     const form =  ref([])
     const credentials =  ref([])
     let error = ref('')
 	let success = ref('')	
+    let imageFile=ref("");
+    let imageUrl=ref("");
+    let error_image = ref('');
 	const warningAlert = ref(false)
 	const successAlert = ref(false)
 	const hideAlert = ref(true)
@@ -56,6 +59,7 @@
 		formData.append('guardian_name',form.value.guardian_name)
 		formData.append('guardian_contact_no',form.value.guardian_contact_no)
 		formData.append('guardian_relationship',form.value.guardian_relationship)
+        formData.append('beneficiary_image',imageFile.value)
 		axios.post(`/api/update_beneficiary/`+id, formData).then(function () {
 			success.value='You have successfully updated beneficiary!'
 			form.value=[]
@@ -71,6 +75,33 @@
 			error.value='Fields cannot be empty!'
 		});
 	}
+
+    //Display Image
+    const upload_image = (event) => {
+        let file = event.target.files[0];
+        if(event.target.files.length===0){
+            imageFile.value='';
+            imageUrl.value='';
+            return;
+        }else if(file['size'] < 2111775){
+            imageFile.value = event.target.files[0];
+            error.value=''
+        }else{
+            warningAlert.value = !warningAlert.value
+            error.value='File size cannot be bigger than 2 MB'
+        }
+    }
+    watch(imageFile, (imageFile) => {
+        if(!(imageFile instanceof File)){
+            return;
+        }
+        let fileReader1 = new FileReader();
+        fileReader1.readAsDataURL(imageFile)
+        fileReader1.addEventListener("load", () => {
+            imageUrl.value=fileReader1.result
+            document.getElementById('img1').src = fileReader1.result;
+        })
+    })
 </script>
 <template>
 	<navigation>
@@ -94,25 +125,24 @@
                 <div class="col-lg-12">
                     <div class="flex justify-start space-x-1 px-4 ">
                         <button class="btn text-white !bg-blue-300 btn-xs !text-xs p-1 px-3 hover:!bg-blue-500 !rounded-b-none"  v-on:click="menu = ''">Personal Info</button>
-                        <!-- <button class="btn text-white !bg-blue-500 btn-xs !text-xs p-1 px-3 !rounded-b-none"  v-on:click="menu = 'change_picture'">Change Picture</button> -->
+                        <button class="btn text-white !bg-blue-500 btn-xs !text-xs p-1 px-3 !rounded-b-none"  v-on:click="menu = 'change_picture'">Change Picture</button>
                         <!-- <button class="btn text-white !bg-blue-300 btn-xs !text-xs p-1 px-3 hover:!bg-blue-500 !rounded-b-none"  v-on:click="menu = 'change_password'">Change Password</button> -->
                     </div>
                     <div class="card !border !border-blue-500">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-2">
-                                    <img src="../../../images/default.jpg" alt="QR" class="w-40 h-40 bg-gray-100 border">
+                                    <img :src="'storage/profile/'+form.beneficiary_image" id="img1" v-if="form.beneficiary_image!=null"/>
+                                    <img src="../../../images/default.jpg" id="img1" alt="Profile Picture" class="w-40 h-40 bg-gray-100 border" v-else/>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <div class="flex justify-start space-x-1">
-                                            <input type="file" class="form-control !text-sm" placeholder="Middle Name">
-                                            <button class="btn btn-xs btn-danger ">
+                                            <input type="file" class="form-control !text-sm" accept="image/*" id="image1" @change="upload_image">
+                                            <!-- <button class="btn btn-xs btn-danger ">
                                                 <XMarkIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></XMarkIcon>
-                                            </button>
+                                            </button> -->
                                         </div>
-                                        
-                                        <label for="" class="mb-0 italic text-blue-400">File_Name.png</label>
                                     </div> 
                                 </div>
                             </div>
@@ -120,8 +150,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="flex justify-center space-x-2">
-                                        <button class="btn btn-sm btn-secondary">Cancel</button>
-                                        <button class="btn btn-sm btn-success">Save Changes</button>
+                                        <button class="btn btn-sm btn-success"  type="button" @click="onEdit(form.id)">Save Changes</button>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +164,7 @@
                 <div class="col-lg-12">
                     <div class="flex justify-start space-x-1 px-4 ">
                         <button class="btn text-white !bg-blue-300 btn-xs !text-xs p-1 px-3 hover:!bg-blue-500 !rounded-b-none"  v-on:click="menu = ''">Personal Info </button>
-                        <!-- <button class="btn text-white !bg-blue-300 btn-xs !text-xs p-1 px-3 hover:!bg-blue-500 !rounded-b-none"  v-on:click="menu = 'change_picture'">Change Picture</button> -->
+                        <button class="btn text-white !bg-blue-300 btn-xs !text-xs p-1 px-3 hover:!bg-blue-500 !rounded-b-none"  v-on:click="menu = 'change_picture'">Change Picture</button>
                         <!-- <button class="btn text-white !bg-blue-500 btn-xs !text-xs p-1 px-3 !rounded-b-none"  v-on:click="menu = 'change_password'">Change Password</button> -->
                     </div>
                     <div class="card !border !border-blue-500">
@@ -173,7 +202,7 @@
                 <div class="col-lg-12">
                     <div class="flex justify-start space-x-1 px-4 ">
                         <button class="btn text-white !bg-blue-500 btn-xs !text-xs p-1 px-3 !rounded-b-none"  v-on:click="menu = ''">Personal Info</button>
-                        <!-- <button class="btn text-white !bg-blue-300 btn-xs !text-xs p-1 px-3 hover:!bg-blue-500 !rounded-b-none"  v-on:click="menu = 'change_picture'">Change Picture</button> -->
+                        <button class="btn text-white !bg-blue-300 btn-xs !text-xs p-1 px-3 hover:!bg-blue-500 !rounded-b-none"  v-on:click="menu = 'change_picture'">Change Picture</button>
                         <!-- <button class="btn text-white !bg-blue-300 btn-xs !text-xs p-1 px-3 hover:!bg-blue-500 !rounded-b-none"  v-on:click="menu = 'change_password'">Change Password</button> -->
                     </div>
                     <div class="card !border !border-blue-500">
@@ -274,7 +303,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <img src="../../../images/sampleQR.png" alt="QR" class="w-40 h-40 bg-gray-100 border">
+                                    <a :href="'../../../storage/qr/'+form.qr_code" download><img :src="'../../../storage/qr/'+form.qr_code" alt="QR" class="w-40 h-40 bg-gray-100 border"></a>
                                 </div>
                             </div>
                             <hr class="border-dashed">
