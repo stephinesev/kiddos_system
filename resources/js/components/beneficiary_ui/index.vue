@@ -9,11 +9,11 @@
     })
     let error = ref('')
     const login = async () =>{
-        await axios.post('/api/donor_login_process', form)
+        await axios.post('/api/beneficiary_login_process', form)
         .then(response =>{
             if(response.data.success){
                 localStorage.setItem('token', response.data.data.token)
-                router.push('/donate')
+                router.push('/bene_dashboard')
             } else {
                 error.value = response.data.message;
             }
@@ -40,14 +40,14 @@
 							</div>
 							<form class="pt-3" @submit.prevent="login">
 								<div class="form-group">
-									<label for="exampleInputEmail">Email Address</label>
+									<label for="exampleInputEmail">Username</label>
 									<div class="input-group">
 										<div class="input-group-prepend bg-transparent">
 											<span class="input-group-text bg-transparent border-right-0">
 												<UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" w-5 h-5"></UserIcon>
 											</span>
 										</div>
-										<input type="email" class="form-control form-control-lg border-left-0 pl-1" v-model="form.email" id="exampleInputEmail" placeholder="Email Address">
+										<input type="text" class="form-control form-control-lg border-left-0 pl-1" v-model="form.username" id="exampleInputEmail" placeholder="Username">
 									</div>
 								</div>
 								<div class="form-group">
@@ -61,13 +61,8 @@
 										<input type="password" class="form-control form-control-lg border-left-0 pl-0" v-model="form.password" id="exampleInputPassword" placeholder="Password">                        
 									</div>
 								</div>
-								
 								<div class="my-3">
 									<input type="submit" value="Login" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
-								</div>
-								
-								<div class="text-center mt-4 font-weight-light text-sm">
-									Don't have an account? Please register <a href="/donor_register" class="text-primary">here.</a>
 								</div>
 							</form>
 						</div>

@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import loginForm from  '../components/login.vue'
 import dashboard from '../components/dashboard.vue'
+import qr_scanner from '../components/qr_scanner.vue'
 import beneficaryIndex from '../components/beneficiary/index.vue'
 import beneficaryView from '../components/beneficiary/view.vue'
 import DonorIndex from '../components/donors/index.vue'
@@ -24,7 +25,7 @@ import BeneUI_Dashboard from '../components/beneficiary_ui/dashboard.vue'
 import BeneUI_Donate from '../components/beneficiary_ui/donate.vue'
 import BeneUI_DonorProfile from '../components/beneficiary_ui/beneficiary_profile.vue'
 import BeneUI_Register from '../components/beneficiary_ui/register.vue'
-import BeneUI_History from '../components/beneficiary_ui/bmi_history.vue'
+import BeneUI_History from '../components/beneficiary_ui/view.vue'
 
 const routes = [
     {
@@ -38,6 +39,13 @@ const routes = [
     {
         path:'/dashboard',
         component: dashboard,
+        meta:{
+            requiresAuth:true
+        }
+    },
+    {
+        path:'/qr_scanner',
+        component: qr_scanner,
         meta:{
             requiresAuth:true
         }
@@ -117,14 +125,17 @@ const routes = [
     {
         path:'/donation_admin_view/',
         component: DonationAdminIndex,
-
-
+        meta:{
+            requiresAuth:true
+        }
     },
     {
-        path:'/donation_admin_view/view',
+        path:'/donation_admin_view/view/:donation_id',
         component: DonationAdminView,
-
-
+        props:true,
+        meta:{
+            requiresAuth:true
+        }
     },
 
 
@@ -145,30 +156,30 @@ const routes = [
     {
         path:'/bene_dashboard/',
         component: BeneUI_Dashboard,
-        // meta:{
-        //     requiresAuth:true
-        // }
+        meta:{
+            requiresAuth:true
+        }
     },
     {
         path:'/donate/',
         component: BeneUI_Donate,
-        // meta:{
-        //     requiresAuth:true
-        // }
+        meta:{
+            requiresAuth:true
+        }
     },
     {
-        path:'/bene_profile/',
+        path:'/bene_profile',
         component: BeneUI_DonorProfile,
-        // meta:{
-        //     requiresAuth:true
-        // }
+        meta:{
+            requiresAuth:true
+        }
     },
     {
         path:'/bmi_history/',
         component: BeneUI_History,
-        // meta:{
-        //     requiresAuth:true
-        // }
+        meta:{
+            requiresAuth:true
+        }
     },
     // {
     //     path:'/:pathMatch(.*)*',

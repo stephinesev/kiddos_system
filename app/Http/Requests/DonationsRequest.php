@@ -23,13 +23,15 @@ class DonationsRequest extends FormRequest
     {
         return [
             'donor_id'=>'string|nullable',
-            'event_id'=>'required|string|nullable',
+            'event_id'=>'integer|nullable',
             'when_date'=>'required|string|nullable',
             'when_time'=>'required|string|nullable',
             'barangay'=>'required|string|nullable',
             'donation_type'=>'required|string|nullable',
             'mode_of_collection'=>'required|string|nullable',
             'pickup_description'=>'string|nullable',
+            'pickup_contact_no'=>'string|nullable',
+            'others'=>'string|nullable',
         ];
     }
 }
