@@ -124,7 +124,9 @@
                         <a class="nav-link dropdown-toggle !flex" href="#" data-toggle="dropdown" id="profileDropdown" @click="userDrop = !userDrop">
                             <span>
                                 <!-- <img :src="'storage/profile/'+credentials.picture" id="img1" v-if="credentials.picture!=null"/> -->
-                                <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon>
+                                <!-- <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon> -->
+                                <img :src="'storage/profile/'+credentials.picture" id="img1" style="width:75px!important;" v-if="credentials.picture!=null"/>
+                                <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 " v-else></UserIcon>
                             </span>
                             <span class="nav-profile-name">{{ credentials.name }}</span>
                         </a>

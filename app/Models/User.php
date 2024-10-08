@@ -42,6 +42,7 @@ class User extends Authenticatable
         'nutritional_status',
         'delete_bmi',
         'qr_code',
+        'beneficiary_image'
     ];
 
     /**

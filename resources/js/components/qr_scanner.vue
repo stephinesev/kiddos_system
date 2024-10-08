@@ -195,9 +195,22 @@
 									<!-- <h2 class="mb-2  font-bold text-green-400">QR Successfully Scanned!</h2> -->
                                     <!-- <img class="w-full" src="" > -->
                                      <center>
-                                        <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-40 h-40 "></UserIcon>
+                                        <!-- <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-40 h-40 "></UserIcon> -->
+                                        <img :src="'storage/profile/'+beneficiary.beneficiary_image" id="img1" v-if="beneficiary.beneficiary_image!=null" style="width: 30%;border-radius:20%"/>
+                                        <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-40 h-40 " v-else></UserIcon>
                                      </center>
-									<h5 class="leading-tight">{{ beneficiary.name }}</h5>
+                                     <br>
+									<h5 class="leading-tight" style="text-transform: capitalize;">{{ beneficiary.name }}</h5>
+								</div>
+							</div>
+                            <div class="col-lg-12 col-md-3">
+								<div class="text-center">
+									<h5 class="leading-tight">{{ beneficiary.gender }}</h5>
+								</div>
+							</div>
+                            <div class="col-lg-12 col-md-3">
+								<div class="text-center">
+									<h5 class="leading-tight">{{ beneficiary.address }}</h5>
 								</div>
 							</div>
 						</div>
