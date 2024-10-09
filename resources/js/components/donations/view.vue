@@ -4,6 +4,7 @@
 	import{ArrowUpOnSquareIcon} from '@heroicons/vue/24/outline'
     import { reactive, ref, onMounted, shallowReactive} from "vue"
     import { useRouter } from "vue-router"
+	import { Carousel, Slide } from 'vue-carousel';
 	const router = useRouter();
 	import moment from 'moment'
 	import {
@@ -152,6 +153,7 @@
 						<div class="row">
                             <div class="col-lg-12">
                                 <div class="">
+									<!-- We are please to inform you that LeBron has generously made a significant donation to the barangay. Please ensure to acknowledge their contribution and extend our heartfelt thanks for their invaluable support towards our community’s betterment! -->
                                     <p class="text-lg font-bold w-full text-gray-700">Event Description</p>
                                     <p class="text-sm ">{{ events.event_description}}</p>
                                 </div>
