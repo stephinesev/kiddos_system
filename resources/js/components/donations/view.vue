@@ -153,14 +153,78 @@
 						<div class="row">
                             <div class="col-lg-12">
                                 <div class="">
-									<!-- We are please to inform you that LeBron has generously made a significant donation to the barangay. Please ensure to acknowledge their contribution and extend our heartfelt thanks for their invaluable support towards our community’s betterment! -->
-                                    <p class="text-lg font-bold w-full text-gray-700">Event Description</p>
+                                    <p class="text-lg font-bold w-full text-gray-700 mb-0">Event Description</p>
                                     <p class="text-sm ">{{ events.event_description}}</p>
                                 </div>
                             </div>
                         </div>
                         <br>
-                        <div class="row">
+						<div class="row">
+							<div class="col-lg-12">
+								<table class="w-full">
+									<tr>
+										<td class="text-sm" width="65%">What</td>
+										<td class="text-sm" width="35%">Type of Donation</td>
+										
+									</tr>
+									<tr>
+										<td class="!text-gray-700">{{events.event_name}}</td>
+										<td class="!text-gray-700">{{donations.donation_type}}</td>
+									</tr>
+									<tr>
+										<td colspan="2" class="pt-2"></td>
+									</tr>
+									<tr>
+										<td class="text-sm">When</td>
+										<td class="text-sm">Mode of Collection</td>
+									</tr>
+									
+									<tr>
+										<td class="!text-gray-700">{{ moment(events.start_date).format("MMM. DD, YYYY") }} | {{moment(events.start_date+' '+events.event_time).format('h:mm A')}}</td>
+										<td class="!text-gray-700">
+											{{donations.mode_of_collection}}
+											<div class="flex" v-if="donations.mode_of_collection=='Pick Up'">
+												<span>Pick-up Location:{{donations.pickup_description}}</span>
+												<span>Contact Number:{{donations.pickup_contact_no}}</span>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" class="pt-2"></td>
+									</tr>
+									<tr>
+										<td class="text-sm">Barangay</td>
+									</tr>
+									<tr>
+										<td class="!text-gray-700">{{ events.event_address}}</td>
+									</tr>
+								</table>
+								<br>
+								<!-- <table class="w-full">
+									<tr>
+										<td width="5%">What</td>
+										<td width="60%">:{{events.event_name}}</td>
+										<td width="15%">Type of Donation</td>
+										<td width="20%">:{{donations.donation_type}}</td>
+									</tr>
+									<tr>
+										<td>When</td>
+										<td>:{{ moment(events.start_date).format("MMM. DD, YYYY") }} | {{moment(events.start_date+' '+events.event_time).format('h:mm A')}}</td>
+										
+										<td>Mode of Collection</td>
+										<td>
+											:{{donations.mode_of_collection}}
+											<div class="flex" v-if="donations.mode_of_collection=='Pick Up'">
+												<span>Pick-up Location:{{donations.pickup_description}}</span>
+												<span>Contact Number:{{donations.pickup_contact_no}}</span>
+											</div>
+										</td>
+									</tr>
+								</table> -->
+							</div>
+						</div>
+						<hr class="border-dashed">
+                        <!-- <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <p class="text-base font-bold w-full text-gray-600 mb-0.5">What</p>
@@ -202,7 +266,7 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
+                        <br> -->
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">

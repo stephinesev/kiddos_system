@@ -158,7 +158,7 @@
                 <div class="card">
                     <div class="card-body">
 						<!-- DATATABLE -->
-                        <div class="pt-3">
+                        <div class="overflow-x-scroll pt-3">
                             <DataTable :data="donationsall" :options="options" class="display table table-bordered table-hover !border nowrap">
                                 <thead>
                                     <tr>
