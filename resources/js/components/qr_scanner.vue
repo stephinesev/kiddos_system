@@ -143,26 +143,43 @@
             </div>
         </div>
 		<div class="row">
-            <div class="col-lg-12 stretch-card">
-                <div class="card">
+            <div class="col-lg-4 !rounded-t-xl">
+                <div class="card !h-96 !py-0 rounded-lg !shadow-sm">
                     <div class="card-body">
-						<div class="row">
-                            <div class="col-lg-4"></div>
-                            <div class="col-lg-4 !shadow-sm !rounded-t-xl">
-                                <div class="form-group">
-                                    <center><label><b>QR Code Scanner/Reader</b></label></center>
-                                    <qrcode-stream @error="onError" @decode="onDecode"></qrcode-stream> 
+                        <div class="row h-full pb-10">
+                            <qrcode-stream @error="onError" @decode="onDecode"></qrcode-stream> 
+                            <h4 class="font-3xl font-bold text-gray-500 !pt-4 w-full text-center">QR Code Scanner/Reader</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 !rounded-t-xl">
+                <div class="card !h-96 !py-0 rounded-lg !shadow-sm">
+                    <div class="card-body">
+                        <div class="row">
+							<div class="col-lg-5 col-md-3">
+								<div class="text-center">
+                                    <div class="bg-gray-100 w-64 h-64">
+                                        <img :src="'storage/profile/'+beneficiary.beneficiary_image" id="img1" v-if="beneficiary.beneficiary_image!=null" style="width: 100%;border-radius:20%"/>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                
+                            <div class="col-lg-7">
+                                <h4 class="leading-none font-bold" style="text-transform: capitalize;">Stephine{{ beneficiary.name }}</h4>
+                                <h6 class="leading-none">asd{{ beneficiary.gender }}</h6>
+                                <h6 class="leading-none">asdasd{{ beneficiary.address }}</h6>
                             </div>
-                            <div class="col-lg-6">
-                            </div>
-                        </div>
+						</div>
+                        <hr class="border-dashed">
+						<div class="row mt-4"> 
+							<div class="col-lg-12 col-md-12">
+								<div class="flex justify-center space-x-2">
+									<button type="button" @click="checkAttendance(beneficiary_id)" class="btn !text-white !text-xs !bg-orange-500 btn-sm !rounded-full w-full">Check Attendance</button>
+									<a :href="redirection" target="_blank" class="btn !text-white !text-xs !bg-green-500 btn-sm !rounded-full w-full">Update Health Status</a>
+                                    <button type="button" @click="closeAlert()" class="btn !text-white !text-xs !bg-red-500 btn-sm !rounded-full w-full">Scan Again</button>
+								</div>
+							</div>
+						</div>
                     </div>
                 </div>
             </div>
