@@ -133,7 +133,7 @@
                             <div class="row">
                                 <div class="col-lg-2">
                                     <img :src="'storage/profile/'+form.beneficiary_image" id="img1" v-if="form.beneficiary_image!=null"/>
-                                    <img src="../../../images/default.jpg" id="img1" alt="Profile Picture" class="w-40 h-40 bg-gray-100 border" v-else/>
+                                    <img src="../../../images/download.png" id="img1" alt="Profile Picture" class="w-45 h-45 bg-gray-100 border" v-else/>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">

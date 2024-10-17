@@ -33,7 +33,7 @@ class UserRequest extends FormRequest
             'weight' => 'string|nullable',
             'height' => 'string|nullable',
             'bmi' => 'string|nullable',
-            'barangay' => 'string|nullable',
+            'barangay' => 'required|integer',
             'school_name' => 'string|nullable',
             'grade_level' => 'string|nullable',
             'student_id' => 'string|nullable',

@@ -24,6 +24,8 @@
 	const credentials = ref([])
 	const notification = ref([])
 	const notification_count = ref(0)
+	const success = ref('')
+	const error = ref(0)
 	const openMaster = () => {
 		masterfileDrop.value = !masterfileDrop.value
 		prDrop.value = !hideDrop.value
@@ -55,13 +57,13 @@
 	}
 
     //Read Notification function
-	const readNotif = (id) => {
+	const readNotif = (id,donation_id) => {
         axios.get(`/api/read_notification/`+id).then(function () {
             getNotification()
             router.push('/donation_admin_view/view/'+donation_id)
         }).catch(function(err){
             success.value=''
-            error.value.push('Error! Try again.')
+            error.value='Error Try Again!'
         });
 	}
 </script>
@@ -129,7 +131,7 @@
                             <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
                             <div v-if="notification!=''">
                                 <span v-for="(notif,index) in notification">
-                                    <a class="dropdown-item" @click="readNotif(notif.id)">
+                                    <a class="dropdown-item" @click="readNotif(notif.id,notif.donation_id)">
                                         <div class="item-thumbnail">
                                             <div class="item-icon bg-success">
                                                 <span>
@@ -149,7 +151,7 @@
                                 </span>
                             </div>
                             <span v-else>
-                                <a class="dropdown-item" @click="readNotif(notif.id)">
+                                <a class="dropdown-item" @click="readNotif(notif.id,notif.donation_id)">
                                     <div class="item-content">
                                         <center>
                                             <h4 class="font-weight-bold"> 
@@ -242,6 +244,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link !text-gray-600" href="/barangay">
+                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                            <HomeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></HomeIcon>
+                        </i>
+                        <span class="menu-title">Barangay</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link !text-gray-600 cursor-pointer" @click="openMaster()" >
                             <i class="mdi mdi-circle-outline menu-icon !text-gray-600">
                                 <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></UserIcon>
@@ -258,6 +268,7 @@
                         >
                             <div class="!hidden"  :class="{ show:masterfileDrop }">
                                 <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item list-none"> <a class="nav-link" href="/admin">Admin</a></li>
                                     <li class="nav-item list-none"> <a class="nav-link" href="/beneficiary">Beneficiaries</a></li>
                                     <li class="nav-item list-none"> <a class="nav-link" href="/donors">Donors</a></li>
                                 </ul>

@@ -9,6 +9,7 @@ use App\Http\Requests\BmiHistoryRequest;
 use App\Models\User;
 use App\Models\BmiHistory;
 use App\Models\Attendance;
+use App\Models\Barangay;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class UsersController extends Controller
 {
@@ -78,7 +79,7 @@ class UsersController extends Controller
             'bmi'=>'',
             'status'=>'',
             'nutritional_status'=>'',
-            'barangay'=>'',
+            'barangay'=>0,
             'school_name'=>'',
             'grade_level'=>'',
             'student_id'=>'',
@@ -91,6 +92,8 @@ class UsersController extends Controller
 
     public function add_beneficiary(UserRequest $request){
         $validated=$request->validated();
+        $barangay_name=Barangay::where('id',$request->barangay)->value('barangay_name');
+        $validated['barangay_name']=$barangay_name;
         $validated['role']='Beneficiary';
         $user=User::create($validated);
         if($user){
@@ -103,7 +106,7 @@ class UsersController extends Controller
     }
 
     public function get_beneficiary(){
-        $beneficiary=User::orderBy('name','ASC')->get();
+        $beneficiary=User::where('role','Beneficiary')->orderBy('name','ASC')->get();
         $beneficiaryall=[];
         foreach($beneficiary AS $b){
             $beneficiaryall[]=[
@@ -137,6 +140,8 @@ class UsersController extends Controller
     public function update_beneficiary(UserRequest $request, $id){
         $update=User::where('id',$id)->first();
         $validated=$request->validated();
+        $barangay_name=Barangay::where('id',$request->barangay)->value('barangay_name');
+        $validated['barangay_name']=$barangay_name;
         if($request->file('beneficiary_image')){
             $path = storage_path('app/public/profile');
             if (!file_exists($path)) {
@@ -256,5 +261,78 @@ class UsersController extends Controller
         $validated['beneficiary_id']=$request->beneficiary_id;
         $validated['attendance_date']=$request->attendance_date;
         Attendance::create($validated);
+    }
+
+    public function create_admin(Request $request){
+        $formData=[
+            'username'=>'',
+            'password'=>'',
+            'name'=>'',
+            'email'=>'',
+            'birth_date'=>'',
+            'gender'=>'',
+            'address'=>'',
+            'status'=>''
+        ];
+        return response()->json($formData);
+    }
+
+    public function add_admin(Request $request){
+        $validated=$this->validate($request,[
+                'username'=>['required','string'],
+                'password'=>['required','string'],
+                'name'=>['required','string'],
+                'email'=>['required','email'],
+                'birth_date'=>['required','string'],
+                'gender'=>['required','string'],
+                'address'=>['required','string'],
+                'status'=>['required','string'],
+        ]);
+        $validated['role']='Admin';
+        User::create($validated);
+    }
+
+    public function get_admin(){
+        $admin=User::where('role','Admin')->orderBy('name','ASC')->get();
+        $adminall=[];
+        foreach($admin AS $b){
+            $adminall[]=[
+                'id'=>$b->id,
+                $b->name,
+                $b->gender,
+                $b->email,
+                $b->address,
+                $b->status,
+                ''
+            ];
+        }
+        return response()->json([
+            'adminall'=>$adminall,
+        ],200);
+    }
+
+    public function edit_admin($id){
+        $admin=User::where('id',$id)->first();
+        return response()->json([
+            'admin'=>$admin,
+        ],200);
+    }
+    public function update_admin(Request $request, $id){
+        $update=User::where('id',$id)->first();
+        $validated=$this->validate($request,[
+                'username'=>['required','string'],
+                'password'=>['required','string'],
+                'name'=>['required','string'],
+                'email'=>['required','email'],
+                'birth_date'=>['required','string'],
+                'gender'=>['required','string'],
+                'address'=>['required','string'],
+                'status'=>['required','string'],
+        ]);
+        $update->update($validated);
+    }
+    public function delete_admin($id){
+        $deleted = User::find($id);
+        $deleted->delete();
     }
 }

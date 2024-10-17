@@ -27,6 +27,7 @@ class DonorsRequest extends FormRequest
             'birth_date'=>'required|string|nullable',
             'gender'=>'required|string|nullable',
             'address'=>'required|string|nullable',
+            'barangay'=>'required|integer',
             'email' => 'required|email|nullable|unique:donors,email,'.$this->id,
             'contact_no'=>'required|string|nullable',
         ];

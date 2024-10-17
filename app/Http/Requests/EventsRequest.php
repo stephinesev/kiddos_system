@@ -25,6 +25,7 @@ class EventsRequest extends FormRequest
             'event_name'=>'required|string|nullable',
             'event_description'=>'string|nullable',
             'event_color'=>'required|string|nullable',
+            'barangay'=>'required|integer',
             'event_address'=>'required|string|nullable',
             'event_time'=>'required|string|nullable',
             'start_date'=>'required|string|nullable',

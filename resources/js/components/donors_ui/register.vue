@@ -4,6 +4,7 @@
     import { useRouter } from "vue-router"
 	const router = useRouter() //use if link is used inside the page
 	let form=ref([]);
+	let barangay=ref([]);
 	// let form = reactive({
     //     fullname:'',
 	// 	password:'',
@@ -21,7 +22,13 @@
 	//Fetcher of Data
 	onMounted(async () => {
 		registerForm()
+		getBarangay()
 	})
+	//Fetching Data From Barangay Table for display
+	const getBarangay = async () => {
+		let response = await axios.get("/api/get_barangay");
+		barangay.value = response.data.barangay;
+	}
 	//Declaration of input values
 	const registerForm = async () => {
 		let response = await axios.get("/api/create_registration");
@@ -35,6 +42,7 @@
 		formData.append('fullname',form.value.fullname)
 		formData.append('birth_date',form.value.birth_date)
 		formData.append('gender',form.value.gender)
+		formData.append('barangay',form.value.barangay)
 		formData.append('address',form.value.address)
 		formData.append('email',form.value.email)
 		formData.append('contact_no',form.value.contact_no)
@@ -102,6 +110,13 @@
                                         </div>
                                     </div>
                                 </div>
+								<div class="form-group">
+									<label for="exampleInputEmail">Barangay</label>
+                                    <select  class="form-control" v-model="form.barangay">
+										<option value="">--Select Barangay--</option>
+										<option :value="b.id" v-for="b in barangay" :key="b.id">{{ b.barangay_name }} - {{ b.city}}</option>
+									</select>
+								</div>
                                 <div class="form-group">
 									<label for="exampleInputEmail">Address</label>
                                     <input type="text" class="form-control !text-sm" placeholder="Address" v-model="form.address">

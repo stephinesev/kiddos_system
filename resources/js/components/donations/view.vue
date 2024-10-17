@@ -77,10 +77,10 @@
 		donation_images.value=response.data.images
 	}
     //Accept function
-	const acceptDonation = (id) => {
+	const acceptDonation = (id,donor_id,event_id) => {
 		var confirmation = confirm("Do you want to accept this donation?");
 		if (confirmation == true) {
-			axios.get(`/api/accept_donation/`+id).then(function () {
+			axios.get(`/api/accept_donation/`+id+'/'+donor_id+'/'+event_id).then(function () {
 				success.value='Successfully accepted donation!'
 				error.value=[]
 				// getDonations()
@@ -313,8 +313,8 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="flex justify-center space-x-2">
-										<button class="btn btn-danger btn-md w-38" @click="declineDonation(props.donation_id)">Decline Donation</button>
-										<button class="btn btn-success btn-md w-38" @click="acceptDonation(props.donation_id)">Accept Donation</button>
+										<button class="btn btn-danger btn-md w-38" @click="declineDonation(props.donation_id,donations.donor_id,donations.event_id)">Decline Donation</button>
+										<button class="btn btn-success btn-md w-38" @click="acceptDonation(props.donation_id,donations.donor_id,donations.event_id)">Accept Donation</button>
 									</div>
 								</div>
 							</div>

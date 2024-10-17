@@ -4,7 +4,9 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import loginForm from  '../components/login.vue'
 import dashboard from '../components/dashboard.vue'
+import barangay from '../components/barangay/index.vue'
 import qr_scanner from '../components/qr_scanner.vue'
+import adminIndex from '../components/admin/index.vue'
 import beneficaryIndex from '../components/beneficiary/index.vue'
 import beneficaryView from '../components/beneficiary/view.vue'
 import DonorIndex from '../components/donors/index.vue'
@@ -47,8 +49,22 @@ const routes = [
         }
     },
     {
+        path:'/barangay',
+        component: barangay,
+        meta:{
+            requiresAuth:true
+        }
+    },
+    {
         path:'/qr_scanner',
         component: qr_scanner,
+        meta:{
+            requiresAuth:true
+        }
+    },
+    {
+        path:'/admin',
+        component: adminIndex,
         meta:{
             requiresAuth:true
         }

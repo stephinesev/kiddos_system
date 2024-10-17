@@ -18,6 +18,7 @@
     import moment from 'moment'
 	//Variables
 	let form=ref([]);
+	let barangay=ref([]);
 	let donors=ref([]);
 	let donorsall=ref([]);
 	// let error = ref([])
@@ -30,8 +31,13 @@
 	onMounted(async () => {
 		donorForm()
 		allDonor()
+		getBarangay()
 	})
-
+	//Fetching Data From Barangay Table for display
+	const getBarangay = async () => {
+		let response = await axios.get("/api/get_barangay");
+		barangay.value = response.data.barangay;
+	}
 	//Declaration of input values
 	const donorForm = async () => {
 		let response = await axios.get("/api/create_donor");
@@ -52,6 +58,7 @@
 		formData.append('birth_date',form.value.birth_date)
 		formData.append('gender',form.value.gender)
 		formData.append('address',form.value.address)
+		formData.append('barangay',form.value.barangay)
 		formData.append('email',form.value.email)
 		formData.append('contact_no',form.value.contact_no)
 		axios.post("/api/add_donor",formData).then(function () {
@@ -104,6 +111,7 @@
 		formData.append('birth_date',donors.value.birth_date)
 		formData.append('gender',donors.value.gender)
 		formData.append('address',donors.value.address)
+		formData.append('barangay',donors.value.barangay)
 		formData.append('email',donors.value.email)
 		formData.append('contact_no',donors.value.contact_no)
 		axios.post(`/api/update_donor/`+id, formData).then(function () {
@@ -161,7 +169,7 @@
 				title:'Donors',
 				extend: 'copy',
 				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5, 6 ],
+					columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ],
 					orthogonal: null
 				}
 			},
@@ -169,7 +177,7 @@
 				title:'Donors',
 				extend: 'excel',
 				exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6 ],
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ],
 					orthogonal: null,
 				},
 				createEmptyCells: true,
@@ -184,7 +192,7 @@
 				title:'Donors',
 				extend: 'print',
 				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5, 6],
+					columns: [ 0, 1, 2, 3, 4, 5, 6, 7],
 					orthogonal: null
 				}
 			},
@@ -279,6 +287,7 @@
                                         <th class="!text-xs bg-gray-100 uppercase"> Fullname</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Date of Birth</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Gender</th>
+                                        <th class="!text-xs bg-gray-100 uppercase"> Barangay</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Address</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Phone Number</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Email Address</th>
@@ -289,7 +298,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <template #column-7="props" align="center">
+                                <template #column-8="props" align="center">
                                     <button @click="openEdit(props.rowData.id)" class="btn btn-xs btn-info text-white p-1">
                                         <PencilIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></PencilIcon>
                                     </button >
@@ -359,6 +368,15 @@
 							</div>
 						</div>
 						<div class="row">
+							<div class="col-lg-6 col-md-6">
+								<div class="form-group">
+									<label class="text-gray-500 m-0" for="">Barangay</label>
+									<select  class="form-control" v-model="form.barangay">
+										<option value="">--Select Barangay--</option>
+										<option :value="b.id" v-for="b in barangay" :key="b.id">{{ b.barangay_name }} - {{ b.city}}</option>
+									</select>
+								</div>
+							</div>
 							<div class="col-lg-6 col-md-6">
 								<div class="form-group">
 									<label class="text-gray-500 m-0" for="">Address</label>
@@ -454,6 +472,15 @@
 							</div>
 						</div>
 						<div class="row">
+							<div class="col-lg-6 col-md-6">
+								<div class="form-group">
+									<label class="text-gray-500 m-0" for="">Barangay</label>
+									<select  class="form-control" v-model="donors.barangay">
+										<option value="">--Select Barangay--</option>
+										<option :value="b.id" v-for="b in barangay" :key="b.id">{{ b.barangay_name }} - {{ b.city}}</option>
+									</select>
+								</div>
+							</div>
 							<div class="col-lg-6 col-md-6">
 								<div class="form-group">
 									<label class="text-gray-500 m-0" for="">Address</label>

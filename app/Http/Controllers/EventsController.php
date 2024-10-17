@@ -6,6 +6,7 @@ use Event;
 use Illuminate\Http\Request;
 use App\Http\Requests\EventsRequest;
 use App\Models\Events;
+use App\Models\Barangay;
 
 class EventsController extends Controller
 {
@@ -13,6 +14,7 @@ class EventsController extends Controller
         $formData=[
             'event_name'=>'',
             'event_description'=>'',
+            'barangay'=>0,
             'event_address'=>'',
             'event_time'=>'',
             'start_date'=>'',
@@ -24,6 +26,8 @@ class EventsController extends Controller
 
     public function add_event(EventsRequest $request){
         $validated=$request->validated();
+        $barangay_name=Barangay::where('id',$request->barangay)->value('barangay_name');
+        $validated['barangay_name']=$barangay_name;
         Events::create($validated);
     }
 
@@ -35,6 +39,7 @@ class EventsController extends Controller
                 'id'=>$b->id,
                 $b->event_name,
                 $b->event_description,
+                $b->barangay_name,
                 $b->event_address,
                 date("H:i A",strtotime($b->event_time)),
                 $b->start_date,
@@ -76,6 +81,8 @@ class EventsController extends Controller
     public function update_event(EventsRequest $request, $id){
         $update=Events::where('id',$id)->first();
         $validated=$request->validated();
+        $barangay_name=Barangay::where('id',$request->barangay)->value('barangay_name');
+        $validated['barangay_name']=$barangay_name;
         $update->update($validated);
     }
     public function delete_event($id){

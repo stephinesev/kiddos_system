@@ -6,6 +6,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\DonorsController;
 use App\Http\Controllers\DonationsController;
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\BarangayController;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,20 @@ Route::post('/beneficiary_login_process', [UsersController::class,'beneficiary_l
 //DONOR REGISTRATION
 Route::get('/create_registration',[DonationsController::class,'create_registration']);
 Route::post('/registration',[DonationsController::class,'registration']);
+// Admin CRUD
+Route::get('/create_admin',[UsersController::class,'create_admin']);
+Route::post('/add_admin',[UsersController::class,'add_admin']);
+Route::get('/get_admin',[UsersController::class,'get_admin']);
+Route::get('/edit_admin/{id}',[UsersController::class,'edit_admin']);
+Route::post('/update_admin/{id}',[UsersController::class,'update_admin']);
+Route::get('/delete_admin/{id}',[UsersController::class,'delete_admin']);
+//Barangay CRUD
+Route::get('/create_barangay',[BarangayController::class,'create_barangay']);
+Route::post('/add_barangay',[BarangayController::class,'add_barangay']);
+Route::get('/get_barangay',[BarangayController::class,'get_barangay']);
+Route::get('/edit_barangay/{id}',[BarangayController::class,'edit_barangay']);
+Route::post('/update_barangay/{id}',[BarangayController::class,'update_barangay']);
+Route::get('/delete_barangay/{id}',[BarangayController::class,'delete_barangay']);
 //Beneficiary CRUD
 Route::get('/create_beneficiary',[UsersController::class,'create_beneficiary']);
 Route::post('/add_beneficiary',[UsersController::class,'add_beneficiary']);
@@ -64,8 +79,8 @@ Route::post('/upload_image', [DonationsController::class, 'upload_image']);
 Route::get('/get_donations',[DonationsController::class,'get_donations']);
 Route::get('/get_images/{id}',[DonationsController::class,'get_images']);
 Route::get('/get_admin_donations',[DonationsController::class,'get_admin_donations']);
-Route::get('/accept_donation/{id}',[DonationsController::class,'accept_donation']);
-Route::get('/decline_donation/{id}',[DonationsController::class,'decline_donation']);
+Route::get('/accept_donation/{id}/{donor_id}/{event_id}',[DonationsController::class,'accept_donation']);
+Route::get('/decline_donation/{id}/{donor_id}/{event_id}',[DonationsController::class,'decline_donation']);
 Route::get('/get_notification',[DonationsController::class,'get_notification']);
 Route::get('/read_notification/{id}',[DonationsController::class,'read_notification']);
 Route::get('/get_notification_donor',[DonationsController::class,'get_notification_donor']);

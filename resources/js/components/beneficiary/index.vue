@@ -18,6 +18,7 @@
     import moment from 'moment'
 	//Variables
 	let form=ref([]);
+	let barangay=ref([]);
 	let beneficiary=ref([]);
 	let beneficiaryall=ref([]);
 	let error = ref('')
@@ -30,8 +31,13 @@
 	onMounted(async () => {
 		beneficiaryForm()
 		allBeneficiary()
+		getBarangay()
 	})
-
+	//Fetching Data From Barangay Table for display
+	const getBarangay = async () => {
+		let response = await axios.get("/api/get_barangay");
+		barangay.value = response.data.barangay;
+	}
 	//Declaration of input values
 	const beneficiaryForm = async () => {
 		let response = await axios.get("/api/create_beneficiary");
@@ -422,7 +428,11 @@
 							<div class="col-lg-6 col-md-6">
 								<div class="form-group">
 									<label class="text-gray-500 m-0" for="">Barangay</label>
-									<input type="text" class="form-control" placeholder="Barangay" v-model="form.barangay">
+									<!-- <input type="text" class="form-control" placeholder="Barangay" v-model="form.barangay"> -->
+									<select  class="form-control" v-model="form.barangay">
+										<option value="0">--Select Barangay--</option>
+										<option :value="b.id" v-for="b in barangay" :key="b.id">{{ b.barangay_name }} - {{ b.city}}</option>
+									</select>
 								</div>
 							</div>
                             <div class="col-lg-6 col-md-6">
@@ -621,7 +631,11 @@
 							<div class="col-lg-6 col-md-6">
 								<div class="form-group">
 									<label class="text-gray-500 m-0" for="">Barangay</label>
-									<input type="text" class="form-control" placeholder="Barangay" v-model="beneficiary.barangay">
+									<!-- <input type="text" class="form-control" placeholder="Barangay" v-model="beneficiary.barangay"> -->
+									<select  class="form-control" v-model="beneficiary.barangay">
+										<option value="0">--Select Barangay--</option>
+										<option :value="b.id" v-for="b in barangay" :key="b.id">{{ b.barangay_name }} - {{ b.city}}</option>
+									</select>
 								</div>
 							</div>
                             <div class="col-lg-6 col-md-6">

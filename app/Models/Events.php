@@ -13,6 +13,8 @@ class Events extends Model
         'event_name',
         'event_description',
         'event_address',
+        'barangay',
+        'barangay_name',
         'event_time',
         'start_date',
         'end_date',

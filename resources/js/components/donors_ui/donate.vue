@@ -6,6 +6,7 @@
     import { useRouter } from "vue-router"
     let form=ref([]);
     let events=ref([]);
+    let barangay=ref([]);
 	let donations=ref([]);
 	let error = ref([])
     let success = ref('')	
@@ -19,8 +20,13 @@
 		getCredentials()
         donationForm()
         getEvents()
+        getBarangay()
 	})
-
+    //Fetching Data From Barangay Table for display
+	const getBarangay = async () => {
+		let response = await axios.get("/api/get_barangay");
+		barangay.value = response.data.barangay;
+	}
     //Get fullname and donors ID
     const getCredentials = async () => {
 		const response = await fetch(`/api/donor_credentials`);
@@ -62,6 +68,7 @@
 		formData.append('event_id',form.value.event_id)
 		formData.append('when_date',form.value.when_date)
 		formData.append('when_time',form.value.when_time)
+		formData.append('event_address',form.value.event_address)
 		formData.append('barangay',form.value.barangay)
 		formData.append('donation_type',form.value.donation_type)
 		formData.append('mode_of_collection',form.value.mode_of_collection)
@@ -87,7 +94,8 @@
     //Fetch event address
     const getAddress = async () => {
 		let response = await axios.get(`/api/get_event_address/`+form.value.event_id);
-		form.value.barangay = response.data.address;
+		form.value.event_address = response.data.address;
+		form.value.barangay = response.data.barangay;
 		form.value.when_date = response.data.date;
 		form.value.when_time = response.data.time;
 	}
@@ -168,8 +176,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Barangay</label>
-                                    <input type="text" class="form-control !text-sm" v-model="form.barangay">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label for="">Barangay</label>
+                                            <select  class="form-control" v-model="form.barangay">
+                                                <option value="">--Select Barangay--</option>
+                                                <option :value="b.id" v-for="b in barangay" :key="b.id">{{ b.barangay_name }} - {{ b.city}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label for="">Address</label>
+                                            <textarea type="text" class="form-control !text-sm" v-model="form.event_address"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-lg-12">

@@ -21,6 +21,7 @@
 	//Variables
 	let intervalId;
 	let form=ref([]);
+	let barangay=ref([]);
 	let events=ref([]);
 	let eventall=ref([]);
 	let error = ref([])
@@ -37,7 +38,13 @@
   		// }, 10000);
 		allEvents();
 		getRandomHexColor()
+		getBarangay()
 	})
+	//Fetching Data From Barangay Table for display
+	const getBarangay = async () => {
+		let response = await axios.get("/api/get_barangay");
+		barangay.value = response.data.barangay;
+	}
 	const getRandomHexColor = () => {
 		for(var i=0;i<10;i++){
 			// Define an array of hexadecimal digits
@@ -93,6 +100,7 @@
 		formData.append('event_name',form.value.event_name)
 		formData.append('event_color',form.value.event_color)
 		formData.append('event_description',form.value.event_description)
+		formData.append('barangay',form.value.barangay)
 		formData.append('event_address',form.value.event_address)
 		formData.append('event_time',form.value.event_time)
 		formData.append('start_date',form.value.start_date)
@@ -136,6 +144,7 @@
 		formData.append('event_name',events.value.event_name)
 		formData.append('event_color',events.value.event_color)
 		formData.append('event_description',events.value.event_description)
+		formData.append('barangay',events.value.barangay)
 		formData.append('event_address',events.value.event_address)
 		formData.append('event_time',events.value.event_time)
 		formData.append('start_date',events.value.start_date)
@@ -300,12 +309,13 @@
                             </button>
                         </div>
 						<!-- DATATABLE -->
-                        <div class="pt-3">
+                        <div class="overflow-x-scroll pt-3">
                             <DataTable :data="eventall" :options="options" class="display table table-bordered table-hover !border nowrap">
                                 <thead>
                                     <tr>
                                         <th class="!text-xs bg-gray-100 uppercase"> Event Name</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Event Description</th>
+                                        <th class="!text-xs bg-gray-100 uppercase"> Barangay</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Event Address</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Event Time</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Start Date</th>
@@ -317,7 +327,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <template #column-6="props" align="center">
+                                <template #column-7="props" align="center">
                                     <button @click="openEdit(props.rowData.id)" class="btn btn-xs btn-info text-white p-1">
                                         <PencilIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></PencilIcon>
                                     </button >
@@ -360,6 +370,15 @@
 								<select name="color_display" id="color_display" class="form-control" v-model="form.event_color" :style="'background-color:'+form.event_color">
 									<option value="">--Select Event Color--</option>
 									<option :value="color_display[index]" v-for="(col,index) in color_display" :key="color_display[index]" :style="{background: color_display[index]}">{{ color_display[index] }}</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12 col-md-12">
+								<label class="text-gray-500 m-0" for="">Barangay</label>
+								<select  class="form-control" v-model="form.barangay">
+									<option value="0">--Select Barangay--</option>
+									<option :value="b.id" v-for="b in barangay" :key="b.id">{{ b.barangay_name }} - {{ b.city}}</option>
 								</select>
 							</div>
 						</div>
@@ -445,6 +464,15 @@
 								<select name="color_display" id="color_display" class="form-control" v-model="events.event_color" :style="'background-color:'+events.event_color">
 									<option value="">--Select Event Color--</option>
 									<option :value="color_display[index]" v-for="(col,index) in color_display" :key="color_display[index]" :style="{background: color_display[index]}">{{ color_display[index] }}</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12 col-md-12">
+								<label class="text-gray-500 m-0" for="">Barangay</label>
+								<select  class="form-control" v-model="events.barangay">
+									<option value="0">--Select Barangay--</option>
+									<option :value="b.id" v-for="b in barangay" :key="b.id">{{ b.barangay_name }} - {{ b.city}}</option>
 								</select>
 							</div>
 						</div>

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\DonorsRequest;
 use App\Models\Donor;
+use App\Models\Barangay;
 use Illuminate\Support\Facades\Validator;
 
 class DonorsController extends Controller
@@ -81,6 +82,7 @@ class DonorsController extends Controller
             'birth_date'=>'',
             'gender'=>'',
             'address'=>'',
+            'barangay'=>0,
             'email'=>'',
             'contact_no'=>'',
         ];
@@ -89,6 +91,8 @@ class DonorsController extends Controller
 
     public function add_donor(DonorsRequest $request){
         $validated=$request->validated();
+        $barangay_name=Barangay::where('id',$request->barangay)->value('barangay_name');
+        $validated['barangay_name']=$barangay_name;
         Donor::create($validated);
     }
 
@@ -102,6 +106,7 @@ class DonorsController extends Controller
                 $b->fullname,
                 $b->birth_date,
                 $b->gender,
+                $b->barangay_name,
                 $b->address,
                 $b->contact_no,
                 $b->email,
@@ -122,6 +127,8 @@ class DonorsController extends Controller
     public function update_donor(DonorsRequest $request, $id){
         $update=Donor::where('id',$id)->first();
         $validated=$request->validated();
+        $barangay_name=Barangay::where('id',$request->barangay)->value('barangay_name');
+        $validated['barangay_name']=$barangay_name;
         if($request->file('profile_image')){
             $path = storage_path('app/public/profile');
             if (!file_exists($path)) {

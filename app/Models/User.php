@@ -33,6 +33,7 @@ class User extends Authenticatable
         'bmi',
         'status',
         'barangay',
+        'barangay_name',
         'school_name',
         'grade_level',
         'student_id',

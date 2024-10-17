@@ -10,6 +10,7 @@ use App\Models\DonationImages;
 use App\Models\Donor;
 use App\Models\Events;
 use App\Models\Notifications;
+use App\Models\Barangay;
 use Illuminate\Support\Facades\File;
 
 class DonationsController extends Controller
@@ -20,6 +21,7 @@ class DonationsController extends Controller
             'password'=>'',
             'birth_date'=>'',
             'gender'=>'',
+            'barangay'=>0,
             'address'=>'',
             'email'=>'',
             'contact_no'=>'',
@@ -36,6 +38,7 @@ class DonationsController extends Controller
             'event_id'=>0,
             'where_date'=>'',
             'where_time'=>'',
+            'event_address'=>'',
             'barangay'=>'',
             'donation_type'=>'',
             'mode_of_collection'=>'',
@@ -47,6 +50,8 @@ class DonationsController extends Controller
     }
     public function add_donation(DonationsRequest $request){
         $validated=$request->validated();
+        $barangay_name=Barangay::where('id',$request->barangay)->value('barangay_name');
+        $validated['barangay_name']=$barangay_name;
         $insert=Donations::create($validated);
         if($insert){
             $donor_name=Donor::where('id',$insert->donor_id)->value('fullname');
@@ -79,10 +84,12 @@ class DonationsController extends Controller
     }
 
     public function get_event_address($id){
+        $barangay=Events::where('id',$id)->value('barangay');
         $address=Events::where('id',$id)->value('event_address');
         $date=Events::where('id',$id)->value('start_date');
         $time=Events::where('id',$id)->value('event_time');
         return response()->json([
+            'barangay'=>$barangay,
             'address'=>$address,
             'date'=>$date,
             'time'=>$time,
@@ -112,7 +119,7 @@ class DonationsController extends Controller
                 ($b->event_id!=0) ? $event_name : $b->others,
                 "<center>".date('F d,Y',strtotime($b->when_date))."</center>",
                 "<center>".date('H:i A',strtotime($b->when_time))."</center>",
-                $b->barangay,
+                $b->barangay_name,
                 "<center>".$b->donation_type."</center>",
                 "<center>".$b->mode_of_collection."</center>",
                 ''
@@ -141,7 +148,7 @@ class DonationsController extends Controller
                 ($b->event_id!=0) ? $event_name : $b->others,
                 "<center>".date('F d,Y',strtotime($b->when_date))."</center>",
                 "<center>".date('H:i A',strtotime($b->when_time))."</center>",
-                $b->barangay,
+                $b->barangay_name,
                 "<center>".$b->donation_type."</center>",
                 "<center>".$b->mode_of_collection."</center>",
                 $b->pickup_description,
@@ -155,25 +162,27 @@ class DonationsController extends Controller
         ],200);
     }
 
-    public function accept_donation($id){
+    public function accept_donation($id,$donor_id,$event_id){
         $update=Donations::where('id',$id)->first();
         $accepted['status']='1';
         $update->update($accepted);
         if($update){
-            // $validated_notif['donor_id']=$update->donor_id;
-            // $validated_notif['event_id']=$update->event_id;
+            $validated_notif['donation_id']=$id;
+            $validated_notif['donor_id']=$donor_id;
+            $validated_notif['event_id']=$event_id;
             $validated_notif['notification']=($update->mode_of_collection=='Self Delivery') ? "Thankyou for your donation! We will be expecting your donation." : "Thankyou for your donation! We will be arriving on your location.";
             $validated_notif['identifier']="1";
             Notifications::create($validated_notif);
         }
     }
-    public function decline_donation($id){
+    public function decline_donation($id,$donor_id,$event_id){
         $update=Donations::where('id',$id)->first();
         $declined['status']='2';
         $update->update($declined);
         if($update){
-            // $validated_notif['donor_id']=$update->donor_id;
-            // $validated_notif['event_id']=$update->event_id;
+            $validated_notif['donation_id']=$id;
+            $validated_notif['donor_id']=$donor_id;
+            $validated_notif['event_id']=$event_id;
             $validated_notif['notification']="Sorry your donation has been declined.";
             $validated_notif['identifier']="1";
             Notifications::create($validated_notif);

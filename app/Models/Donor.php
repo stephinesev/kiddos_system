@@ -20,6 +20,8 @@ class Donor extends Authenticatable
         'password',
         'gender',
         'address',
+        'barangay',
+        'barangay_name',
         'email',
         'contact_no',
         'profile_image',

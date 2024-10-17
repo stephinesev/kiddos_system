@@ -7,6 +7,7 @@
     import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from "vue3-qrcode-reader"
     import moment from 'moment'
     let success = ref('')	
+    let error = ref('')	
     let errors = ref('')	
     const redirection = ref('')	
     const beneficiary = ref([])	
@@ -17,7 +18,7 @@
 	const hideAlert = ref(true)
     //Fetcher of Data
 	onMounted(async () => {
-        getData()
+        //getData()
 	})
     
     const onError = (error) => {
@@ -41,7 +42,7 @@
         beneficiary_id.value=id
         getData(id)
         redirection.value=decodedString
-        successAlert.value=!successAlert.value
+        // successAlert.value=!successAlert.value
         success.value='Success'
     }
 
@@ -75,8 +76,12 @@
 	const getData = async (id) => {
 		let response = await axios.get("/api/edit_beneficiary/"+id);
 		beneficiary.value = response.data.beneficiary;
+        if(beneficiary.value.status=='Inactive'){
+            beneficiary.value=[]
+            error.value='Beneficiary QR code do not exists!'
+            warningAlert.value = !warningAlert.value
+        }
 	}
-    
 </script>
 <script>
    
@@ -160,23 +165,24 @@
 							<div class="col-lg-5 col-md-3">
 								<div class="text-center">
                                     <div class="bg-gray-100 w-64 h-64">
-                                        <img :src="'storage/profile/'+beneficiary.beneficiary_image" id="img1" v-if="beneficiary.beneficiary_image!=null" style="width: 100%;border-radius:20%"/>
+                                        <img :src="'storage/profile/'+beneficiary.beneficiary_image" id="img1" v-if="beneficiary!=null && beneficiary.length!=0 && beneficiary.beneficiary_image!=null" style="width: 100%;border-radius:20%"/>
+                                        <img src="../../images/download.png" id="img1" v-else style="width: 100%;border-radius:20%"/>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-7">
-                                <h4 class="leading-none font-bold" style="text-transform: capitalize;">Stephine{{ beneficiary.name }}</h4>
-                                <h6 class="leading-none">asd{{ beneficiary.gender }}</h6>
-                                <h6 class="leading-none">asdasd{{ beneficiary.address }}</h6>
+                            <div class="col-lg-7" v-if="beneficiary!=null && beneficiary.length!=0">
+                                <h4 class="leading-none font-bold" style="text-transform: capitalize;">{{ beneficiary.name }}</h4>
+                                <h6 class="leading-none">{{ beneficiary.gender }}</h6>
+                                <h6 class="leading-none">{{ beneficiary.address }}</h6>
                             </div>
 						</div>
                         <hr class="border-dashed">
-						<div class="row mt-4"> 
+						<div class="row mt-4" v-if="beneficiary!=null && beneficiary.length!=0"> 
 							<div class="col-lg-12 col-md-12">
 								<div class="flex justify-center space-x-2">
 									<button type="button" @click="checkAttendance(beneficiary_id)" class="btn !text-white !text-xs !bg-orange-500 btn-sm !rounded-full w-full">Check Attendance</button>
 									<a :href="redirection" target="_blank" class="btn !text-white !text-xs !bg-green-500 btn-sm !rounded-full w-full">Update Health Status</a>
-                                    <button type="button" @click="closeAlert()" class="btn !text-white !text-xs !bg-red-500 btn-sm !rounded-full w-full">Scan Again</button>
+                                    <!-- <button type="button" @click="closeAlert()" class="btn !text-white !text-xs !bg-red-500 btn-sm !rounded-full w-full">Scan Again</button> -->
 								</div>
 							</div>
 						</div>
@@ -185,7 +191,7 @@
             </div>
         </div>
 		<!-- SUCCESS ALERT MODAL -->
-		<Transition
+		<!-- <Transition
             enter-active-class="transition ease-out !duration-1000"
             enter-from-class="opacity-0 scale-95"
             enter-to-class="opacity-100 scale-500"
@@ -209,10 +215,10 @@
 						<div class="row">
 							<div class="col-lg-12 col-md-3">
 								<div class="text-center">
-									<!-- <h2 class="mb-2  font-bold text-green-400">QR Successfully Scanned!</h2> -->
-                                    <!-- <img class="w-full" src="" > -->
+									<h2 class="mb-2  font-bold text-green-400">QR Successfully Scanned!</h2> 
+                                     <img class="w-full" src="" >
                                      <center>
-                                        <!-- <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-40 h-40 "></UserIcon> -->
+                                        <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-40 h-40 "></UserIcon>
                                         <img :src="'storage/profile/'+beneficiary.beneficiary_image" id="img1" v-if="beneficiary.beneficiary_image!=null" style="width: 30%;border-radius:20%"/>
                                         <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-40 h-40 " v-else></UserIcon>
                                      </center>
@@ -244,7 +250,7 @@
 					</div>
 				</div>
 			</div>
-		</Transition>
+		</Transition> -->
 
         <!-- SUCCESS ALERT MODAL -->
 		<Transition
@@ -277,6 +283,49 @@
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+		</Transition>
+        <!-- ERROR ALERT MODAL -->
+		<Transition
+            enter-active-class="transition ease-out !duration-1000"
+            enter-from-class="opacity-0 scale-95"
+            enter-to-class="opacity-100 scale-500"
+            leave-active-class="transition ease-in duration-75"
+            leave-from-class="opacity-100 scale-500"
+            leave-to-class="opacity-0 scale-95"
+			v-if="error!=''"
+        >
+			<div class="modal p-0 !bg-transparent" :class="{ show:warningAlert }">
+				<div @click="closeAlert" class="w-full h-full fixed backdrop-blur-sm bg-white/30"></div>
+				<div class="modal__content !shadow-2xl !rounded-3xl !my-44 w-96 p-0">
+					<div class="flex justify-center">
+						<div class="!border-red-400 border-8 bg-red-400 !h-32 !w-32 -top-16 absolute rounded-full text-center shadow">
+							<div class="p-2 text-white">
+								<CheckIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-24 h-24 "></CheckIcon>
+							</div>
+						</div>
+					</div>
+					<div class="py-5 rounded-t-3xl"></div>
+					<div class="modal_s_items pt-0 !px-8 pb-4">
+						<div class="row">
+							<div class="col-lg-12 col-md-3">
+								<div class="text-center">
+									<h2 class="mb-2  font-bold text-red-400">Error!</h2>
+									<h5 class="leading-tight">{{ error }}</h5>
+									<!-- <h5 class="leading-tight" v-for="er in error">{{ er }}</h5> -->
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row mt-4"> 
+							<div class="col-lg-12 col-md-12">
+								<div class="flex justify-center space-x-2">
+									<button @click="closeAlert" class="btn !text-white !bg-red-400 btn-sm !rounded-full w-full">Close</button>
+								</div>
+							</div>
+						</div>
+					</div> 
 				</div>
 			</div>
 		</Transition>
