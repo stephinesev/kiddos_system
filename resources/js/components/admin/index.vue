@@ -53,6 +53,7 @@
 		formData.append('gender',form.value.gender)
 		formData.append('address',form.value.address)
 		formData.append('status',form.value.status)
+		formData.append('role',form.value.role)
 		axios.post("/api/add_admin",formData).then(function () {
 			success.value='You have successfully added new admin!'
 			form.value=[]
@@ -82,6 +83,7 @@
 		formData.append('gender',admin.value.gender)
 		formData.append('address',admin.value.address)
 		formData.append('status',admin.value.status)
+		formData.append('role',admin.value.role)
 		axios.post(`/api/update_admin/`+id, formData).then(function () {
 			success.value='You have successfully updated admin!'
 			admin.value=[]
@@ -234,6 +236,7 @@
                                         <th class="!text-xs bg-gray-100 uppercase"> Gender</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Email</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Address</th>
+                                        <th class="!text-xs bg-gray-100 uppercase"> Role</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Status</th>
                                         <th class="!text-xs bg-gray-100 uppercase" width="7%" align="center"> 
                                             <span class="text-center  px-auto">
@@ -242,7 +245,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <template #column-5="props">
+                                <template #column-6="props">
 									<center>
 										<button @click="openEdit(props.rowData.id)" class="btn btn-xs btn-info text-white p-1">
 											<PencilIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></PencilIcon>
@@ -333,13 +336,23 @@
 									<textarea class="form-control" rows="3" v-model="form.address"></textarea>
 								</div>
 							</div>
-							<div class="col-lg-6 col-md-6">
+							<div class="col-lg-3 col-md-3">
 								<div class="form-group">
 									<label class="text-gray-500 m-0" >Status</label>
 									<select class="form-control" v-model="form.status">
                                         <option value="">--Select Status--</option>
                                         <option value="Active">Active</option>
                                         <option value="Inactive">Inactive</option>
+                                    </select>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3">
+								<div class="form-group">
+									<label class="text-gray-500 m-0" >Role</label>
+									<select class="form-control" v-model="form.role">
+                                        <option value="">--Select Role--</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Admin LGU">Admin LGU</option>
                                     </select>
 								</div>
 							</div>
@@ -386,8 +399,8 @@
 							</div>
                             <div class="col-lg-6 col-md-6">
 								<div class="form-group">
-									<label class="text-gray-500 m-0" >Password</label>
-									<input type="password" class="form-control" placeholder="Password" v-model='admin.password'>
+									<label class="text-gray-500 m-0" >Change Password</label>
+									<input type="password" class="form-control" placeholder="Change Password" v-model='admin.password'>
 								</div>
 							</div>
 						</div>
@@ -430,13 +443,23 @@
 									<textarea class="form-control" rows="3" v-model="admin.address"></textarea>
 								</div>
 							</div>
-							<div class="col-lg-6 col-md-6">
+							<div class="col-lg-3 col-md-3">
 								<div class="form-group">
 									<label class="text-gray-500 m-0" >Status</label>
 									<select class="form-control" v-model="admin.status">
                                         <option value="">--Select Status--</option>
                                         <option value="Active">Active</option>
                                         <option value="Inactive">Inactive</option>
+                                    </select>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-3">
+								<div class="form-group">
+									<label class="text-gray-500 m-0" >Role</label>
+									<select class="form-control" v-model="admin.role">
+                                        <option value="">--Select Role--</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Admin LGU">Admin LGU</option>
                                     </select>
 								</div>
 							</div>

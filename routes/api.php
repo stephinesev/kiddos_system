@@ -7,6 +7,7 @@ use App\Http\Controllers\DonorsController;
 use App\Http\Controllers\DonationsController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\BarangayController;
+use App\Http\Controllers\GraphController;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,8 @@ Route::get('/qrcode', [UsersController::class,'qrcode']);
 Route::get('/login_form', [UsersController::class,'login_form']);
 Route::post('/login_process', [UsersController::class,'login_process']);
 Route::get('/dashboard', [UsersController::class,'dashboard']);
+//ADMIN LGU LOGIN
+Route::post('/login_process_lgu', [UsersController::class,'login_process_lgu']);
 //DONOR LOGIN
 Route::get('/donor_login_form', [DonorsController::class,'donor_login_form']);
 Route::post('/donor_login_process', [DonorsController::class,'donor_login_process']);
@@ -63,6 +66,7 @@ Route::post('/add_bmi_history',[UsersController::class,'add_bmi_history']);
 Route::get('/history_beneficiary_delete/{id}',[UsersController::class,'history_beneficiary_delete']);
 Route::get('/get_bmi',[UsersController::class,'get_bmi']);
 Route::post('/insert_attendance',[UsersController::class,'insert_attendance']);
+Route::get('/get_attendance',[UsersController::class,'get_attendance']);
 //Donors CRUD
 Route::get('/create_donor',[DonorsController::class,'create_donor']);
 Route::post('/add_donor',[DonorsController::class,'add_donor']);
@@ -94,3 +98,7 @@ Route::get('/edit_event/{id}',[EventsController::class,'edit_event']);
 Route::post('/update_event/{id}',[EventsController::class,'update_event']);
 Route::get('/delete_event/{id}',[EventsController::class,'delete_event']);
 Route::get('/today_event',[EventsController::class,'today_event']);
+
+//LGU Graphs
+Route::get('/chart_barangay',[GraphController::class,'chart_barangay']);
+Route::get('/chart_barangaypie',[GraphController::class,'chart_barangaypie']);

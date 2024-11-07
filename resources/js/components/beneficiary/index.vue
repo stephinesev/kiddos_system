@@ -125,7 +125,7 @@
 		formData.append('username',beneficiary.value.username)
 		formData.append('name',beneficiary.value.name)
 		formData.append('email',beneficiary.value.email)
-		// formData.append('password',beneficiary.value.password)
+		formData.append('password',beneficiary.value.password)
 		formData.append('birth_date',beneficiary.value.birth_date)
 		formData.append('gender',beneficiary.value.gender)
 		formData.append('address',beneficiary.value.address)
@@ -590,8 +590,8 @@
 							</div>
                             <div class="col-lg-6 col-md-6">
 								<div class="form-group">
-									<label class="text-gray-500 m-0" >Password</label>
-									<input type="password" class="form-control" placeholder="Password" value="*******" readonly disabled>
+									<label class="text-gray-500 m-0" >Change Password</label>
+									<input type="password" class="form-control" v-model="beneficiary.password" placeholder="Change Password">
 								</div>
 							</div>
 						</div>

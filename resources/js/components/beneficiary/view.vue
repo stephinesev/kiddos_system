@@ -11,6 +11,7 @@
             default:''
         }
     })
+	let attendance=ref([]);
 	let bmi_list=ref([]);
 	let beneficiary=ref([]);
 	let beneficiary_joinhistoryuser=ref([]);
@@ -37,6 +38,7 @@
 	//Get data from database
 	const getBeneficiary = async () => {
 		let response = await axios.get(`/api/edit_beneficiary/${props.id}`)
+		attendance.value = response.data.attendance
 		beneficiary.value = response.data.beneficiary
 		beneficiary_joinhistoryuser.value = response.data.beneficiary_joinhistoryuser
 		beneficiary_joinhistorybmi.value = response.data.beneficiary_joinhistorybmi
@@ -221,7 +223,7 @@
 						<div class="row">
 							<div class="col-lg-6">
 								<span class="text-sm text-gray-700 font-bold pr-1">Barangay: </span>
-								<span class="text-sm text-gray-700">{{beneficiary.barangay}}</span>
+								<span class="text-sm text-gray-700">{{beneficiary.barangay_name}}</span>
 							</div>
 							<div class="col-lg-6">
 								<span class="text-sm text-gray-700 font-bold pr-1">Address: </span>
@@ -240,7 +242,7 @@
 							</div>
 						</div>
 						<div class="row">
-								<div class="col-lg-12">
+								<div class="col-lg-6">
 									<table class="w-full table-bordered !text-xs mt-3">
 										<tr>
 											<td class=""><input placeholder="#" type="text" v-model="item_no" class="w-full p-1 text-center" disabled></td>
@@ -274,9 +276,9 @@
 												<Bars3Icon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></Bars3Icon>
 											</td>
 										</tr>
-										<tr v-for="(b,indexes) in beneficiary_joinhistoryuser">
+										<!-- <tr v-for="(b,indexes) in beneficiary_joinhistoryuser">
 											<td class="p-1 text-center">{{ indexes + 1 }}</td>
-											<td class="p-1 text-center">{{ moment(b.created_at).format("YYYY-MM-DD") }}</td>
+											<td class="p-1 text-center">{{ moment(b.created_at).format("MMM DD,YYYY") }}</td>
 											<td class="p-1 text-center">{{ b.height }}</td>
 											<td class="p-1 text-center">{{ b.weight }}</td>
 											<td class="p-1">{{ b.bmi }}</td>
@@ -286,10 +288,10 @@
 													<XMarkIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></XMarkIcon>
 												</button>
 											</td>
-										</tr>
+										</tr> -->
 										<tr v-for="(bs,indexesr) in beneficiary_joinhistorybmi">
 											<td class="p-1 text-center">{{ indexesr + 1 + beneficiary_joinhistoryuser.length }}</td>
-											<td class="p-1 text-center">{{ moment(bs.bmi_date).format("YYYY-MM-DD") }}</td>
+											<td class="p-1 text-center">{{ moment(bs.bmi_date).format("MMM DD,YYYY") }}</td>
 											<td class="p-1 text-center">{{ bs.height }}</td>
 											<td class="p-1 text-center">{{ bs.weight }}</td>
 											<td class="p-1">{{ bs.bmi }}</td>
@@ -302,7 +304,7 @@
 										</tr>
 										<tr v-for="(i,index) in bmi_list">
 											<td class="p-1 text-center">{{ index + 1 + beneficiary_joinhistoryuser.length + beneficiary_joinhistorybmi.length  }}</td>
-											<td class="p-1 text-center">{{ i.bmi_date }}</td>
+											<td class="p-1 text-center">{{ moment(i.bmi_date).format("MMM DD,YYYY") }}</td>
 											<td class="p-1 text-center">{{ i.height }}</td>
 											<td class="p-1 text-center">{{ i.weight }}</td>
 											<td class="p-1">{{ i.bmi }}</td>
@@ -312,6 +314,18 @@
 													<XMarkIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></XMarkIcon>
 												</button>
 											</td>
+										</tr>
+									</table>
+								</div>
+								<div class="col-lg-6">
+									<table class="w-full table-bordered !text-xs mt-3">
+										<tr class="bg-gray-100">
+											<td class="p-1 uppercase text-center" width="5%">#</td>
+											<td class="p-1 uppercase text-center" width="15%">Attendance Date</td>
+										</tr>
+										<tr v-for="(a,indexatt) in attendance">
+											<td class="p-1 text-center">{{ indexatt + 1 }}</td>
+											<td class="p-1 text-center">{{ moment(a.attendance_date).format("MMM DD,YYYY") }}</td>
 										</tr>
 									</table>
 								</div>

@@ -187,6 +187,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link !text-gray-600" href="/attendance">
+                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                            <QueueListIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></QueueListIcon>
+                        </i>
+                        <span class="menu-title">Attendance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/bmi_history">
                         <i class="mdi mdi-home menu-icon !text-gray-600">
                             <QueueListIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></QueueListIcon>

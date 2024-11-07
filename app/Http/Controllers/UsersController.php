@@ -96,6 +96,13 @@ class UsersController extends Controller
         $validated['barangay_name']=$barangay_name;
         $validated['role']='Beneficiary';
         $user=User::create($validated);
+        $validated_history['beneficiary_id']=$user->id;
+        $validated_history['weight']=$request->weight;
+        $validated_history['height']=$request->height;
+        $validated_history['bmi']=$request->bmi;
+        $validated_history['nutritional_status']=$request->nutritional_status;
+        $validated_history['bmi_date']=date('Y-m-d H:i:s');
+        BmiHistory::create($validated_history);
         if($user){
             $update_qr=User::where('id',$user->id)->first();
             $qr_name='http://127.0.0.1:8000/beneficiary/view/'.$user->id;
@@ -129,9 +136,11 @@ class UsersController extends Controller
 
     public function edit_beneficiary($id){
         $beneficiary=User::where('id',$id)->first();
+        $attendance=Attendance::where('beneficiary_id',$id)->get();
         $beneficiary_joinhistoryuser=User::where('id',$id)->where('delete_bmi','0')->get();
         $beneficiary_joinhistorybmi=BmiHistory::where('beneficiary_id',$id)->get();
         return response()->json([
+            'attendance'=>$attendance,
             'beneficiary'=>$beneficiary,
             'beneficiary_joinhistoryuser'=>$beneficiary_joinhistoryuser,
             'beneficiary_joinhistorybmi'=>$beneficiary_joinhistorybmi,
@@ -182,6 +191,13 @@ class UsersController extends Controller
                 $variantdata['bmi']=$v->bmi;
                 $variantdata['nutritional_status']=$v->nutritional_status;
                 BmiHistory::create($variantdata);
+
+                $update=User::where('id',$v->beneficiary_id)->first();
+                $variantdataupdate['weight']=$v->weight;
+                $variantdataupdate['height']=$v->height;
+                $variantdataupdate['bmi']=$v->bmi;
+                $variantdataupdate['nutritional_status']=$v->nutritional_status;
+                $update->update($variantdataupdate);
             }
         }
     }
@@ -230,16 +246,16 @@ class UsersController extends Controller
         $beneficiary_joinhistoryuser=User::where('id',Auth::id())->where('delete_bmi','0')->get();
         $beneficiary_joinhistorybmi=BmiHistory::where('beneficiary_id',Auth::id())->get();
         $beneficiaryfirst=[];
-        foreach($beneficiary_joinhistoryuser AS $b){
-            $beneficiaryfirst[]=[
-                'id'=>$b->id,
-                '<center>'.date('F d,Y',strtotime($b->created_at)).'</center>',
-                '<center>'.$b->height.'</center>',
-                '<center>'.$b->weight.'</center>',
-                '<center>'.$b->bmi.'</center>',
-                '<center>'.$b->nutritional_status.'</center>',
-            ];
-        }
+        // foreach($beneficiary_joinhistoryuser AS $b){
+        //     $beneficiaryfirst[]=[
+        //         'id'=>$b->id,
+        //         '<center>'.date('F d,Y',strtotime($b->created_at)).'</center>',
+        //         '<center>'.$b->height.'</center>',
+        //         '<center>'.$b->weight.'</center>',
+        //         '<center>'.$b->bmi.'</center>',
+        //         '<center>'.$b->nutritional_status.'</center>',
+        //     ];
+        // }
         foreach($beneficiary_joinhistorybmi AS $be){
             $beneficiaryfirst[]=[
                 'id'=>$be->id,
@@ -272,7 +288,8 @@ class UsersController extends Controller
             'birth_date'=>'',
             'gender'=>'',
             'address'=>'',
-            'status'=>''
+            'status'=>'',
+            'role'=>''
         ];
         return response()->json($formData);
     }
@@ -287,13 +304,14 @@ class UsersController extends Controller
                 'gender'=>['required','string'],
                 'address'=>['required','string'],
                 'status'=>['required','string'],
+                'role'=>['required','string'],
         ]);
-        $validated['role']='Admin';
+        // $validated['role']='LGU Admin';
         User::create($validated);
     }
 
     public function get_admin(){
-        $admin=User::where('role','Admin')->orderBy('name','ASC')->get();
+        $admin=User::where('role','Admin')->orWhere('role','Admin LGU')->orderBy('name','ASC')->get();
         $adminall=[];
         foreach($admin AS $b){
             $adminall[]=[
@@ -302,6 +320,7 @@ class UsersController extends Controller
                 $b->gender,
                 $b->email,
                 $b->address,
+                $b->role,
                 $b->status,
                 ''
             ];
@@ -334,5 +353,48 @@ class UsersController extends Controller
     public function delete_admin($id){
         $deleted = User::find($id);
         $deleted->delete();
+    }
+
+    public function login_process_lgu(Request $request){
+        $credentials = [
+            'username' => $request->username,
+            'password' => $request->password,
+            'status' => 'Active',
+            'role' => 'Admin LGU',
+        ];
+        if(Auth::attempt($credentials)) {
+            $user = $request->user();
+            $success['token'] = $user->createToken('MyApp')->plainTextToken;
+            $success['name'] = $user->username;
+            $response = [
+                'success' => true,
+                'data' => $success,
+                'message' => 'Admin LGU login successfully'
+            ];
+            return response()->json($response, 200);
+        } else {
+            $response = [
+                'success' => false,
+                'message' => 'Unauthorized'
+            ];
+            return response()->json($response,200);     
+        }
+    }
+
+    public function get_attendance(){
+        $attendance=Attendance::where('beneficiary_id',Auth::id())->orderBy('created_at','ASC')->get();
+        $attendanceall=[];
+        $x=1;
+        foreach($attendance AS $b){
+            $attendanceall[]=[
+                'id'=>$b->id,
+                "<center>".$x."</center>",
+                "<center>".date('F d,Y',strtotime($b->attendance_date))."</center>",
+            ];
+            $x++;
+        }
+        return response()->json([
+            'attendanceall'=>$attendanceall,
+        ],200);
     }
 }

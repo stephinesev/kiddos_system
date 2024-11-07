@@ -97,10 +97,10 @@
 		}
 	}
 	//Decline function
-	const declineDonation = (id) => {
+	const declineDonation = (id,donor_id,event_id) => {
 		var confirmation = confirm("Do you want to decline this donation?");
 		if (confirmation == true) {
-			axios.get(`/api/decline_donation/`+id).then(function () {
+			axios.get(`/api/decline_donation/`+id+'/'+donor_id+'/'+event_id).then(function () {
 				success.value='Successfully declined donation!'
 				error.value=[]
 				// getDonations()
@@ -147,9 +147,9 @@
             </div>
         </div>
 		<div class="row">
-            <div class="col-lg-12 stretch-card">
+            <div class="col-lg-12 stretch-card" >
                 <div class="card">
-                    <div class="card-body !px-20 !py-10">
+                    <div :class=" (donations.status==2) ? 'card-body !px-20 !py-10 bg-red-200' : 'card-body !px-20 !py-10'">
 						<div class="row">
                             <div class="col-lg-12">
                                 <div class="">

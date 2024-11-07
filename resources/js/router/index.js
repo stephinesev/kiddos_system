@@ -28,6 +28,7 @@ import BeneUI_Donate from '../components/beneficiary_ui/donate.vue'
 import BeneUI_DonorProfile from '../components/beneficiary_ui/beneficiary_profile.vue'
 import BeneUI_Register from '../components/beneficiary_ui/register.vue'
 import BeneUI_History from '../components/beneficiary_ui/view.vue'
+import BeneUI_Attendance from '../components/beneficiary_ui/attendance_list.vue'
 
 import LguUI_Index from '../components/lgu_ui/index.vue'
 import LguUI_Dashboard from '../components/lgu_ui/dashboard.vue'
@@ -200,6 +201,13 @@ const routes = [
             requiresAuth:true
         }
     },
+    {
+        path:'/attendance/',
+        component: BeneUI_Attendance,
+        meta:{
+            requiresAuth:true
+        }
+    },
 
 
     {
@@ -213,7 +221,7 @@ const routes = [
         path:'/lgu_dashboard/',
         component: LguUI_Dashboard,
         meta:{
-            requiresAuth:false
+            requiresAuth:true
         }
     },
     // {

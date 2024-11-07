@@ -4,16 +4,16 @@
     import { useRouter } from "vue-router"
 	const router = useRouter() //use if link is used inside the page
 	let form = reactive({
-        email:'',
+        username:'',
         password:'',
     })
     let error = ref('')
     const login = async () =>{
-        await axios.post('/api/donor_login_process', form)
+        await axios.post('/api/login_process_lgu', form)
         .then(response =>{
             if(response.data.success){
                 localStorage.setItem('token', response.data.data.token)
-                router.push('/donor_dashboard')
+                router.push('/lgu_dashboard')
             } else {
                 error.value = response.data.message;
             }
@@ -40,14 +40,14 @@
 							</div>
 							<form class="pt-3" @submit.prevent="login">
 								<div class="form-group">
-									<label for="exampleInputEmail">Email Address</label>
+									<label for="exampleInputEmail">Username</label>
 									<div class="input-group">
 										<div class="input-group-prepend bg-transparent">
 											<span class="input-group-text bg-transparent border-right-0">
 												<UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" w-5 h-5"></UserIcon>
 											</span>
 										</div>
-										<input type="email" class="form-control form-control-lg border-left-0 pl-1" v-model="form.email" id="exampleInputEmail" placeholder="Email Address">
+										<input type="text" class="form-control form-control-lg border-left-0 pl-1" v-model="form.username" id="exampleInputEmail" placeholder="Username">
 									</div>
 								</div>
 								<div class="form-group">

@@ -175,7 +175,7 @@ class DonationsController extends Controller
             Notifications::create($validated_notif);
         }
     }
-    public function decline_donation($id,$donor_id,$event_id){
+    public function decline_donation($id,$donor_id,$event_id) {
         $update=Donations::where('id',$id)->first();
         $declined['status']='2';
         $update->update($declined);

@@ -76,8 +76,14 @@
 	const getData = async (id) => {
 		let response = await axios.get("/api/edit_beneficiary/"+id);
 		beneficiary.value = response.data.beneficiary;
-        if(beneficiary.value.status=='Inactive'){
-            beneficiary.value=[]
+        console.log(beneficiary.value)
+        if(beneficiary.value!=null){
+            if(beneficiary.value.status=='Inactive'){
+                beneficiary.value=[]
+                error.value='Beneficiary QR code do not exists!'
+                warningAlert.value = !warningAlert.value
+            }
+        }else{
             error.value='Beneficiary QR code do not exists!'
             warningAlert.value = !warningAlert.value
         }
