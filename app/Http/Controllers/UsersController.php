@@ -397,4 +397,5 @@ class UsersController extends Controller
             'attendanceall'=>$attendanceall,
         ],200);
     }
+
 }

@@ -22,6 +22,7 @@
 	let beneficiary=ref([]);
 	let beneficiaryall=ref([]);
 	let error = ref('')
+	let status_color = ref('')	
 	// let error = ref([])
 	let success = ref('')	
 	const warningAlert = ref(false)
@@ -286,6 +287,44 @@
 	const showTransaction = (id) => {
 		router.push('/beneficiary/view/'+id)
 	}
+
+	const formatNumber = (number) => {
+      return number.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    } 
+	
+	const calculateBmi = () => {
+      // Convert height from cm to meters (1 cm = 0.01 m)
+      const heightInMeters = form.value.height / 100;
+      // Calculate BMI
+	  if(form.value.weight!='' && form.value.height!=''){
+		form.value.bmi = formatNumber(form.value.weight / (heightInMeters * heightInMeters));
+		var bmi = formatNumber(form.value.weight / (heightInMeters * heightInMeters));
+		// Categorize BMI
+		form.value.nutritional_status = getBmiCategory(bmi);
+	  }
+    }
+
+	const getBmiCategory = (bmi) => {
+		if (formatNumber(bmi) < 18.5) {
+			status_color.value="#ADD8E6"
+            return 'Underweight';
+        } else if (formatNumber(bmi) >= 18.5 && formatNumber(bmi) <= 24.9) {
+			status_color.value="#90EE90"
+            return 'Normal weight';
+        } else if (formatNumber(bmi) >= 25 && formatNumber(bmi) <= 29.9) {
+			status_color.value="#FFFF00"
+            return 'Overweight';
+        } else if (formatNumber(bmi) >= 30 && formatNumber(bmi) <= 34.9) {
+			status_color.value="#FFA500"
+            return 'Obesity Class I';
+        } else if (formatNumber(bmi) >= 35 && formatNumber(bmi) <= 39.9) {
+			status_color.value="#FF5349"
+            return 'Obesity Class II';
+        } else if (formatNumber(bmi) > 40) {
+			status_color.value="#ff4242"
+            return 'Obesity Class III';
+        }
+    }
 </script>
 <style>
 	select{
@@ -505,13 +544,13 @@
 							<div class="col-lg-6 col-md-6">
 								<div class="form-group">
 									<label class="text-gray-500 m-0" for="">Weight</label>
-									<input type="text" class="form-control" placeholder="Weight" v-model="form.weight">
+									<input type="text" class="form-control" placeholder="Weight" v-model="form.weight" @keyup="calculateBmi()">
 								</div>
 							</div>
                             <div class="col-lg-6 col-md-6">
 								<div class="form-group">
-									<label class="text-gray-500 m-0" >Height</label>
-									<input type="text" class="form-control" placeholder="Height" v-model="form.height">
+									<label class="text-gray-500 m-0" >Height (cm)</label>
+									<input type="text" class="form-control" placeholder="Height (cm)" v-model="form.height" @keyup="calculateBmi()">
 								</div>
 							</div>
 						</div>
@@ -519,19 +558,21 @@
 							<div class="col-lg-6 col-md-6">
 								<div class="form-group">
 									<label class="text-gray-500 m-0" for="">Nutritional Status</label>
-									<select class="form-control text-black-500" v-model="form.nutritional_status">
+									<select class="form-control text-black-500" v-model="form.nutritional_status" :style="'pointer-events: none; background-color:'+status_color">
                                         <option value="">--Select Nutritional Status--</option>
                                         <option value="Underweight">Underweight</option>
                                         <option value="Normal weight">Normal weight</option>
                                         <option value="Overweight">Overweight</option>
-                                        <option value="Obesity">Obesity</option>
+                                        <option value="Obesity Class I">Obesity Class I</option>
+                                        <option value="Obesity Class II">Obesity Class II</option>
+                                        <option value="Obesity Class III">Obesity Class III</option>
                                     </select>
 								</div>
 							</div>
                             <div class="col-lg-6 col-md-6">
 								<div class="form-group">
 									<label class="text-gray-500 m-0" >BMI</label>
-									<input type="text" class="form-control" placeholder="BMI" v-model="form.bmi">
+									<input type="text" class="form-control" placeholder="BMI" v-model="form.bmi" readonly>
 								</div>
 							</div>
 						</div>

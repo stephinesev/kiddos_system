@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Barangay;
@@ -16,12 +16,18 @@ class GraphController extends Controller
         $data_barangay_underweight=[];
         $data_barangay_overweight=[];
         $data_barangay_obesity=[];
+        $data_barangay_obesity2=[];
+        $data_barangay_obesity3=[];
+        $endDate = Carbon::now();
+        $startDate = Carbon::now()->subMonths(6);
         foreach($barangay_loop as $b){
             $barangay[]=$b->barangay_name;
             $data_barangay_normal[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Normal weight')->count();
             $data_barangay_underweight[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Underweight')->count();
             $data_barangay_overweight[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Overweight')->count();
-            $data_barangay_obesity[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity')->count();
+            $data_barangay_obesity[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity Class I')->count();
+            $data_barangay_obesity2[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity Class II')->count();
+            $data_barangay_obesity3[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity Class III')->count();
             // $data_barangay_normal[]=BmiHistory::select('beneficiary_id')->distinct()->join('users', 'users.id', '=', 'bmi_history.beneficiary_id')->where('barangay',$b->id)->where('bmi_history.nutritional_status','Normal weight')->orderByDesc('bmi_date')->count();
             // $data_barangay_underweight[]=BmiHistory::select('beneficiary_id')->distinct()->join('users', 'users.id', '=', 'bmi_history.beneficiary_id')->where('barangay',$b->id)->where('bmi_history.nutritional_status','Underweight')->orderByDesc('bmi_date')->count();
             // $data_barangay_overweight[]=BmiHistory::select('beneficiary_id')->distinct()->join('users', 'users.id', '=', 'bmi_history.beneficiary_id')->where('barangay',$b->id)->where('bmi_history.nutritional_status','Overweight')->orderByDesc('bmi_date')->count();
@@ -34,6 +40,8 @@ class GraphController extends Controller
             'data_barangay_underweight' => $data_barangay_underweight,
             'data_barangay_overweight' => $data_barangay_overweight,
             'data_barangay_obesity' => $data_barangay_obesity,
+            'data_barangay_obesity2' => $data_barangay_obesity2,
+            'data_barangay_obesity3' => $data_barangay_obesity3,
         ];
         return response()->json($data);
     }
@@ -44,17 +52,24 @@ class GraphController extends Controller
         $data_barangay_pie=[];
         $data_barangay_underweight=[];
         $data_barangay_overweight=[];
-        $data_barangay_obesity=[];
+        $data_barangay_obesity1=[];
+        $data_barangay_obesity2=[];
+        $data_barangay_obesity3=[];
         $dividenormal=0;
         $divideunderweight=0;
         $divideoverweight=0;
-        $divideobisiity=0;
+        $divideobisiity1=0;
+        $divideobisiity2=0;
+        $divideobisiity3=0;
         foreach($barangay_loop as $b){
             $barangay[]=$b->barangay_name;
             $dividenormal=User::where('role','Beneficiary')->where('status','Active')->where('barangay','!=','0')->where('nutritional_status','Normal weight')->count();
             $divideunderweight=User::where('role','Beneficiary')->where('status','Active')->where('barangay','!=','0')->where('nutritional_status','Underweight')->count();
             $divideoverweight=User::where('role','Beneficiary')->where('status','Active')->where('barangay','!=','0')->where('nutritional_status','Overweight')->count();
-            $divideobisiity=User::where('role','Beneficiary')->where('status','Active')->where('barangay','!=','0')->where('nutritional_status','Obesity')->count();
+
+            $divideobisiity1=User::where('role','Beneficiary')->where('status','Active')->where('barangay','!=','0')->where('nutritional_status','Obesity Class I')->count();
+            $divideobisiity2=User::where('role','Beneficiary')->where('status','Active')->where('barangay','!=','0')->where('nutritional_status','Obesity Class II')->count();
+            $divideobisiity3=User::where('role','Beneficiary')->where('status','Active')->where('barangay','!=','0')->where('nutritional_status','Obesity Class III')->count();
             // $divide=User::where('role','Beneficiary')->where('status','Active')->orderByDesc('nutritional_status')->count();
             if($dividenormal!==0){
                 $data_barangay_pie[]=(User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Normal weight')->orderByDesc('nutritional_status')->count() / $dividenormal)  * 100;
@@ -73,10 +88,20 @@ class GraphController extends Controller
                 $data_barangay_overweight[]=0;
             }
 
-            if($divideobisiity!==0){
-                $data_barangay_obesity[]=(User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity')->count() / $divideobisiity)  * 100;
+            if($divideobisiity1!==0){
+                $data_barangay_obesity1[]=(User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity Class I')->count() / $divideobisiity1)  * 100;
             }else{
-                $data_barangay_obesity[]=0;
+                $data_barangay_obesity1[]=0;
+            }
+            if($divideobisiity2!==0){
+                $data_barangay_obesity2[]=(User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity Class II')->count() / $divideobisiity2)  * 100;
+            }else{
+                $data_barangay_obesity2[]=0;
+            }
+            if($divideobisiity3!==0){
+                $data_barangay_obesity3[]=(User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity Class III')->count() / $divideobisiity3)  * 100;
+            }else{
+                $data_barangay_obesity3[]=0;
             }
         }
         $data = [
@@ -84,7 +109,9 @@ class GraphController extends Controller
             'data_barangay_pie' => $data_barangay_pie,
             'data_barangay_underweightpie' => $data_barangay_underweight,
             'data_barangay_overweightpie' => $data_barangay_overweight,
-            'data_barangay_obesitypie' => $data_barangay_obesity,
+            'data_barangay_obesitypie1' => $data_barangay_obesity1,
+            'data_barangay_obesitypie2' => $data_barangay_obesity2,
+            'data_barangay_obesitypie3' => $data_barangay_obesity3,
         ];
         return response()->json($data);
     }

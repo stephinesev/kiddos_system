@@ -19,11 +19,12 @@
 	let item_no=ref();
 	let height=ref('');
 	let weight=ref('');
-	let bmi=ref('');
+	let bmis=ref('');
 	let bmi_date=ref('');
 	let error = ref([])
 	let error_items = ref([]);
 	let success = ref('')	
+	let status_color = ref('')	
 	let nutritional_status=ref('');
 	const dangerAlert = ref(false)
 	const dangerAlert_item = ref(false)
@@ -115,7 +116,7 @@
 		}else if(weight.value == ''){
 			document.getElementById('weight_check').placeholder="Weight must not be empty!"
 			document.getElementById('weight_check').style.backgroundColor = '#FAA0A0';
-		}else if(bmi.value == ''){
+		}else if(bmis.value == ''){
 			document.getElementById('bmi_check').placeholder="BMI must not be empty!"
 			document.getElementById('bmi_check').style.backgroundColor = '#FAA0A0';
 		}else if(nutritional_status.value == ''){
@@ -128,16 +129,22 @@
 				bmi_date:bmi_date.value,
 				height:height.value,
 				weight:weight.value,
-				bmi:bmi.value,
+				bmi:bmis.value,
 				nutritional_status:nutritional_status.value
 			}
+			document.getElementById('date_check').style.backgroundColor = '#FFFFFF';
+			document.getElementById('height_check').style.backgroundColor = '#FFFFFF';
+			document.getElementById('weight_check').style.backgroundColor = '#FFFFFF';
+			document.getElementById('bmi_check').style.backgroundColor = '#FFFFFF';
+			document.getElementById('nutritional_status_check').style.backgroundColor = '#FFFFFF';
 			document.getElementById("save_btn").style.display="block"
 			bmi_list.value.push(bmi_details)
 			bmi_date.value='';
 			height.value='';
 			weight.value='';
-			bmi.value='';
+			bmis.value='';
 			nutritional_status.value='';
+			status_color.value='';
 		}
 	}
 
@@ -185,6 +192,44 @@
 			});
 		}
 	}
+	const formatNumber = (number) => {
+      return number.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    }
+	const calculateBmi = () => {
+      // Convert height from cm to meters (1 cm = 0.01 m)
+      const heightInMeters = height.value / 100;
+      // Calculate BMI
+	  if(heightInMeters!=0){
+		bmis.value = formatNumber(weight.value / (heightInMeters * heightInMeters));
+		// alert(bmi.value)
+		var bmi = formatNumber(weight.value / (heightInMeters * heightInMeters));
+		// Categorize BMI
+		
+		nutritional_status.value = getBmiCategory(bmi);
+	  }
+    }
+
+	const getBmiCategory = (bmi) => {
+		if (formatNumber(bmi) < 18.5) {
+			status_color.value="#ADD8E6"
+            return 'Underweight';
+        } else if (formatNumber(bmi) >= 18.5 && formatNumber(bmi) <= 24.9) {
+			status_color.value="#90EE90"
+            return 'Normal weight';
+        } else if (formatNumber(bmi) >= 25 && formatNumber(bmi) <= 29.9) {
+			status_color.value="#FFFF00"
+            return 'Overweight';
+        } else if (formatNumber(bmi) >= 30 && formatNumber(bmi) <= 34.9) {
+			status_color.value="#FFA500"
+            return 'Obesity Class I';
+        } else if (formatNumber(bmi) >= 35 && formatNumber(bmi) <= 39.9) {
+			status_color.value="#FF5349"
+            return 'Obesity Class II';
+        } else if (formatNumber(bmi) > 40) {
+			status_color.value="#ff4242"
+            return 'Obesity Class III';
+        }
+    }
 </script>
 <template>
 	<navigation>
@@ -247,16 +292,18 @@
 										<tr>
 											<td class=""><input placeholder="#" type="text" v-model="item_no" class="w-full p-1 text-center" disabled></td>
 											<td class=""><input placeholder="Date" id="date_check" type="date" v-model="bmi_date" class="w-full p-1 text-center"></td>
-											<td class=""><input placeholder="Height" id="height_check" type="text" v-model="height" class="w-full p-1 text-center"></td>
-											<td class=""><input placeholder="Weight" id="weight_check" type="text" v-model="weight" class="w-full p-1 text-center"></td>
-											<td class=""><input placeholder="BMI" id="bmi_check" type="text" v-model="bmi" class="w-full p-1"></td>
+											<td class=""><input placeholder="Weight" id="weight_check" type="text" v-model="weight" @keyup="calculateBmi()" class="w-full p-1 text-center"></td>
+											<td class=""><input placeholder="Height (cm)" id="height_check" type="text" v-model="height" @keyup="calculateBmi()" class="w-full p-1 text-center"></td>
+											<td class=""><input placeholder="BMI" id="bmi_check" type="text" v-model="bmis" class="w-full p-1" readonly></td>
 											<td class="">
-												<select class="w-full p-1 text-black-500" id="nutritional_status_check" v-model="nutritional_status">
+												<select class="w-full p-1 text-black-500" id="nutritional_status_check" v-model="nutritional_status" :style="'pointer-events: none; background-color:'+status_color">
 													<option value="">--Select Nutritional Status--</option>
 													<option value="Underweight">Underweight</option>
 													<option value="Normal weight">Normal weight</option>
 													<option value="Overweight">Overweight</option>
-													<option value="Obesity">Obesity</option>
+													<option value="Obesity Class I">Obesity Class I</option>
+													<option value="Obesity Class II">Obesity Class II</option>
+													<option value="Obesity Class III">Obesity III</option>
 												</select>
 											</td>
 											<td class="text-center">
@@ -268,8 +315,8 @@
 										<tr class="bg-gray-100">
 											<td class="p-1 uppercase text-center" width="5%">#</td>
 											<td class="p-1 uppercase text-center" width="15%">Date</td>
-											<td class="p-1 uppercase text-center" width="15%">Height</td>
 											<td class="p-1 uppercase text-center" width="15%">Weight</td>
+											<td class="p-1 uppercase text-center" width="15%">Height</td>
 											<td class="p-1 uppercase" width="20%">BMI</td>
 											<td class="p-1 uppercase" width="">Nutritional Status</td>
 											<td class="p-1 space-x-auto uppercase text-center" align="center" width="1%">
@@ -292,8 +339,8 @@
 										<tr v-for="(bs,indexesr) in beneficiary_joinhistorybmi">
 											<td class="p-1 text-center">{{ indexesr + 1 + beneficiary_joinhistoryuser.length }}</td>
 											<td class="p-1 text-center">{{ moment(bs.bmi_date).format("MMM DD,YYYY") }}</td>
-											<td class="p-1 text-center">{{ bs.height }}</td>
 											<td class="p-1 text-center">{{ bs.weight }}</td>
+											<td class="p-1 text-center">{{ bs.height }}</td>
 											<td class="p-1">{{ bs.bmi }}</td>
 											<td class="p-1">{{ bs.nutritional_status }}</td>
 											<td class="text-center">
@@ -303,10 +350,10 @@
 											</td>
 										</tr>
 										<tr v-for="(i,index) in bmi_list">
-											<td class="p-1 text-center">{{ index + 1 + beneficiary_joinhistoryuser.length + beneficiary_joinhistorybmi.length  }}</td>
+											<td class="p-1 text-center">{{ index + 1 + beneficiary_joinhistoryuser.length }}</td>
 											<td class="p-1 text-center">{{ moment(i.bmi_date).format("MMM DD,YYYY") }}</td>
-											<td class="p-1 text-center">{{ i.height }}</td>
 											<td class="p-1 text-center">{{ i.weight }}</td>
+											<td class="p-1 text-center">{{ i.height }}</td>
 											<td class="p-1">{{ i.bmi }}</td>
 											<td class="p-1">{{ i.nutritional_status }}</td>
 											<td class="text-center">
