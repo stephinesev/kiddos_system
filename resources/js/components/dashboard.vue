@@ -157,7 +157,11 @@ export default {
 					},
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Children'
+                            }
                         }
                     }
                 }
@@ -167,7 +171,7 @@ export default {
             fetch('/api/chart_barangaypie')
                 .then(response => response.json())
                 .then(data => {
-                    this.labels = data.labels;
+                    this.labelss = data.labels;
                     this.data_barangay_pie = data.data_barangay_pie;
                     this.data_barangay_underweightpie = data.data_barangay_underweightpie;
                     this.data_barangay_overweightpie = data.data_barangay_overweightpie;
@@ -182,7 +186,7 @@ export default {
             this.chart2 = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: this.labels,
+                    labels: this.labelss,
                     datasets: [{
                             label: 'Normal',
                             data: this.data_barangay_pie,
@@ -570,7 +574,7 @@ export default {
 			<div class="col-md-5 grid-margin stretch-card">
 				<div class="card">
 					<div class="card-body dashboard-tabs p-0">
-						Children Health Status (BMI) Across {{counts}} Barangay
+						Children Health Status (BMI) in Barangay Over 6 Months
                         <canvas ref="lineChart"></canvas>
 					</div>
 					<br>

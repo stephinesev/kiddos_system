@@ -20,22 +20,31 @@ class GraphController extends Controller
         $data_barangay_obesity3=[];
         $endDate = Carbon::now();
         $startDate = Carbon::now()->subMonths(6);
-        foreach($barangay_loop as $b){
-            $barangay[]=$b->barangay_name;
-            $data_barangay_normal[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Normal weight')->count();
-            $data_barangay_underweight[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Underweight')->count();
-            $data_barangay_overweight[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Overweight')->count();
-            $data_barangay_obesity[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity Class I')->count();
-            $data_barangay_obesity2[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity Class II')->count();
-            $data_barangay_obesity3[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity Class III')->count();
-            // $data_barangay_normal[]=BmiHistory::select('beneficiary_id')->distinct()->join('users', 'users.id', '=', 'bmi_history.beneficiary_id')->where('barangay',$b->id)->where('bmi_history.nutritional_status','Normal weight')->orderByDesc('bmi_date')->count();
-            // $data_barangay_underweight[]=BmiHistory::select('beneficiary_id')->distinct()->join('users', 'users.id', '=', 'bmi_history.beneficiary_id')->where('barangay',$b->id)->where('bmi_history.nutritional_status','Underweight')->orderByDesc('bmi_date')->count();
-            // $data_barangay_overweight[]=BmiHistory::select('beneficiary_id')->distinct()->join('users', 'users.id', '=', 'bmi_history.beneficiary_id')->where('barangay',$b->id)->where('bmi_history.nutritional_status','Overweight')->orderByDesc('bmi_date')->count();
-            // $data_barangay_obesity[]=BmiHistory::select('beneficiary_id')->distinct()->join('users', 'users.id', '=', 'bmi_history.beneficiary_id')->where('barangay',$b->id)->where('bmi_history.nutritional_status','Obesity')->orderByDesc('bmi_date')->count();
+        // foreach($barangay_loop as $b){
+        //     $barangay[]=$b->barangay_name;
+        //     $data_barangay_normal[]=User::join('bmi_history', 'bmi_history.beneficiary_id', '=', 'users.id')->where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('bmi_history.nutritional_status','Normal weight')->whereMonth('bmi_history.bmi_date','09')->count();
+        //     $data_barangay_underweight[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Underweight')->count();
+        //     $data_barangay_overweight[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Overweight')->count();
+        //     $data_barangay_obesity[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity Class I')->count();
+        //     $data_barangay_obesity2[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity Class II')->count();
+        //     $data_barangay_obesity3[]=User::where('role','Beneficiary')->where('status','Active')->where('barangay',$b->id)->where('nutritional_status','Obesity Class III')->count();
+        // }
+        $months = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $month = Carbon::now()->subMonths($i)->format('F'); // Get month names (e.g., January, February)
+            $month_disp = Carbon::now()->subMonths($i)->format('m'); // Get month names (e.g., January, February)
+            $months[] = $month;
+            $data_barangay_normal[]=User::join('bmi_history', 'bmi_history.beneficiary_id', '=', 'users.id')->where('role','Beneficiary')->where('status','Active')->where('bmi_history.nutritional_status','Normal weight')->whereMonth('bmi_history.bmi_date',$month_disp)->count();
+
+            $data_barangay_underweight[]=User::join('bmi_history', 'bmi_history.beneficiary_id', '=', 'users.id')->where('role','Beneficiary')->where('status','Active')->where('bmi_history.nutritional_status','Underweight')->whereMonth('bmi_history.bmi_date',$month_disp)->count();
+            $data_barangay_overweight[]=User::join('bmi_history', 'bmi_history.beneficiary_id', '=', 'users.id')->where('role','Beneficiary')->where('status','Active')->where('bmi_history.nutritional_status','Overweight')->whereMonth('bmi_history.bmi_date',$month_disp)->count();
+            $data_barangay_obesity[]=User::join('bmi_history', 'bmi_history.beneficiary_id', '=', 'users.id')->where('role','Beneficiary')->where('status','Active')->where('bmi_history.nutritional_status','Obesity Class I')->whereMonth('bmi_history.bmi_date',$month_disp)->count();
+            $data_barangay_obesity2[]=User::join('bmi_history', 'bmi_history.beneficiary_id', '=', 'users.id')->where('role','Beneficiary')->where('status','Active')->where('bmi_history.nutritional_status','Obesity Class II')->whereMonth('bmi_history.bmi_date',$month_disp)->count();
+            $data_barangay_obesity3[]=User::join('bmi_history', 'bmi_history.beneficiary_id', '=', 'users.id')->where('role','Beneficiary')->where('status','Active')->where('bmi_history.nutritional_status','Obesity Class III')->whereMonth('bmi_history.bmi_date',$month_disp)->count();
         }
         $data = [
             // 'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            'labels' => $barangay,
+            'labels' => $months,
             'data_barangay_normal' => $data_barangay_normal,
             'data_barangay_underweight' => $data_barangay_underweight,
             'data_barangay_overweight' => $data_barangay_overweight,

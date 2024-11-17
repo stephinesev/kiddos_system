@@ -7,7 +7,7 @@
     onMounted(async () => {
 		getDashboard()
         intervalId = setInterval(() => {
-			getNotification();
+			// getNotification();
   		}, 800);
 	})
     const router = useRouter() //use if link is used inside the page

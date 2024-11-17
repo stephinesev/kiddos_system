@@ -20,6 +20,7 @@
 	let form=ref([]);
 	let admin=ref([]);
 	let adminall=ref([]);
+	let admin_attendance=ref([]);
 	let error = ref('')
 	// let error = ref([])
 	let success = ref('')	
@@ -155,6 +156,7 @@
 	//Modal Popup Variables
     const modalNew = ref(false)
     const modalEdit = ref(false)
+    const modalAttendance = ref(false)
 	const hideModal = ref(true)
 	const openNew = () => {
 		modalNew.value = !modalNew.value
@@ -164,9 +166,15 @@
 		admin.value=response.data.admin
 		modalEdit.value = !modalEdit.value
 	}
+	const openAttendance = async (id) => {
+		let response =  await axios.get(`/api/get_admin_attendance/`+id);
+		admin_attendance.value = response.data.admin_attendance;
+		modalAttendance.value = !modalAttendance.value
+	}
 	const closeModal = () => {
 		modalNew.value = !hideModal.value
 		modalEdit.value = !hideModal.value
+		modalAttendance.value = !hideModal.value
 	}
 
 	const closeAlert = () => {
@@ -247,6 +255,9 @@
                                 </thead>
                                 <template #column-6="props">
 									<center>
+										<button @click="openAttendance(props.rowData.id)" class="btn btn-xs btn-success text-white p-1" title="View Attendance">
+											<EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></EyeIcon>
+										</button >
 										<button @click="openEdit(props.rowData.id)" class="btn btn-xs btn-info text-white p-1">
 											<PencilIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></PencilIcon>
 										</button >
@@ -261,6 +272,42 @@
                 </div>
             </div>
         </div>
+		<!-- ATTENDANCE ALERT MODAL -->
+		<Transition
+            enter-active-class="transition ease-out duration-200"
+            enter-from-class="opacity-0 scale-95"
+            enter-to-class="opacity-100 scale-100"
+            leave-active-class="transition ease-in duration-75"
+            leave-from-class="opacity-100 scale-100"
+            leave-to-class="opacity-0 scale-95"
+			>
+			<div class="modal pt-4 px-3" :class="{ show:modalAttendance }">
+				<div @click="closeModal" class="w-full h-full fixed"></div>
+				<div class="modal__content w-6/12">
+					<div class="row mb-3">
+						<div class="col-lg-12 flex justify-between">
+							<span class="font-bold ">View Attendance</span>
+							<a href="#" class="text-gray-600" @click="closeModal">
+								<XMarkIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4"></XMarkIcon>
+							</a>
+						</div>
+					</div>
+					<hr class="mt-0">
+					<div class="modal_s_items ">
+                        <table class="w-full table-bordered !text-xs mt-3">
+							<tr class="bg-gray-100">
+								<td class="p-1 uppercase text-center" width="5%">#</td>
+								<td class="p-1 uppercase text-center" width="15%">Attendance Date</td>
+							</tr>
+							<tr v-for="(a,indexatt) in admin_attendance">
+								<td class="p-1 text-center">{{ indexatt + 1 }}</td>
+								<td class="p-1 text-center">{{ moment(a.attendance_date).format("MMM DD,YYYY") }}</td>
+							</tr>
+						</table>
+					</div> 
+				</div>
+			</div>
+		</Transition>
 		<!-- ADD ADMIN MODAL -->
         <Transition
             enter-active-class="transition ease-out duration-200"

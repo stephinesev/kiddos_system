@@ -276,6 +276,7 @@ class UsersController extends Controller
     public function insert_attendance(Request $request){
         $validated['beneficiary_id']=$request->beneficiary_id;
         $validated['attendance_date']=$request->attendance_date;
+        $validated['user_id']=Auth::id();
         Attendance::create($validated);
     }
 
@@ -395,6 +396,13 @@ class UsersController extends Controller
         }
         return response()->json([
             'attendanceall'=>$attendanceall,
+        ],200);
+    }
+
+    public function get_admin_attendance($id){
+        $admin_attendance=Attendance::where('user_id',$id)->get();
+        return response()->json([
+            'admin_attendance'=>$admin_attendance,
         ],200);
     }
 

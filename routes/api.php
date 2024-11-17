@@ -67,6 +67,7 @@ Route::get('/history_beneficiary_delete/{id}',[UsersController::class,'history_b
 Route::get('/get_bmi',[UsersController::class,'get_bmi']);
 Route::post('/insert_attendance',[UsersController::class,'insert_attendance']);
 Route::get('/get_attendance',[UsersController::class,'get_attendance']);
+Route::get('/get_admin_attendance/{id}',[UsersController::class,'get_admin_attendance']);
 //Donors CRUD
 Route::get('/create_donor',[DonorsController::class,'create_donor']);
 Route::post('/add_donor',[DonorsController::class,'add_donor']);

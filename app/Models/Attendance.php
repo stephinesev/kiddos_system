@@ -11,6 +11,7 @@ class Attendance extends Model
     protected $table="attendance";
     protected $fillable=[
         'beneficiary_id',
-        'attendance_date'
+        'attendance_date',
+        'user_id'
     ];
 }
