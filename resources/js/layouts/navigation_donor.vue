@@ -118,8 +118,8 @@
                 <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">  
                 <!-- <a class="navbar-brand brand-logo" href="index.html">\PURCHASING</a>
                 <a class="navbar-brand brand-logo-mini" href="index.html"><img src="" alt="logo"/>P</a> -->
-                    <div class="text-2xl uppercase font-bold text-orange-500 w-full text-center">
-                        KIDDOS
+                    <div class="text-2xl uppercase w-full text-center">
+                        <a class="navbar-brand brand-logo pb-0 pt-2" href="index.html"><img class="!h-[50px]" src="../../images/logo.png" alt="logo"/></a>
                     </div>
                     <button class="navbar-toggler navbar-toggler align-self-center"  @click="toggleSidebar" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
@@ -129,22 +129,24 @@
                     </button> -->
                 </div>  
             </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end !bg-gradient-to-r !from-blue-500 !to-blue-500">
                 <ul class="navbar-nav mr-lg-4 w-100">
-                <li class="nav-item nav-search d-none d-lg-block w-100">
-                    <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="search">
-                        <i class="mdi mdi-magnify"></i>
-                        </span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Search now" aria-label="search" aria-describedby="search">
-                    </div>
-                </li>
+                    <li class="nav-item nav-search d-none d-lg-block w-100 ">
+                        <div class="input-group bg-white">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="search">
+                                    <i class="mdi mdi-home menu-icon !text-gray-600">
+                                        <MagnifyingGlassIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></MagnifyingGlassIcon>
+                                    </i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control !bg-white" placeholder="Search now" aria-label="search" aria-describedby="search">
+                        </div>
+                    </li>
                 </ul>
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item dropdown m-0">
-                        <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center notification-dropdown" href="#" data-toggle="dropdown" id="profileDropdown" @click="notif = !notif">
+                        <a class="!text-white nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center notification-dropdown" href="#" data-toggle="dropdown" id="profileDropdown" @click="notif = !notif">
                             <span>
                                 <BellIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></BellIcon>
                             </span>
@@ -203,7 +205,7 @@
                         </Transition>
                     </li>
                     <li class="nav-item nav-profile dropdown">
-                        <a class="nav-link dropdown-toggle !flex" href="#" data-toggle="dropdown" id="profileDropdown" @click="userDrop = !userDrop">
+                        <a class="!text-white  nav-link dropdown-toggle !flex" href="#" data-toggle="dropdown" id="profileDropdown" @click="userDrop = !userDrop">
                             <span>
                                 <img :src="'storage/profile/'+credentials.picture" id="img1" style="width:75px!important;" v-if="credentials.picture!=null"/>
                                 <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 " v-else></UserIcon>
