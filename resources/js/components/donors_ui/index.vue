@@ -69,6 +69,9 @@
 								<div class="text-center mt-4 font-weight-light text-sm">
 									Don't have an account? Please register <a href="/donor_register" class="text-primary">here.</a>
 								</div>
+								<div class="text-center mt-4 font-weight-light text-sm">
+									Login as  <a href="http://127.0.0.1:8000/bene_login" class="text-primary"> Benefactor?</a>
+								</div>
 							</form>
 						</div>
 					</div>

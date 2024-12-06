@@ -95,8 +95,11 @@
                 <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">  
                 <!-- <a class="navbar-brand brand-logo" href="index.html">\PURCHASING</a>
                 <a class="navbar-brand brand-logo-mini" href="index.html"><img src="" alt="logo"/>P</a> -->
-                    <div class="text-2xl uppercase font-bold text-orange-500 w-full text-center">
+                    <!-- <div class="text-2xl uppercase font-bold text-orange-500 w-full text-center">
                         KIDDOS
+                    </div> -->
+                    <div class="text-2xl uppercase w-full text-center">
+                        <a class="navbar-brand brand-logo pb-0 pt-2" href="index.html"><img class="!h-[50px]" src="../../images/logo.png" alt="logo"/></a>
                     </div>
                     <button class="navbar-toggler navbar-toggler align-self-center"  @click="toggleSidebar" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
@@ -106,7 +109,7 @@
                     </button> -->
                 </div>  
             </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end !bg-gradient-to-r !from-blue-500 !to-blue-500">
                 <ul class="navbar-nav mr-lg-4 w-100">
                 <li class="nav-item nav-search d-none d-lg-block w-100">
                     <div class="input-group">

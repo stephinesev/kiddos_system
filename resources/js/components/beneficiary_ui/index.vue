@@ -64,6 +64,9 @@
 								<div class="my-3">
 									<input type="submit" value="Login" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
 								</div>
+								<div class="text-center mt-4 font-weight-light text-sm">
+									Login as<a href="http://127.0.0.1:8000/donor_login" class="text-primary"> Donor?</a>
+								</div>
 							</form>
 						</div>
 					</div>
