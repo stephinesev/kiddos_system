@@ -233,7 +233,7 @@ export default {
             this.chart3 = new Chart(ctx1, {
                 type: 'pie',
                 data: {
-                    labels: this.labels,
+                    labels: this.labelss,
                     datasets: [{
                             label: 'Normal',
                             data: this.data_barangay_underweightpie,
@@ -280,7 +280,7 @@ export default {
             this.chart4 = new Chart(ctx2, {
                 type: 'pie',
                 data: {
-                    labels: this.labels,
+                    labels: this.labelss,
                     datasets: [{
                             label: 'Overweight',
                             data: this.data_barangay_overweightpie,
@@ -327,7 +327,7 @@ export default {
             this.chart5 = new Chart(ctx3, {
                 type: 'pie',
                 data: {
-                    labels: this.labels,
+                    labels: this.labelss,
                     datasets: [{
                             label: 'Obesity Class I',
                             data: this.data_barangay_obesitypie1,
@@ -374,7 +374,7 @@ export default {
             this.chart6 = new Chart(ctx4, {
                 type: 'pie',
                 data: {
-                    labels: this.labels,
+                    labels: this.labelss,
                     datasets: [{
                             label: 'Obesity Class II',
                             data: this.data_barangay_obesitypie2,
@@ -421,7 +421,7 @@ export default {
             this.chart7 = new Chart(ctx5, {
                 type: 'pie',
                 data: {
-                    labels: this.labels,
+                    labels: this.labelss,
                     datasets: [{
                             label: 'Obesity Class III',
                             data: this.data_barangay_obesitypie3,
