@@ -79,16 +79,19 @@
                     <div class="text-2xl uppercase w-full text-center">
                         <a class="navbar-brand brand-logo pb-0 pt-2" href="index.html"><img class="!h-[50px]" src="../../images/logo.png" alt="logo"/></a>
                     </div>
-                    <button class="navbar-toggler navbar-toggler align-self-center"  @click="toggleSidebar" type="button" data-toggle="minimize">
+                    <!-- <button class="navbar-toggler navbar-toggler align-self-center"  @click="toggleSidebar" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
-                    </button>
+                    </button> -->
+                    <!-- <button class="navbar-toggler navbar-toggler align-self-center !text-white" type="button" data-toggle="minimize">
+                        <span class=" !text-white mdi mdi-sort-variant"></span>
+                    </button> -->
                     <!-- <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
                     </button> -->
                 </div>  
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end !bg-gradient-to-r !from-blue-500 !to-blue-500">
-                <ul class="navbar-nav mr-lg-4 w-100">
+                <!-- <ul class="navbar-nav mr-lg-4 w-100">
                     <li class="nav-item nav-search d-none d-lg-block w-100 ">
                         <div class="input-group bg-white">
                             <div class="input-group-prepend">
@@ -101,16 +104,16 @@
                             <input type="text" class="form-control !bg-white" placeholder="Search now" aria-label="search" aria-describedby="search">
                         </div>
                     </li>
-                </ul>
+                </ul> -->
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item dropdown mr-1">
                         <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
-                        <i class="mdi mdi-message-text mx-0"></i>
+                        <!-- <i class="mdi mdi-message-text mx-0"></i> -->
                         </a>
                     </li>
                     <li class="nav-item dropdown mr-4">
                         <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center notification-dropdown" id="notificationDropdown" href="#" data-toggle="dropdown">
-                        <i class="mdi mdi-bell mx-0"></i>
+                        <!-- <i class="mdi mdi-bell mx-0"></i> -->
                         </a>
                     </li>
                     <li class="nav-item dropdown m-0">
@@ -227,7 +230,7 @@
                         </Transition>
                     </li>
                 </ul>
-                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center !text-white" type="button" data-toggle="offcanvas">
                     <span class="mdi mdi-menu"></span>
                 </button>
             </div>
@@ -240,7 +243,7 @@
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/dashboard">
                         <i class="mdi mdi-home menu-icon !text-gray-600">
-                            <HomeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></HomeIcon>
+                            <!-- <HomeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></HomeIcon> -->
                         </i>
                         <span class="menu-title">Dashboard</span>
                         </a>
@@ -248,14 +251,14 @@
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/barangay">
                         <i class="mdi mdi-home menu-icon !text-gray-600">
-                            <HomeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></HomeIcon>
+                            <!-- <HomeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></HomeIcon> -->
                         </i>
                         <span class="menu-title">Barangay</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600 cursor-pointer" @click="openMaster()" >
-                            <i class="mdi mdi-circle-outline menu-icon !text-gray-600">
+                            <i class="mdi mdi-users menu-icon !text-gray-600">
                                 <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></UserIcon>
                             </i>
                             <span class="menu-title">Users</span>
@@ -279,7 +282,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/donation_admin_view">
-                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                        <i class="mdi mdi-hosme menu-icon !text-gray-600">
                             <BanknotesIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></BanknotesIcon>
                         </i>
                         <span class="menu-title">Donations</span>
@@ -287,7 +290,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/events">
-                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                        <i class="mdi mdi-hosme menu-icon !text-gray-600">
                             <CalendarIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></CalendarIcon>
                         </i>
                         <span class="menu-title">Events</span>
@@ -295,7 +298,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/qr_scanner">
-                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                        <i class="mdi mdi-hsome menu-icon !text-gray-600">
                             <MagnifyingGlassIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></MagnifyingGlassIcon>
                         </i>
                         <span class="menu-title">QR Scan</span>
