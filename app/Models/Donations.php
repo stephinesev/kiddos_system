@@ -22,6 +22,7 @@ class Donations extends Model
         'pickup_contact_no', 
         'status', 
         'others', 
+        'admin_message', 
     ];
     public function events(){
         return $this->belongsTo(Events::class,'event_id', 'id');

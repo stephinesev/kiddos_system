@@ -116,10 +116,8 @@
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="navbar-brand-wrapper d-flex justify-content-center">
                 <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">  
-                <!-- <a class="navbar-brand brand-logo" href="index.html">\PURCHASING</a>
-                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="" alt="logo"/>P</a> -->
                     <div class="text-2xl uppercase w-full text-center">
-                        <a class="navbar-brand brand-logo pb-0 pt-2" href="index.html"><img class="!h-[50px]" src="../../images/logo.png" alt="logo"/></a>
+                        <a class="navbar-brand brand-logo pb-0 pt-2" href="/donor_dashboard"><img class="!h-[50px]" src="../../images/logo.png" alt="logo"/></a>
                     </div>
                     <!-- <button class="navbar-toggler navbar-toggler align-self-center"  @click="toggleSidebar" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
@@ -169,7 +167,7 @@
                                         <div class="item-thumbnail">
                                             <div class="item-icon bg-success">
                                                 <span>
-                                                    <img :src="'storage/profile/'+notif.donors[0].profile_image" id="img1" v-if="notif.donors[0].profile_image!=null"/>
+                                                    <img :src="'../storage/profile/'+notif.donors[0].profile_image" id="img1" v-if="notif.donors[0].profile_image!=null"/>
                                                     <img src="../../images/default.jpg" id="img1" v-else/>
                                                 </span>
                                             </div>
@@ -206,8 +204,8 @@
                     </li>
                     <li class="nav-item nav-profile dropdown">
                         <a class="!text-white  nav-link dropdown-toggle !flex" href="#" data-toggle="dropdown" id="profileDropdown" @click="userDrop = !userDrop">
-                            <span>
-                                <img :src="'storage/profile/'+credentials.picture" id="img1" style="width:75px!important;" v-if="credentials.picture!=null"/>
+                            <span style="margin-top: -4px;">
+                                <img :src="'../storage/profile/'+credentials.picture" id="img1" style="width:35px!important;" v-if="credentials.picture!=null"/>
                                 <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 " v-else></UserIcon>
                             </span>
                             <span class="nav-profile-name">{{ credentials.fullname }}</span>
@@ -249,7 +247,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link !text-gray-600" href="/donate">
+                        <a class="nav-link !text-gray-600" href="/donor_donate/0">
                         <i class="mdi mdi-hosme menu-icon !text-gray-600">
                             <InboxArrowDownIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></InboxArrowDownIcon>
                         </i>

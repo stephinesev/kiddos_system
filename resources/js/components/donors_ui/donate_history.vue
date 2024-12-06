@@ -18,7 +18,9 @@
     //Variables
     let donationsall=ref([]);
     let donation_images=ref([]);
+    let admin_message=ref('');
     const modalImage = ref(false)
+    const modalMessage = ref(false)
     const hideModal = ref(true)
     //Fetcher of Data
 	onMounted(async () => {
@@ -33,11 +35,17 @@
     const openImage = async (id) => {
 		let response =  await axios.get(`/api/get_images/`+id);
 		donation_images.value=response.data.images
-        console.log(donation_images.value)
 		modalImage.value = !modalImage.value
+	}
+	//Message Modal Viewer
+    const openMessage = async (id) => {
+		let response =  await axios.get(`/api/get_message/`+id);
+		admin_message.value=response.data
+		modalMessage.value = !modalMessage.value
 	}
     const closeModal = () => {
 		modalImage.value = !hideModal.value
+		modalMessage.value = !hideModal.value
 	}
     //Datatable Initialization
 	DataTablesCore.Buttons.jszip(jszip);
@@ -121,6 +129,7 @@
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Barangay</th>
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Type of Donation</th>
                                         <th class="!text-xs bg-gray-100 uppercase text-center"> Mode of Collection</th>
+                                        <th class="!text-xs bg-gray-100 uppercase text-center"> Message</th>
                                         <th class="!text-xs bg-gray-100 uppercase" width="7%" align="center"> 
                                             <span class="text-center  px-auto">
                                                 <Bars3Icon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></Bars3Icon>
@@ -128,7 +137,14 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <template #column-6="props">
+								<template #column-6="props">
+                                    <center>
+                                        <button @click="openMessage(props.rowData.id)" class="btn btn-xs btn-success text-white p-1" v-if="props.rowData.admin_message!=null && props.rowData.admin_message!=''">
+                                            View Message
+                                        </button >
+                                    </center>
+                                </template>
+                                <template #column-7="props">
                                     <center>
                                         <button @click="openImage(props.rowData.id)" class="btn btn-xs btn-success text-white p-1">
                                             <EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></EyeIcon>
@@ -179,6 +195,42 @@
 										</div>
 									</div>
 								</div>
+							</div>
+						</div>
+					</div> 
+				</div>
+			</div>
+		</Transition>
+		<!-- Message VIEWER MODAL -->
+        <Transition
+            enter-active-class="transition ease-out duration-200"
+            enter-from-class="opacity-0 scale-95"
+            enter-to-class="opacity-100 scale-100"
+            leave-active-class="transition ease-in duration-75"
+            leave-from-class="opacity-100 scale-100"
+            leave-to-class="opacity-0 scale-95"
+        >
+			<div class="modal pt-4 px-3" :class="{ show:modalMessage }">
+				<div @click="closeModal" class="w-full h-full fixed"></div>
+				<div class="modal__content w-4/12">
+					<div class="row mb-3">
+						<div class="col-lg-12 flex justify-between">
+							<span class="font-bold ">Message Viewer</span>
+							<a href="#" class="text-gray-600" @click="closeModal">
+								<XMarkIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4"></XMarkIcon>
+							</a>
+						</div>
+					</div>
+					<hr class="mt-0">
+					<div class="modal_s_items ">
+						<div class="row">
+							<div class="col-lg-12 col-md-12" >
+								<div class="p-1 sm:p-8" v-if="admin_message!=''">
+									<div class="columns-1 gap-2 sm:columns-2 sm:gap-2 md:columns-3 lg:columns-4 [&>img:not(:first-child)]:mt-2" >
+										<p >{{admin_message}}</p>
+									</div>
+								</div>
+								<p v-else><center><b>No message...</b></center></p>
 							</div>
 						</div>
 					</div> 

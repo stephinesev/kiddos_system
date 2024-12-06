@@ -77,7 +77,7 @@
                 <!-- <a class="navbar-brand brand-logo" href="index.html">\PURCHASING</a>
                 <a class="navbar-brand brand-logo-mini" href="index.html"><img src="" alt="logo"/>P</a> -->
                     <div class="text-2xl uppercase w-full text-center">
-                        <a class="navbar-brand brand-logo pb-0 pt-2" href="index.html"><img class="!h-[50px]" src="../../images/logo.png" alt="logo"/></a>
+                        <a class="navbar-brand brand-logo pb-0 pt-2" href="/dashboard"><img class="!h-[50px]" src="../../images/logo.png" alt="logo"/></a>
                     </div>
                     <!-- <button class="navbar-toggler navbar-toggler align-self-center"  @click="toggleSidebar" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
@@ -248,14 +248,13 @@
                         <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/barangay">
                         <i class="mdi mdi-home menu-icon !text-gray-600">
-                            <!-- <HomeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></HomeIcon> -->
                         </i>
                         <span class="menu-title">Barangay</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600 cursor-pointer" @click="openMaster()" >
                             <i class="mdi mdi-users menu-icon !text-gray-600">

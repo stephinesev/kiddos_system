@@ -417,6 +417,42 @@
 					</div>
 					<hr class="mt-0">
 					<div class="modal_s_items ">
+						<div class="row">
+							<div class="col-lg-6 col-md-6">
+								<div class="form-group">
+									<label class="text-gray-500 m-0" for="">Weight</label>
+									<input type="text" class="form-control" placeholder="Weight" v-model="form.weight" @keyup="calculateBmi()">
+								</div>
+							</div>
+                            <div class="col-lg-6 col-md-6">
+								<div class="form-group">
+									<label class="text-gray-500 m-0" >Height (cm)</label>
+									<input type="text" class="form-control" placeholder="Height (cm)" v-model="form.height" @keyup="calculateBmi()">
+								</div>
+							</div>
+						</div>
+                        <div class="row">
+							<div class="col-lg-6 col-md-6">
+								<div class="form-group">
+									<label class="text-gray-500 m-0" for="">Nutritional Status</label>
+									<select class="form-control text-black-500" v-model="form.nutritional_status" :style="'pointer-events: none; background-color:'+status_color">
+                                        <option value="">--Select Nutritional Status--</option>
+                                        <option value="Underweight">Underweight</option>
+                                        <option value="Normal weight">Normal weight</option>
+                                        <option value="Overweight">Overweight</option>
+                                        <option value="Obesity Class I">Obesity Class I</option>
+                                        <option value="Obesity Class II">Obesity Class II</option>
+                                        <option value="Obesity Class III">Obesity Class III</option>
+                                    </select>
+								</div>
+							</div>
+                            <div class="col-lg-6 col-md-6">
+								<div class="form-group">
+									<label class="text-gray-500 m-0" >BMI</label>
+									<input type="text" class="form-control" placeholder="BMI" v-model="form.bmi" readonly>
+								</div>
+							</div>
+						</div>
                         <div class="row">
 							<div class="col-lg-6 col-md-6">
 								<div class="form-group">
@@ -537,42 +573,6 @@
 								<div class="form-group">
 									<label class="text-gray-500 m-0" >Relationship to Child</label>
 									<input type="text" class="form-control" placeholder="Relationship to Child" v-model="form.guardian_relationship">
-								</div>
-							</div>
-						</div>
-                        <div class="row">
-							<div class="col-lg-6 col-md-6">
-								<div class="form-group">
-									<label class="text-gray-500 m-0" for="">Weight</label>
-									<input type="text" class="form-control" placeholder="Weight" v-model="form.weight" @keyup="calculateBmi()">
-								</div>
-							</div>
-                            <div class="col-lg-6 col-md-6">
-								<div class="form-group">
-									<label class="text-gray-500 m-0" >Height (cm)</label>
-									<input type="text" class="form-control" placeholder="Height (cm)" v-model="form.height" @keyup="calculateBmi()">
-								</div>
-							</div>
-						</div>
-                        <div class="row">
-							<div class="col-lg-6 col-md-6">
-								<div class="form-group">
-									<label class="text-gray-500 m-0" for="">Nutritional Status</label>
-									<select class="form-control text-black-500" v-model="form.nutritional_status" :style="'pointer-events: none; background-color:'+status_color">
-                                        <option value="">--Select Nutritional Status--</option>
-                                        <option value="Underweight">Underweight</option>
-                                        <option value="Normal weight">Normal weight</option>
-                                        <option value="Overweight">Overweight</option>
-                                        <option value="Obesity Class I">Obesity Class I</option>
-                                        <option value="Obesity Class II">Obesity Class II</option>
-                                        <option value="Obesity Class III">Obesity Class III</option>
-                                    </select>
-								</div>
-							</div>
-                            <div class="col-lg-6 col-md-6">
-								<div class="form-group">
-									<label class="text-gray-500 m-0" >BMI</label>
-									<input type="text" class="form-control" placeholder="BMI" v-model="form.bmi" readonly>
 								</div>
 							</div>
 						</div>

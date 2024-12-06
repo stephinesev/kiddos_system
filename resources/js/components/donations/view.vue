@@ -44,7 +44,9 @@
     let donation_images=ref([]);
     const warningAlert = ref(false)
 	const successAlert = ref(false)
+	const successAlertMessage = ref(false)
 	const hideAlert = ref(true)
+	let admin_message = ref('')	
 	//Donation ID
 	const props = defineProps({
 		donation_id:{
@@ -84,17 +86,32 @@
 				success.value='Successfully accepted donation!'
 				error.value=[]
 				// getDonations()
-				successAlert.value = !successAlert.value
+				successAlertMessage.value = !successAlertMessage.value
 				setTimeout(() => {
 					// getDonations()
-					closeAlert()
-					router.push('/donation_admin_view')
+					// closeAlert()
+					// router.push('/donation_admin_view')
 				}, 2000);
 			}).catch(function(err){
 				success.value=''
 				error.value.push('Error! Try again.')
 			});
 		}
+	}
+	//Admin Message Save
+	const adminMessage = (id) => {
+		const formData=new FormData()
+		formData.append('admin_message',admin_message.value)
+		axios.post(`/api/admin_message/`+id, formData).then(function () {
+			success.value='You have successfully forwarded the message!'
+			successAlert.value = !successAlert.value
+			setTimeout(() => {
+				closeAlert()
+				router.push('/donation_admin_view')
+			}, 2000);
+		}).catch(function(err){
+			error.value.push('Error! Try again.')
+		});
 	}
 	//Decline function
 	const declineDonation = (id,donor_id,event_id) => {
@@ -126,6 +143,7 @@
 	const closeAlert = () => {
 		warningAlert.value = !hideAlert.value
 		successAlert.value= !hideAlert.value
+		successAlertMessage.value= !hideAlert.value
 	}  
 </script>
 <template>
@@ -324,6 +342,46 @@
             </div>
         </div>
 		<!-- SUCCESS ALERT MODAL -->
+		<Transition
+            enter-active-class="transition ease-out !duration-1000"
+            enter-from-class="opacity-0 scale-95"
+            enter-to-class="opacity-100 scale-500"
+            leave-active-class="transition ease-in duration-75"
+            leave-from-class="opacity-100 scale-500"
+            leave-to-class="opacity-0 scale-95"
+			v-if="success!=''"
+        >
+			<div class="modal p-0 !bg-transparent" :class="{ show:successAlertMessage }">
+				<div @click="closeAlert" class="w-full h-full fixed backdrop-blur-sm bg-white/30"></div>
+				<div class="modal__content !shadow-2xl !rounded-3xl !my-44 w-96 p-0">
+					<div class="flex justify-center">
+						<div class="!border-green-500 border-8 bg-green-500 !h-32 !w-32 -top-16 absolute rounded-full text-center shadow">
+							<div class="p-2 text-white">
+								<CheckIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-24 h-24 "></CheckIcon>
+							</div>
+						</div>
+					</div>
+					<div class="py-5 rounded-t-3xl"></div>
+					<div class="modal_s_items pt-0 !px-8 pb-4">
+						<div class="row">
+							<div class="col-lg-12 col-md-3">
+								<div class="text-center">
+									<h2 class="mb-2  font-bold text-green-400">Success!</h2>
+									<h5 class="leading-tight">{{ success }}</h5>
+								</div>
+								<div class="flex justify-center space-x-2">
+									<textarea id="" v-model="admin_message" rows="3" class="form-control" placeholder="Add message...."></textarea>
+								</div>
+								<br>
+								<div class="flex justify-center space-x-2">
+									<button type="button" class="btn btn-success btn-md w-38" @click="adminMessage(props.donation_id)">Forward Message</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</Transition>
 		<Transition
             enter-active-class="transition ease-out !duration-1000"
             enter-from-class="opacity-0 scale-95"

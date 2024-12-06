@@ -8,4 +8,5 @@ import { createApp } from 'vue'
 
 import app from './components/app.vue'
 import router from './router/index.js'
-createApp(app).use(router).mount('#app')
+import Uploader from 'vue-media-upload';
+createApp(app).component('Uploader', Uploader).use(router).mount('#app')

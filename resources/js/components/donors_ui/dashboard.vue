@@ -114,66 +114,38 @@
                             </div>
                             <div class="p-4 bg-white overflow-y-scroll h-[648px]" >
                                 <div v-for="(et,index) in events_today">
-                                    <div class="card rounded-lg !border !border-l-8 mb-3" :style="(et.event_color!=null) ? 'border-color:'+et.event_color : 'border-color:#3788d8'">
-                                        <div class="card-body p-3">
-                                            <div class="flex justify-between">
-                                                <div>
-                                                    <div class="flex justify-start ">
-                                                        <span class="mr-2 text-teal-400">
-                                                            <ClockIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></ClockIcon>
-                                                        </span>
-                                                        <p class="text-sm m-0 text-gray-600">{{ moment(et.event_time, "hh:mm:ss").format('hh:mm A') }}</p>
+                                    <a :href="'/donor_donate/'+et.id">
+                                        <div class="card rounded-lg !border !border-l-8 mb-3" :style="(et.event_color!=null) ? 'border-color:'+et.event_color : 'border-color:#3788d8'">
+                                            <div class="card-body p-3">
+                                                <div class="flex justify-between">
+                                                    <div>
+                                                        <div class="flex justify-start ">
+                                                            <span class="mr-2 text-teal-400">
+                                                                <ClockIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></ClockIcon>
+                                                            </span>
+                                                            <p class="text-sm m-0 text-gray-600">{{ moment(et.event_time, "hh:mm:ss").format('hh:mm A') }}</p>
+                                                        </div>
+                                                        <p class="text-base font-bold text-gray-800 my-1">{{ et.event_name }}</p>
+                                                        <p class="text-sm m-0 text-gray-600">
+                                                            {{ et.event_description }}
+                                                        </p>
+                                                        <div class="flex justify-start mt-1">
+                                                            <span class="mr-2">
+                                                                <MapPinIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></MapPinIcon>
+                                                            </span>
+                                                            <p class="text-sm m-0 text-gray-600">{{et.event_address}}</p>
+                                                        </div>
                                                     </div>
-                                                    <p class="text-base font-bold text-gray-800 my-1">{{ et.event_name }}</p>
-                                                    <p class="text-sm m-0 text-gray-600">
-                                                        {{ et.event_description }}
-                                                    </p>
-                                                    <div class="flex justify-start mt-1">
-                                                        <span class="mr-2">
-                                                            <MapPinIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></MapPinIcon>
+                                                    <div>
+                                                        <span>
+                                                            <EllipsisVerticalIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></EllipsisVerticalIcon>
                                                         </span>
-                                                        <p class="text-sm m-0 text-gray-600">{{et.event_address}}</p>
                                                     </div>
-                                                </div>
-                                                <div>
-                                                    <span>
-                                                        <EllipsisVerticalIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></EllipsisVerticalIcon>
-                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
-                                <!-- <div class="card rounded-lg !border !border-blue-400 !border-l-8 mb-3">
-                                    <div class="card-body p-3">
-                                        <div class="flex justify-between">
-                                            <div>
-                                                <div class="flex justify-start ">
-                                                    <span class="mr-2 text-blue-400">
-                                                        <ClockIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></ClockIcon>
-                                                    </span>
-                                                    <p class="text-sm m-0 text-gray-600">8:00am - 5:00pm</p>
-                                                </div>
-                                                <p class="text-base font-bold text-gray-800 my-1">Relief Goods</p>
-                                                <p class="text-sm m-0 text-gray-600">
-                                                    It is a long established fact that a reader will be distracted by th...
-                                                </p>
-                                                <div class="flex justify-start mt-1">
-                                                    <span class="mr-2">
-                                                        <MapPinIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></MapPinIcon>
-                                                    </span>
-                                                    <p class="text-sm m-0 text-gray-600">Brgy. Mabusilak, Purok 2, Sipalay Marie City</p>
-                                                </div>
-                                                
-                                            </div>
-                                            <div>
-                                                <span>
-                                                    <EllipsisVerticalIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></EllipsisVerticalIcon>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
                     </div>

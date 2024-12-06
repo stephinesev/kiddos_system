@@ -28,8 +28,14 @@
                     <div class="col-lg-6 login-half-bg2 d-flex flex-row !bg-gray-300">
 					</div>
 					<div class="col-lg-6 d-flex align-items-center justify-content-center !bg-white">
-						<div class="auth-form-transparent text-left p-3">
-							<h4 class="font-bold">DONORS</h4>
+						<div class="auth-form-transparent text-left p-3" style="border-radius: 8px!important;box-shadow:1px 1px 2px 2px rgb(47, 47, 47)!important;">
+							<div class="brand-logo">
+								<center>
+									<img src="../../../images/logo.png" alt="logo">
+									<h4 class="font-bold">DONORS</h4>
+								</center>
+							</div>
+							<!-- <h4 class="font-bold">DONORS</h4> -->
 							<div class="alert alert-danger" v-if="error">
 								<div class="flex justify-start space-x-2">
 									<div>
@@ -69,9 +75,9 @@
 								<div class="text-center mt-4 font-weight-light text-sm">
 									Don't have an account? Please register <a href="/donor_register" class="text-primary">here.</a>
 								</div>
-								<div class="text-center mt-4 font-weight-light text-sm">
+								<!-- <div class="text-center mt-4 font-weight-light text-sm">
 									Login as  <a href="http://127.0.0.1:8000/bene_login" class="text-primary"> Benefactor?</a>
-								</div>
+								</div> -->
 							</form>
 						</div>
 					</div>

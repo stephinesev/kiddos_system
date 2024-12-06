@@ -99,7 +99,7 @@
                         KIDDOS
                     </div> -->
                     <div class="text-2xl uppercase w-full text-center">
-                        <a class="navbar-brand brand-logo pb-0 pt-2" href="index.html"><img class="!h-[50px]" src="../../images/logo.png" alt="logo"/></a>
+                        <a class="navbar-brand brand-logo pb-0 pt-2" href="/bene_dashboard"><img class="!h-[50px]" src="../../images/logo.png" alt="logo"/></a>
                     </div>
                     <button class="navbar-toggler navbar-toggler align-self-center"  @click="toggleSidebar" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
@@ -110,7 +110,7 @@
                 </div>  
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end !bg-gradient-to-r !from-blue-500 !to-blue-500">
-                <ul class="navbar-nav mr-lg-4 w-100">
+                <!-- <ul class="navbar-nav mr-lg-4 w-100">
                 <li class="nav-item nav-search d-none d-lg-block w-100">
                     <div class="input-group">
                     <div class="input-group-prepend">
@@ -121,14 +121,14 @@
                     <input type="text" class="form-control" placeholder="Search now" aria-label="search" aria-describedby="search">
                     </div>
                 </li>
-                </ul>
+                </ul> -->
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle !flex" href="#" data-toggle="dropdown" id="profileDropdown" @click="userDrop = !userDrop">
                             <span>
                                 <!-- <img :src="'storage/profile/'+credentials.picture" id="img1" v-if="credentials.picture!=null"/> -->
                                 <!-- <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 "></UserIcon> -->
-                                <img :src="'storage/profile/'+credentials.picture" id="img1" style="width:75px!important" v-if="credentials.picture!=null"/>
+                                <img :src="'storage/profile/'+credentials.picture" id="img1" style="width:35px!important" v-if="credentials.picture!=null"/>
                                 <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 " v-else></UserIcon>
                             </span>
                             <span class="nav-profile-name">{{ credentials.name }}</span>
@@ -143,10 +143,6 @@
                         >
                         
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown"  v-show="userDrop">
-                            <a class="dropdown-item">
-                                <i class="mdi mdi-settings text-primary"></i>
-                                Settings
-                            </a>
                             <a href="#" class="dropdown-item" @click="logout_donor" >
                                 <i class="mdi mdi-logout text-primary"></i>
                                 Logout
@@ -168,7 +164,7 @@
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/bene_dashboard">
                         <i class="mdi mdi-home menu-icon !text-gray-600">
-                            <HomeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></HomeIcon>
+                            <!-- <HomeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></HomeIcon> -->
                         </i>
                         <span class="menu-title">Dashboard</span>
                         </a>
@@ -183,23 +179,23 @@
                     </li> -->
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/bene_profile">
-                        <i class="mdi mdi-home menu-icon !text-gray-600">
-                            <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></UserIcon>
+                        <i class="mdi mdi-account menu-icon !text-gray-600">
+                            <!-- <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></UserIcon> -->
                         </i>
                         <span class="menu-title">Profile</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/attendance">
-                        <i class="mdi mdi-home menu-icon !text-gray-600">
-                            <QueueListIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></QueueListIcon>
+                        <i class="mdi mdi-calendar menu-icon !text-gray-600">
+                            <!-- <QueueListIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></QueueListIcon> -->
                         </i>
                         <span class="menu-title">Attendance</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/bmi_history">
-                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                        <i class="mdi mdi-list-box menu-icon !text-gray-600">
                             <QueueListIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></QueueListIcon>
                         </i>
                         <span class="menu-title">BMI History</span>

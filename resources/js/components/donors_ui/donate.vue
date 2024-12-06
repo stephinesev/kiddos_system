@@ -15,12 +15,21 @@
     const warningAlert = ref(false)
 	const successAlert = ref(false)
 	const hideAlert = ref(true)
+    const props = defineProps({
+		id:{
+            type:String,
+            default:''
+        }
+    })
     //Fetcher of Data
 	onMounted(async () => {
 		getCredentials()
         donationForm()
         getEvents()
         getBarangay()
+        if(props.id!=0){
+            getAddressRedirect()
+        }
 	})
     //Fetching Data From Barangay Table for display
 	const getBarangay = async () => {
@@ -41,7 +50,7 @@
     //Fetching events data
 	const getEvents = async () => {
 		let response = await axios.get("/api/get_events_donation");
-		events.value = response.data.events;
+        events.value = response.data.events;
 	}
     //Fetch Image value
     const changeMedia = (event) =>{
@@ -94,6 +103,14 @@
     //Fetch event address
     const getAddress = async () => {
 		let response = await axios.get(`/api/get_event_address/`+form.value.event_id);
+		form.value.event_address = response.data.address;
+		form.value.barangay = response.data.barangay;
+		form.value.when_date = response.data.date;
+		form.value.when_time = response.data.time;
+	}
+    const getAddressRedirect = async () => {
+		let response = await axios.get(`/api/get_event_address/`+props.id);
+		form.value.event_id = props.id;
 		form.value.event_address = response.data.address;
 		form.value.barangay = response.data.barangay;
 		form.value.when_date = response.data.date;

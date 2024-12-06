@@ -116,12 +116,14 @@ class DonationsController extends Controller
             $event_name=Events::where('id',$b->event_id)->value('event_name');
             $donationsall[]=[
                 'id'=>$b->id,
+                'admin_message'=>$b->admin_message,
                 ($b->event_id!=0) ? $event_name : $b->others,
                 "<center>".date('F d,Y',strtotime($b->when_date))."</center>",
                 "<center>".date('H:i A',strtotime($b->when_time))."</center>",
                 $b->barangay_name,
                 "<center>".$b->donation_type."</center>",
                 "<center>".$b->mode_of_collection."</center>",
+                '',
                 ''
             ];
         }
@@ -175,6 +177,18 @@ class DonationsController extends Controller
             Notifications::create($validated_notif);
         }
     }
+
+    public function admin_message(Request $request,$id){
+        $update=Donations::where('id', $id)->first();
+        $accepted['admin_message']=$request->admin_message;
+        $update->update($accepted);
+    }
+
+    public function get_message($id){
+        $message=Donations::where('id',$id)->first();
+        return $message->admin_message;
+    }
+
     public function decline_donation($id,$donor_id,$event_id) {
         $update=Donations::where('id',$id)->first();
         $declined['status']='2';

@@ -122,8 +122,9 @@ const routes = [
         }
     },
     {
-        path:'/donate/',
+        path:'/donor_donate/:id',
         component: DonorUI_Donate,
+        props:true,
         meta:{
             requiresAuth:true
         }
