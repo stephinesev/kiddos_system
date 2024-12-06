@@ -121,16 +121,16 @@
                     <div class="text-2xl uppercase w-full text-center">
                         <a class="navbar-brand brand-logo pb-0 pt-2" href="index.html"><img class="!h-[50px]" src="../../images/logo.png" alt="logo"/></a>
                     </div>
-                    <button class="navbar-toggler navbar-toggler align-self-center"  @click="toggleSidebar" type="button" data-toggle="minimize">
+                    <!-- <button class="navbar-toggler navbar-toggler align-self-center"  @click="toggleSidebar" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
-                    </button>
+                    </button> -->
                     <!-- <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
                     </button> -->
                 </div>  
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end !bg-gradient-to-r !from-blue-500 !to-blue-500">
-                <ul class="navbar-nav mr-lg-4 w-100">
+                <!-- <ul class="navbar-nav mr-lg-4 w-100">
                     <li class="nav-item nav-search d-none d-lg-block w-100 ">
                         <div class="input-group bg-white">
                             <div class="input-group-prepend">
@@ -143,7 +143,7 @@
                             <input type="text" class="form-control !bg-white" placeholder="Search now" aria-label="search" aria-describedby="search">
                         </div>
                     </li>
-                </ul>
+                </ul> -->
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item dropdown m-0">
                         <a class="!text-white nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center notification-dropdown" href="#" data-toggle="dropdown" id="profileDropdown" @click="notif = !notif">
@@ -230,7 +230,7 @@
                         </Transition>
                     </li>
                 </ul>
-                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center !text-white" type="button" data-toggle="offcanvas">
                 <span class="mdi mdi-menu"></span>
                 </button>
             </div>
@@ -242,7 +242,7 @@
                 <ul class="nav ">
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/donor_dashboard">
-                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                        <i class="mdi mdi-hsome menu-icon !text-gray-600">
                             <HomeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></HomeIcon>
                         </i>
                         <span class="menu-title">Dashboard</span>
@@ -250,7 +250,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/donate">
-                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                        <i class="mdi mdi-hosme menu-icon !text-gray-600">
                             <InboxArrowDownIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></InboxArrowDownIcon>
                         </i>
                         <span class="menu-title">Donate</span>
@@ -258,7 +258,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/donor_profile">
-                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                        <i class="mdi mdi-homse menu-icon !text-gray-600">
                             <UserIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></UserIcon>
                         </i>
                         <span class="menu-title">Profile</span>
@@ -266,7 +266,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link !text-gray-600" href="/donation_history">
-                        <i class="mdi mdi-home menu-icon !text-gray-600">
+                        <i class="mdi mdi-hosme menu-icon !text-gray-600">
                             <QueueListIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></QueueListIcon>
                         </i>
                         <span class="menu-title">Donation History</span>
