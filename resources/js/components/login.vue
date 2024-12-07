@@ -26,7 +26,7 @@
 			<div class="content-wrapper d-flex align-items-stretch auth auth-img-bg !w-screen !h-screen !overflow-x-hidden !overflow-y-hidden">
 				<div class="row flex-grow">
 					<div class="col-lg-6 d-flex align-items-center justify-content-center !bg-white">
-						<div class="auth-form-transparent text-left p-3" style="border-radius: 8px!important;box-shadow:1px 1px 2px 2px rgb(47, 47, 47)!important;">
+						<div class="auth-form-transparent text-left p-3 rounded-lg shadow-lg" >
 							<!-- <div class="brand-logo">
 								<img src="../../images/logo_cenpri.png" alt="logo">
 								<h4 class="font-bold">ADMINISTRATOR</h4>

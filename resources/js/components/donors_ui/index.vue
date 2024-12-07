@@ -28,7 +28,7 @@
                     <div class="col-lg-6 login-half-bg2 d-flex flex-row !bg-gray-300">
 					</div>
 					<div class="col-lg-6 d-flex align-items-center justify-content-center !bg-white">
-						<div class="auth-form-transparent text-left p-3" style="border-radius: 8px!important;box-shadow:1px 1px 2px 2px rgb(47, 47, 47)!important;">
+						<div class="auth-form-transparent text-left p-3 rounded-lg shadow-lg">
 							<div class="brand-logo">
 								<center>
 									<img src="../../../images/logo.png" alt="logo">
