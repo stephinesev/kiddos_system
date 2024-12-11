@@ -218,6 +218,9 @@
                                 <span>Add New Barangay </span>
                             </button>
                         </div>
+						<br>
+						<br>
+						<br>
 						<!-- DATATABLE -->
                         <div class="pt-3">
                             <DataTable :data="barangayall" :options="options" class="display table table-bordered table-hover !border nowrap">

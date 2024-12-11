@@ -374,6 +374,7 @@
 								</div>
 								<br>
 								<div class="flex justify-center space-x-2">
+									<button @click="closeAlert" class="btn !text-white w-50 !bg-red-400 btn-sm  w-full">Close</button>
 									<button type="button" class="btn btn-success btn-md w-38" @click="adminMessage(props.donation_id)">Forward Message</button>
 								</div>
 							</div>

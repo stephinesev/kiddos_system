@@ -358,6 +358,9 @@
                                 <span>Add New Beneficiary </span>
                             </button>
                         </div>
+						<br>
+						<br>
+						<br>
 						<!-- DATATABLE -->
                         <div class="pt-3">
                             <DataTable :data="beneficiaryall" :options="options" class="display table table-bordered table-hover !border nowrap">
@@ -370,6 +373,7 @@
                                         <th class="!text-xs bg-gray-100 uppercase"> Weight</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Height</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> BMI</th>
+                                        <th class="!text-xs bg-gray-100 uppercase"> Nutritional Status</th>
                                         <th class="!text-xs bg-gray-100 uppercase"> Status</th>
                                         <th class="!text-xs bg-gray-100 uppercase" width="7%" align="center"> 
                                             <span class="text-center  px-auto">
@@ -378,7 +382,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <template #column-7="props">
+                                <template #column-8="props">
 									<button @click="showTransaction(props.rowData.id)" class="btn btn-xs btn-success text-white p-1">
                                         <EyeIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-3 h-3 "></EyeIcon>
                                     </button >

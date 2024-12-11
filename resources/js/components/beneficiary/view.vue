@@ -256,6 +256,14 @@
 					<hr class="border-dashed mt-0">
 					<div class="pt-1">
 						<div class="row">
+							<div class="col-lg-5"></div>
+							<div class="col-lg-2">
+								<a :href="'../../../storage/qr/'+beneficiary.qr_code" download><img :src="'../../../storage/qr/'+beneficiary.qr_code" alt="QR" class="w-40 h-40 bg-gray-100 border shadow-lg rounded-xl p-2" title="Click image to download QR"></a>
+							</div>
+							<div class="col-lg-5"></div>
+						</div>
+						<hr>
+						<div class="row">
 							<div class="col-lg-6">
 								<span class="text-sm text-gray-700 font-bold pr-1">Name: </span>
 								<span class="text-sm text-gray-700">{{beneficiary.name}}</span>

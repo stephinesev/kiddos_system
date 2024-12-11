@@ -10,6 +10,7 @@ class Notifications extends Model
     use HasFactory;
     protected $table = "notification";
     protected $fillable = [
+        'beneficiary_id',
         'donor_id',
         'donation_id',
         'event_id',
@@ -19,5 +20,9 @@ class Notifications extends Model
     ];
     public function donors(){
         return $this->hasMany(Donor::class, 'id', 'donor_id');
+    }
+
+    public function users(){
+        return $this->hasMany(User::class, 'id', 'beneficiary_id');
     }
 }

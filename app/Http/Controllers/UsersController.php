@@ -11,6 +11,7 @@ use App\Models\BmiHistory;
 use App\Models\Attendance;
 use App\Models\Barangay;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Models\Notifications;
 class UsersController extends Controller
 {
     public function login_form(){
@@ -118,14 +119,15 @@ class UsersController extends Controller
         foreach($beneficiary AS $b){
             $beneficiaryall[]=[
                 'id'=>$b->id,
-                $b->name,
-                $b->gender,
-                $b->email,
+                ($b->nutritional_status=='Normal weight') ? '<div class="bg-green-100">'.$b->name.'</div>' : $b->name,
+                ($b->nutritional_status=='Normal weight') ? '<div class="bg-green-100">'.$b->gender.'</div>' : $b->gender,
+                ($b->nutritional_status=='Normal weight') ? '<div class="bg-green-100">'.$b->email.'</div>' : $b->email,
                 // $b->role,
-                $b->weight,
-                $b->height,
-                $b->bmi,
-                $b->status,
+                ($b->nutritional_status=='Normal weight') ? '<div class="bg-green-100">'.$b->weight.'</div>' : $b->weight,
+                ($b->nutritional_status=='Normal weight') ? '<div class="bg-green-100">'.$b->height.'</div>' : $b->height,
+                ($b->nutritional_status=='Normal weight') ? '<div class="bg-green-100">'.$b->bmi.'</div>' : $b->bmi,
+                ($b->nutritional_status=='Normal weight') ? '<div class="bg-green-100">'.$b->nutritional_status.'</div>' : $b->nutritional_status,
+                ($b->nutritional_status=='Normal weight') ? '<div class="bg-green-100">'.$b->status.'</div>' : $b->status,
                 ''
             ];
         }
@@ -406,4 +408,12 @@ class UsersController extends Controller
         ],200);
     }
 
+    public function get_notification_beneficiary(){
+        $notification=Notifications::with('users')->where('beneficiary_id',Auth::id())->where('read','0')->where('identifier','2')->orderByDesc('created_at')->get();
+        $notification_count=Notifications::where('beneficiary_id',Auth::id())->where('read','0')->where('identifier','2')->count();
+        return response()->json([
+            'notification'=>$notification,
+            'notification_count'=>$notification_count,
+        ],200);
+    }
 }

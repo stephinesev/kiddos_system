@@ -62,8 +62,14 @@ const colorPalette = [
   '#FF9F40',
   '#FF5733',
   '#33FF57',
+  '#FF33A6',
+  '#008000',
+  '#808000',
+  '#800000',
+  '#00FFFF',
+  '#ff9800',
+  '#ff5722',
   '#3357FF',
-  '#FF33A6'
 ];
 export default {
     mounted() {
@@ -73,7 +79,25 @@ export default {
     },
     data() {
         return {
-            chartLabels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+            // chartLabels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+            chartLabels: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                '#4BC0C0',
+                '#9966FF',
+                '#FF9F40',
+                '#FF5733',
+                '#33FF57',
+                '#FF33A6',
+                '#008000',
+                '#808000',
+                '#800000',
+                '#00FFFF',
+                '#ff9800',
+                '#ff5722',
+                '#3357FF'
+            ],
             chartColors: [],
         };
     },
@@ -515,12 +539,12 @@ export default {
 					<div class="d-flex align-items-end flex-wrap">
 						<div class="mr-md-3 mr-xl-5">
 						<h2>Welcome back,</h2>
-						<p class="mb-md-0">Your analytics dashboard template.</p>
+						<p class="mb-md-0">Your data visual dashboard template.</p>
 						</div>
 						<div class="d-flex">
 						<i class="mdi mdi-home text-muted hover-cursor"></i>
 						<p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;Dashboard&nbsp;/&nbsp;</p>
-						<p class="text-primary mb-0 hover-cursor">Analytics</p>
+						<p class="text-primary mb-0 hover-cursor">Data Visual</p>
 						</div>
 					</div>
 				</div>

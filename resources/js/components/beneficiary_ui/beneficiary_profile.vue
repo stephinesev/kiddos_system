@@ -12,6 +12,7 @@
     let imageFile=ref("");
     let imageUrl=ref("");
     let error_image = ref('');
+    let barangay=ref([]);
 	const warningAlert = ref(false)
 	const successAlert = ref(false)
 	const hideAlert = ref(true)
@@ -25,7 +26,13 @@
 	onMounted(async () => {
 		getCredentials()
         beneficiaryForm()
+        getBarangay()
 	})
+    //Fetching Data From Barangay Table for display
+	const getBarangay = async () => {
+		let response = await axios.get("/api/get_barangay");
+		barangay.value = response.data.barangay;
+	}
     const closeAlert = () => {
 		warningAlert.value = !hideAlert.value
 		successAlert.value= !hideAlert.value
@@ -208,6 +215,14 @@
                     <div class="card !border !border-blue-500">
                         <div class="card-body">
                             <div class="row">
+                                <div class="col-lg-5"></div>
+                                <div class="col-lg-2">
+                                    <a :href="'../../../storage/qr/'+form.qr_code" download><img :src="'../../../storage/qr/'+form.qr_code" alt="QR" class="w-40 h-40 bg-gray-100 border shadow-lg rounded-xl p-2" title="Click image to download QR"></a>
+                                </div>
+                                <div class="col-lg-5"></div>
+                            </div>
+                            <hr>
+                            <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="" class="mb-0">Fullname</label>
@@ -243,7 +258,11 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="" class="mb-0">Barangay</label>
-                                        <input type="text" class="form-control !text-sm" v-model="form.barangay">
+                                        <!-- <input type="text" class="form-control !text-sm" v-model="form.barangay"> -->
+                                        <select  class="form-control" v-model="form.barangay">
+                                            <option value="0">--Select Barangay--</option>
+                                            <option :value="b.id" v-for="b in barangay" :key="b.id">{{ b.barangay_name }} - {{ b.city}}</option>
+                                        </select>
                                     </div> 
                                 </div>
                                 <div class="col-lg-3">
@@ -301,11 +320,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-lg-4">
-                                    <a :href="'../../../storage/qr/'+form.qr_code" download><img :src="'../../../storage/qr/'+form.qr_code" alt="QR" class="w-40 h-40 bg-gray-100 border"></a>
+                                    <a :href="'../../../storage/qr/'+form.qr_code" download><img :src="'../../../storage/qr/'+form.qr_code" alt="QR" class="w-40 h-40 bg-gray-100 border" title="Click image to download QR"></a>
                                 </div>
-                            </div>
+                            </div> -->
                             <hr class="border-dashed">
                             <div class="row">
                                 <div class="col-lg-12">

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\EventsRequest;
 use App\Models\Events;
 use App\Models\Barangay;
+use App\Models\User;
+use App\Models\Notifications;
 
 class EventsController extends Controller
 {
@@ -28,7 +30,17 @@ class EventsController extends Controller
         $validated=$request->validated();
         $barangay_name=Barangay::where('id',$request->barangay)->value('barangay_name');
         $validated['barangay_name']=$barangay_name;
-        Events::create($validated);
+        $events=Events::create($validated);
+
+        $beneficiary=User::where('role','Beneficiary')->where('status','Active')->get();
+        $date=($request->start_date==$request->end_date) ? date('F d,Y',strtotime($request->start_date)) : date('F d,Y',strtotime($request->start_date))." to ".date('F d,Y',strtotime($request->end_date));
+        foreach($beneficiary AS $b){
+            $validated_notif['beneficiary_id']=$b->id;
+            $validated_notif['event_id']=$events->id;
+            $validated_notif['notification']= "Hi <b>".$b->name."</b>, we're excited to invite you to the <b>".$request->event_name."</b><br> happening on <b>".$date."</b>, starting at <b>".date("h:i A",strtotime($request->event_time))."</b> at the <b>".$request->event_address."</b>.<br> We hope to see you there!";
+            $validated_notif['identifier']="2";
+            Notifications::create($validated_notif);
+        }
     }
 
     public function get_events(){

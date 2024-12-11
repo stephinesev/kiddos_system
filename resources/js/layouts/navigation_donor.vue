@@ -208,7 +208,7 @@
                                 <img :src="'../storage/profile/'+credentials.picture" id="img1" style="width:35px!important;" v-if="credentials.picture!=null"/>
                                 <UserIcon  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-5 h-5 " v-else></UserIcon>
                             </span>
-                            <span class="nav-profile-name">{{ credentials.fullname }}</span>
+                            <span class="nav-profile-name !text-white">{{ credentials.fullname }}</span>
                         </a>
                         <Transition
                             enter-active-class="transition ease-out duration-200"

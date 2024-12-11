@@ -308,6 +308,9 @@
                                 <span>Add New Event </span>
                             </button>
                         </div>
+						<br>
+						<br>
+						<br>
 						<!-- DATATABLE -->
                         <div class="overflow-x-scroll pt-3">
                             <DataTable :data="eventall" :options="options" class="display table table-bordered table-hover !border nowrap">

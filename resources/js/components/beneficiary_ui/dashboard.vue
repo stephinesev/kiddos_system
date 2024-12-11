@@ -135,11 +135,11 @@
                                                         <p class="text-sm m-0 text-gray-600">{{et.event_address}}</p>
                                                     </div>
                                                 </div>
-                                                <div>
+                                                <!-- <div>
                                                     <span>
                                                         <EllipsisVerticalIcon fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon w-4 h-4 "></EllipsisVerticalIcon>
                                                     </span>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>

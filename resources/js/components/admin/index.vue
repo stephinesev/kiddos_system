@@ -235,6 +235,9 @@
                                 <span>Add New Admin </span>
                             </button>
                         </div>
+						<br>
+						<br>
+						<br>
 						<!-- DATATABLE -->
                         <div class="pt-3">
                             <DataTable :data="adminall" :options="options" class="display table table-bordered table-hover !border nowrap">
