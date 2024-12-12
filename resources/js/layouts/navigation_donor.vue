@@ -115,10 +115,14 @@
     <!-- partial:partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="navbar-brand-wrapper d-flex justify-content-center">
-                <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">  
-                    <div class="text-2xl uppercase w-full text-center">
-                        <a class="navbar-brand brand-logo pb-0 pt-2" href="/donor_dashboard"><img class="!h-[50px]" src="../../images/logo.png" alt="logo"/></a>
-                    </div>
+                <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100 sm:!m-0 xs:!m-0"> 
+                    <a class="navbar-brand brand-logo-mini" href="/donor_dashboard"><img class="!h-[50px] !w-[150px]" src="../../images/logo.png" alt="logo"/></a>  
+                    <!-- <div class="text-2xl uppercase w-full text-center"> -->
+                    <a class="navbar-brand brand-logo pb-0 pt-2" href="/donor_dashboard"><img class="!h-[50px] xs:!h-[100%] !mb-0 !mt-0" src="../../images/logo.png" alt="logo" style="margin:80px"/></a>
+                    <!-- <button class="navbar-toggler navbar-toggler align-self-center"  @click="toggleSidebar" type="button" data-toggle="minimize">
+                        <span class="mdi mdi-sort-variant"></span>
+                    </button> -->
+                    <!-- </div> -->
                     <!-- <button class="navbar-toggler navbar-toggler align-self-center"  @click="toggleSidebar" type="button" data-toggle="minimize">
                         <span class="mdi mdi-sort-variant"></span>
                     </button> -->

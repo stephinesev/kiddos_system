@@ -51,6 +51,7 @@
 <script>
 import { Chart, registerables } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels'
+import html2canvas from 'html2canvas';
 Chart.register(...registerables, ChartDataLabels);
 
 const colorPalette = [
@@ -511,6 +512,22 @@ export default {
             this.renderChartPie()
             
         },
+        exportChart() {
+            const canvas = document.getElementById('canvasprint', 1.0);
+            const image = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = 'Children Health Status (BMI) in Barangay Over 6 Months.png';
+            link.href = image;
+            link.click();
+        },
+        exportChart2(label) {
+            const canvas = document.getElementById('canvasprint2', 1.0);
+            const image = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = "Silay City Children's Health Status Pie Graph ("+label+").png";
+            link.href = image;
+            link.click();
+        }
     },
     beforeDestroy() {
         if (this.chart) {
@@ -597,9 +614,11 @@ export default {
 			</div>
 			<div class="col-md-5 grid-margin stretch-card">
 				<div class="card">
+                    <button @click="exportChart" class="btn btn-primary btn-sm">Export Children Health Status Graph</button><br>
 					<div class="card-body dashboard-tabs p-0">
 						Children Health Status (BMI) in Barangay Over 6 Months
-                        <canvas ref="lineChart"></canvas>
+                       
+                        <canvas ref="lineChart" id="canvasprint"></canvas>
 					</div>
 					<br>
 					<div v-if="choice === 'underweight'">
@@ -613,9 +632,10 @@ export default {
 						</div>
 						<div class="card" >
 							<div class="card-body">
+                                <button @click="exportChart2('Underweight')" class="btn btn-primary btn-sm w-full mb-2">Export Silay City Children's Health Status Pie Graph</button>
 								Silay City Children's Health Status Pie Graph (Underweight)
 								<canvas ref="lineChart2" hidden></canvas>
-								<canvas ref="lineChart3"></canvas>
+								<canvas ref="lineChart3" id="canvasprint2"></canvas>
 								<canvas ref="lineChart4" hidden></canvas>
 								<canvas ref="lineChart5" hidden></canvas>
 								<canvas ref="lineChart6" hidden></canvas>
@@ -634,10 +654,11 @@ export default {
 						</div>
 						<div class="card" >
 							<div class="card-body">
+                                <button @click="exportChart2('Overweight')" class="btn btn-primary btn-sm w-full mb-2">Export Silay City Children's Health Status Pie Graph</button>
 								Silay City Children's Health Status Pie Graph (Overweight)
 								<canvas ref="lineChart2" hidden></canvas>
 								<canvas ref="lineChart3" hidden></canvas>
-								<canvas ref="lineChart4" ></canvas>
+								<canvas ref="lineChart4" id="canvasprint2"></canvas>
 								<canvas ref="lineChart5" hidden></canvas>
 								<canvas ref="lineChart6" hidden></canvas>
 								<canvas ref="lineChart7" hidden></canvas>
@@ -655,11 +676,12 @@ export default {
 						</div>
 						<div class="card" >
 							<div class="card-body">
+                                <button @click="exportChart2('Obesity Class I')" class="btn btn-primary btn-sm w-full mb-2">Export Silay City Children's Health Status Pie Graph</button>
 								Silay City Children's Health Status Pie Graph (Obesity Class I)
 								<canvas ref="lineChart2" hidden></canvas>
 								<canvas ref="lineChart3" hidden></canvas>
 								<canvas ref="lineChart4" hidden></canvas>
-								<canvas ref="lineChart5"></canvas>
+								<canvas ref="lineChart5" id="canvasprint2"></canvas>
 								<canvas ref="lineChart6" hidden></canvas>
 								<canvas ref="lineChart7" hidden></canvas>
 							</div>
@@ -676,12 +698,13 @@ export default {
 						</div>
 						<div class="card" >
 							<div class="card-body">
+                                <button @click="exportChart2('Obesity Class II')" class="btn btn-primary btn-sm w-full mb-2">Export Silay City Children's Health Status Pie Graph</button>
 								Silay City Children's Health Status Pie Graph (Obesity Class II)
 								<canvas ref="lineChart2" hidden></canvas>
 								<canvas ref="lineChart3" hidden></canvas>
 								<canvas ref="lineChart4" hidden></canvas>
 								<canvas ref="lineChart5"hidden></canvas>
-								<canvas ref="lineChart6"></canvas>
+								<canvas ref="lineChart6" id="canvasprint2"></canvas>
 								<canvas ref="lineChart7" hidden></canvas>
 							</div>
 						</div>
@@ -697,13 +720,14 @@ export default {
 						</div>
 						<div class="card" >
 							<div class="card-body">
+                                <button @click="exportChart2('Obesity Class III')" class="btn btn-primary btn-sm w-full mb-2">Export Silay City Children's Health Status Pie Graph</button>
 								Silay City Children's Health Status Pie Graph (Obesity Class III)
 								<canvas ref="lineChart2" hidden></canvas>
 								<canvas ref="lineChart3" hidden></canvas>
 								<canvas ref="lineChart4" hidden></canvas>
 								<canvas ref="lineChart5" hidden></canvas>
 								<canvas ref="lineChart6" hidden></canvas>
-								<canvas ref="lineChart7"></canvas>
+								<canvas ref="lineChart7" id="canvasprint2"></canvas>
 							</div>
 						</div>
 					</div>
@@ -716,10 +740,11 @@ export default {
 							<button class="btn btn-sm !bg-blue-300 text-white hover:!bg-blue-400 !rounded-b-none" v-on:click.capture="choice='obesity2'" @click="divClick()" style="font-size: 13px;">Obesity Class II</button>
 							<button class="btn btn-sm !bg-blue-300 text-white hover:!bg-blue-400 !rounded-b-none" v-on:click.capture="choice='obesity3'" @click="divClick()" style="font-size: 13px;">Obesity Class III</button>
 						</div>
-						<div class="card" >
+						<div class="card">
 							<div class="card-body">
+                                <button @click="exportChart2('Normal')" class="btn btn-primary btn-sm w-full mb-2">Export Silay City Children's Health Status Pie Graph</button>
 								Silay City Children's Health Status Pie Graph (Normal)
-								<canvas ref="lineChart2"></canvas>
+								<canvas ref="lineChart2" id="canvasprint2"></canvas>
 								<canvas ref="lineChart3" hidden></canvas>
 								<canvas ref="lineChart4" hidden></canvas>
 								<canvas ref="lineChart5" hidden></canvas>

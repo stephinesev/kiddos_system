@@ -30,6 +30,7 @@
         "datatables.net-select-dt": "^2.0.5",
         "datatables.net-vue3": "^3.0.2",
         "fullcalendar": "^6.1.15",
+        "html2canvas": "^1.4.1",
         "instascan": "^1.0.0",
         "jquery": "^3.7.1",
         "jszip": "^3.10.1",
